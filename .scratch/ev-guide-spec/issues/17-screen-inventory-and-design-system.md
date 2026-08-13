@@ -74,3 +74,11 @@ Design the offline surfaces (ADR-0007): the quiet offline indicator, the
 straight-line-distance label the route preview degrades to, and the settings
 row for the opt-in all-Rwanda map pack (76 MB) — which also inherits 06's
 open question about the reference's "Google" wordmark on the map screen.
+
+## Constraint routed from 19 (2026-08-13)
+
+The model fixes what screens render: authored `name`/`nameShort` (the place,
+not the operator) and the Owner's `markerLabel` + icon; availability strings
+derived from structured fields, never prose; rate is per-Connector with
+freshness; the carousel (Photos), owner row (Owner public face), and heart
+(SavedStation) are all model-backed. See docs/domain-model.md §Projections.

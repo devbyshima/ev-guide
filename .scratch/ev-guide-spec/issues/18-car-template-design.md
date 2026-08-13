@@ -26,3 +26,11 @@ constraints on interaction while driving; and what data must be resident on the
 device because the car screen cannot wait on a slow network.
 
 Feed anything this forces back into 19 before the schema locks.
+
+## Constraint routed from 19 (2026-08-13)
+
+The car surface renders from the fixed projections in docs/domain-model.md
+(one-line, two-line, picker-triple, card-triple), from an on-device cache at
+a locked-phone-readable protection class, containing only non-sensitive
+directory + availability data. Marker = Owner icon + ≤3-char markerLabel.
+Rate never appears on a row; availability never in a title.
