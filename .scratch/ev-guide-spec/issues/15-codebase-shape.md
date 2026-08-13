@@ -31,3 +31,12 @@ The car integrations, when they come, are a **custom Expo module** with an
 owned config plugin; nothing in v1 needs to change for that except keeping the
 station-read surface (`stationsNear`, station detail) behind a seam a native
 module can later call.
+
+## Constraint routed from 14 (2026-08-13)
+
+**Frontend first, backend after** (ADR-0005): the apps are built complete
+against a mock data layer behind repository protocols — the ZUBA pattern —
+and the BWEZE tenant swaps in behind the same seam later. This ticket designs
+that seam. One backend, one auth realm, one user table across all three
+surfaces; the admin dashboard should lean on what BWEZE already serves rather
+than invent a stack.

@@ -40,3 +40,10 @@ offline behaviour: degrade to straight-line distance from cached station
 coordinates, or hide the preview and leave the hand-off button (Google Maps
 handles its own offline story). The hand-off itself must never be blocked by
 the preview failing.
+
+## Constraint routed from 14 (2026-08-13)
+
+Freshness reaches the client by **polling on screen focus and map movement**
+(ADR-0005) — no push, no sockets. Offline design is therefore about how stale
+cached reads are presented (ADR-0002's freshness axis does the honest work)
+and when refetches fire, not about reconnecting a stream.

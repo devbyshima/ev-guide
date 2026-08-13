@@ -1,7 +1,7 @@
 # 14 — What does EV Guide run on?
 
 Type: grilling
-Status: open
+Status: closed (2026-08-13)
 Blocked by: 09, 12
 
 ## Question
@@ -37,3 +37,40 @@ server (06) and a **Valhalla routing instance** (ADR-0004), both consuming one
 OSM extract job. Whatever this ticket picks must run long-lived containers with
 a periodic data-refresh pipeline — this strengthens the self-host lean and is a
 concrete test case for the BWEZE question.
+
+## Resolution (2026-08-13)
+
+**BWEZE — after the frontend is built.** Founder call, both halves explicit.
+
+1. **Platform: BWEZE.** EV Guide runs as a BWEZE tenant (Postgres, auth,
+   storage) plus git-deployed containers (API, tile server, Valhalla). The
+   owns-everything rule (26) lands here deliberately: EV Guide is the concrete
+   dogfooding case. Runtime traffic touches only the tenant and containers —
+   a BWEZE control-plane outage degrades deploys, never drivers.
+2. **Sequencing: frontend first.** The apps are built against a mock data
+   layer behind repository protocols (the studio's ZUBA pattern); the BWEZE
+   backend lands after. **Launch bar, stated in the spec:** before EV Guide
+   serves drivers, the BWEZE data plane must run on always-on server
+   infrastructure — as of 2026-08-13 it is a Lima VM on the founder's Mac
+   behind a Cloudflare tunnel, and that is not a serving platform.
+3. **One backend, one auth realm, one user table** for driver app, operator
+   app, and admin dashboard. Roles are membership edges (11); admin is a staff
+   flag; operators/owners arrive by email invitation. If tenant auth cannot
+   cover ADR-0003's Google + Apple + magic link, EV Guide's API carries
+   **Better Auth** (already run in the BWEZE console) against the same
+   Postgres — same realm either way.
+4. **Availability runtime: store reports, derive at read time, poll.** No
+   scheduled decay jobs — effective state is computed from `lastConfirmedAt`
+   + source + ADR-0002's windows on every read. No websockets in v1; clients
+   refetch on screen focus and map moves. Notifications fog may revisit push.
+5. **Geo services: containers beside the tenant.** One periodic OSM extract
+   job feeds both the tile server and Valhalla; Cloudflare CDN caches tiles
+   hard (immutable between refreshes, purge on refresh); previews and API
+   reads go origin.
+
+Recorded as [ADR-0005](../../docs/adr/0005-backend-bweze-frontend-first.md).
+
+**Knock-ons routed:** 15 — now fully unblocked; the mock data layer / repo
+protocol seam is the frontend-first sequencing made concrete, and the admin
+dashboard's stack should lean on what BWEZE already serves; 16 — polling (not
+push) is the freshness mechanism to design offline behaviour around.
