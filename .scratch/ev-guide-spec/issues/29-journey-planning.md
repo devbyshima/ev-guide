@@ -1,7 +1,7 @@
 # 29 — Journey planning with charging stops: in scope or out?
 
 Type: grilling
-Status: open
+Status: closed — out of scope (2026-08-13)
 Blocked by: 28
 
 ## Question
@@ -32,3 +32,22 @@ The availability layer ships in v1 but is **claimed as a bonus, never a
 promise** — so any journey-planning surface must work when every station en
 route reads `Unknown`, and stop *suggestions* may rank by distance/rate/
 connector fit but must not imply live knowledge the layer doesn't have.
+
+## Resolution (2026-08-13): ruled out of scope
+
+**Journey planning — including the corridor filter and the "reachable on my
+remaining charge" isochrone — is out of this map's destination.** Founder
+call.
+
+Why: the brief never asked for it (the fog patch was born from EVP's
+marketed journey planner, and research 03 established EVP has no app — the
+competitive pressure that created the idea does not exist); the reference
+set has no such screen and the 1:1 rule makes every invented screen
+expensive; stop suggestions from an Unknown-dominant layer (28) would be
+hollow exactly where they'd matter; and most of the fleet is in Kigali with
+most trips within range.
+
+The seam that keeps a future effort cheap already exists and needs nothing
+added: Valhalla + isochrones are in the stack (ADR-0004), so journey
+planning later is UI work on existing infrastructure — a fresh effort with
+its own premise, not this map widened.

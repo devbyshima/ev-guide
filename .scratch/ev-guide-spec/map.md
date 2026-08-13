@@ -142,6 +142,14 @@ Ruled beyond the destination. Does not graduate.
   a future payment effort without building any of it, and the reference's
   `Payment & payouts` settings row has no EV Guide equivalent (see 17).
 
+- **Journey planning with charging stops** — including the corridor filter and
+  the "reachable on my remaining charge" isochrone. Ruled out by
+  [29](issues/29-journey-planning.md): the brief never asked for it, the
+  competitive pressure that spawned it proved nonexistent (EVP has no app),
+  and an Unknown-dominant layer makes stop suggestions hollow. Valhalla +
+  isochrones already in the stack keep a future effort cheap — a fresh
+  effort, not this map widened.
+
 - **Moto riders and battery swap.** Ruled out by
   [ADR-0001](../../docs/adr/0001-cars-only-swap-out-of-scope.md) on
   deliverability, not market size — the only live availability data in Rwanda is
