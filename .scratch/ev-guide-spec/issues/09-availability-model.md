@@ -1,7 +1,7 @@
 # 09 — How does EV Guide know a bay is free?
 
 Type: grilling
-Status: open
+Status: claimed (grilling session, 2026-08-13)
 Blocked by: 07, 08
 
 ## Question

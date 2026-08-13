@@ -30,3 +30,15 @@ of the map's Not yet specified section entirely.
 
 If it does not arrive, say so plainly and the manual-entry model stands
 unchanged — it is already the working assumption, not a contingency.
+
+## Open question routed from 26 (2026-08-13)
+
+The founder's rule is **no reliance on external people; we build everything
+ourselves**. Confirm before acting whether a *one-time* dataset acquisition
+falls under it.
+
+The reading applied on the map is that the rule targets **runtime dependency** —
+a request for a government dataset produced under a public EU contract is
+reference material the studio would own outright thereafter, and admin-entered
+stations were always the design. Under the opposite reading this ticket closes
+and all 224 sites are entered by hand from scratch.

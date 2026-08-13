@@ -38,3 +38,15 @@ Also relevant: **EVP has no app** (the launch coverage was future tense) and the
 only shipped competitor is Kabisa Charge with 5+ downloads, no iOS build, and
 charging flows it labels "(simulated)". The competitive pressure assumed at
 charting does not currently exist.
+
+## Constraint routed from 26 (2026-08-13)
+
+**Settled by founder decision: no external runtime dependency.** This removes
+the third option this ticket had grown — aggregating via Kabisa's feed. EV Guide
+must work on its own sources alone.
+
+What remains genuinely open here: the operator app is EV Guide's *own* surface,
+but **operator adoption is still outside the studio's control**. The rule gives
+you the tooling, not the users of it. So this ticket still has to answer what
+the product does when no operator ever signs up, and what the operator app
+offers that makes adoption worth it — now with no fallback feed behind it.

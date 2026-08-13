@@ -21,3 +21,11 @@ to fund it.
 Note the standing constraint: no billing infrastructure and no plan tiers
 anywhere, because EV Guide is free with no monetisation. That removes a large
 slice of what a BaaS normally sells.
+
+## Constraint routed from 26 (2026-08-13)
+
+Founder rule: **no reliance on external people; we build everything ourselves.**
+That is an argument for **BWEZE**, the studio's own platform, over Supabase or
+another third-party BaaS. Weigh it against the risk noted in this ticket's body
+— BWEZE is itself a product in flight, and dogfooding a moving platform under a
+free product with no revenue to fund operations is a real cost.

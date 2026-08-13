@@ -45,3 +45,10 @@ an optional one.
 coordinator). That both answers the unit question — per kWh, in RWF — and hints
 at a de facto market rate. Whether EV Guide displays a figure sourced from a
 competitor's feed is part of ticket 26.
+
+## Constraint routed from 26 (2026-08-13)
+
+Kabisa's `pricePerKwh` is ruled out as a source. Rates are **fully manual** —
+admin- or operator-entered — which is consistent with RURA requiring no tariff
+filing. The uniform **600 RWF/kWh** across the 12 populated records stands as
+market intelligence for sanity-checking manual entries, not as an input.

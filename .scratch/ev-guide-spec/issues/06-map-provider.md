@@ -73,3 +73,13 @@ Google becomes the strongest option and this must be revisited.
 - **The "Google" wordmark bottom-left cannot be reproduced under any non-Google
   choice.** A strict 1:1 reading of the reference points at Google for exactly
   that one pixel. Routed to ticket 17.
+
+## Constraint routed from 26 (2026-08-13)
+
+The founder's no-external-runtime-dependency rule **hardens this ticket's
+recommendation into the only consistent choice**: MapLibre with self-hosted OSM
+vector tiles. Google Maps is precisely the third-party runtime service being
+ruled out, so the two open items in the answer above — the ToS "directory
+service" clause and the Google wordmark — are settled by the rule rather than
+by argument. The wordmark 1:1 conflict still needs recording in 17 as a
+knowing, founder-approved deviation from the reference.
