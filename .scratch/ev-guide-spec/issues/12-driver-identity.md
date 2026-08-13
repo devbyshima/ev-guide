@@ -1,23 +1,12 @@
-# 12 — Do drivers need accounts?
 
-Type: grilling
-Status: open
-Blocked by: 09
+## Round 1 settled (2026-08-13) — interim, ticket not yet resolved
 
-## Question
+**Driver accounts exist.** Founder decision, against the recommendation of a
+device-only local identity. Consequence worth noting: this **removes** the 1:1
+tension flagged for ticket 17 — the reference profile screen shows a named,
+avatared user, which now maps directly rather than becoming a local-only
+profile.
 
-A forced signup wall on a directory app in a data-cost-sensitive market kills
-adoption before anyone sees value. But crowdsourced availability needs identity
-to be trustworthy and rate-limited, and the reference's profile screen assumes
-a named, avatared user.
-
-Settle: whether browsing, viewing rates and connectors, and getting directions
-work with no account at all; what specifically requires signing in (reporting
-availability, saving favourites, setting your own connector type — which is
-what powers "free for me"); the auth method, weighing phone/OTP against email
-and social for this market; whether an anonymous device identity is enough to
-rate-limit reports without an account; and what happens to locally-saved state
-when someone finally signs up.
-
-Note the coupling to 09: if availability leans on driver reports, adoption of
-accounts stops being a preference and becomes load-bearing.
+Still open: whether browsing is anonymous or gated, what specifically requires
+an account, and the auth method — which is now a **running-cost** question,
+since the product has no revenue to fund per-message SMS (Round 2).

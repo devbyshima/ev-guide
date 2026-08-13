@@ -1,25 +1,20 @@
-# 11 — Owner, operator, station: what is the hierarchy and what does each tier see?
 
-Type: grilling
-Status: open
-Blocked by: 07, 09
+## Round 1 settled (2026-08-13) — interim, ticket not yet resolved
 
-## Question
+- **Owner has many Stations; a Station has one Owner; an Operator is assigned to
+  one or more Stations.** Role is a **membership edge, not a user attribute**, so
+  one person can be an owner at one site and an operator at another with no
+  migration.
+- **Admin creates Owners; Owners create their own Operators**, scoped to their
+  own stations. Admin retains full override. This is the loose reading of the
+  brief's "admin creates station managers", confirmed by the founder — the
+  strict reading makes the admin a bottleneck past a handful of sites.
+- **Stats are four metrics, and that is the whole list**: station views,
+  direction taps, availability reports received, and observed uptime. EV Guide
+  never sees a charging session, so there is no kWh delivered, no revenue and no
+  session count — say so plainly rather than shipping an empty dashboard.
+- Operators see assigned stations; owners see theirs aggregated with cross-site
+  comparison; admin sees everything. **An owner sees their own uptime and nobody
+  else's** — the ticket 07 boundary holds.
 
-The brief says the admin creates station managers, in a hierarchy of station
-operator and station owner, and each gets "all the relevant stats". That
-sentence hides most of a permissions model.
-
-Settle the cardinality first: can one owner own many stations, can one operator
-work several, can a station have several operators, can a person be an owner at
-one site and an operator at another, and does an operator belong to an owner or
-directly to a station. Then: who creates whom — the brief says admin creates
-managers, so can an owner create their own operators, or is every account
-admin-minted. Then: what each tier may **write** (availability, rate, station
-details) and what each may **read**.
-
-"All the relevant stats" needs a concrete list per tier — and the honest
-question of what statistics a free directory app can even produce, since with
-no payments there are no transactions to count. Views, direction taps,
-availability reports, and reported occupancy over time are probably it. Say so
-plainly rather than promising dashboards the data can't fill.
+Still open: **write permissions per tier, and conflict resolution** (Round 2).
