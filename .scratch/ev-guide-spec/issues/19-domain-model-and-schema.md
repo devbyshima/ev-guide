@@ -33,3 +33,10 @@ The model this ticket synthesises lands as `packages/domain` (pure types +
 the read-time availability derivation) with its persistence shape consumed
 through `packages/data`'s repository protocols (ADR-0006). Mind the seam:
 the mock and BWEZE implementations must both satisfy it.
+
+## Constraint routed from 16 (2026-08-13)
+
+The schema carries `updatedAt` cursors for delta sync, and Reports carry
+captured-at timestamp + location distinct from arrival time (offline queue,
+ADR-0007). The availability derivation must be pure enough to run identically
+on device and server — it already lives in `packages/domain` (ADR-0006).

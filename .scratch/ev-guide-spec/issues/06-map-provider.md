@@ -83,3 +83,13 @@ ruled out, so the two open items in the answer above — the ToS "directory
 service" clause and the Google wordmark — are settled by the rule rather than
 by argument. The wordmark 1:1 conflict still needs recording in 17 as a
 knowing, founder-approved deviation from the reference.
+
+## Conditional resolved (2026-08-13)
+
+Ticket 16 made offline a first-class requirement (bundled Kigali basemap,
+opt-in Rwanda pack — [ADR-0007](../../docs/adr/0007-offline-model.md)), which
+is the case this ticket's recommendation was conditioned on. **MapLibre +
+self-hosted OSM tiles stands unconditionally.** The two founder calls noted
+here (Google directory-service clause; the "Google" wordmark in the
+reference) are moot for provider choice but the wordmark question remains
+routed to 17.

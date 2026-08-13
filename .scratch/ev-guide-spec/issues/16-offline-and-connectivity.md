@@ -1,7 +1,7 @@
 # 16 — What does EV Guide do on a bad connection?
 
 Type: grilling
-Status: open
+Status: closed (2026-08-13)
 Blocked by: 09, 14
 
 ## Question
@@ -47,3 +47,37 @@ Freshness reaches the client by **polling on screen focus and map movement**
 (ADR-0005) — no push, no sockets. Offline design is therefore about how stale
 cached reads are presented (ADR-0002's freshness axis does the honest work)
 and when refetches fire, not about reconnecting a stream.
+
+## Resolution (2026-08-13)
+
+**Offline is first-class.** Five parts:
+
+1. **Basemap:** Kigali's vector basemap (5.6 MB) ships **inside the app
+   binary**; the all-Rwanda pack (76 MB) is an opt-in download in settings;
+   the station directory is fully synced on every online launch (it is
+   kilobytes). **This closes 06's conditional: MapLibre confirmed** — offline
+   tiles are required, which Google's ToS cannot provide.
+2. **Honesty:** the ADR-0002 decay derivation runs **on device** over cached
+   reports, so no availability state is ever rendered beyond its decay
+   window, offline or on — a stale green is structurally impossible. A quiet
+   offline indicator plus the standard freshness timestamps; offline is a
+   normal mode, not an error.
+3. **Reports queue offline**, capturing timestamp and location at tap time;
+   they sync with the original timestamp (11's most-recent-wins orders them),
+   expire unsent after their own decay window (2h driver), and proximity
+   gating evaluates the captured location.
+4. **Route preview degrades to labeled straight-line distance** from cached
+   coordinates; the Google Maps hand-off button is never blocked; route line
+   and ETA simply don't render offline.
+5. **Cold start:** a directory snapshot ships in the binary (refreshed each
+   release), so a zero-connectivity first run shows every station with all
+   availability honestly `Unknown`. Online syncs are delta fetches on an
+   `updatedAt` cursor; photos lazy-load. Budget stated in the spec: cold
+   online start under 1 MB excluding actually-panned tiles.
+
+Recorded as [ADR-0007](../../docs/adr/0007-offline-model.md).
+
+**Knock-ons routed:** 06 — conditional resolved, MapLibre stands; 17 — the
+offline indicator, straight-line label, and Rwanda-pack settings row need
+faces; 19 — the schema carries `updatedAt` cursors and the report queue's
+captured-at fields.

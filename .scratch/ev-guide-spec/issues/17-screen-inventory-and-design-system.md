@@ -67,3 +67,10 @@ the operator app, visible only to users holding an Owner/Operator
 membership — and this ticket designs its face. The design system this ticket
 produces lands as `packages/ui`, shared by both mobile apps; the admin
 dashboard takes tokens only.
+
+## Constraint routed from 16 (2026-08-13)
+
+Design the offline surfaces (ADR-0007): the quiet offline indicator, the
+straight-line-distance label the route preview degrades to, and the settings
+row for the opt-in all-Rwanda map pack (76 MB) — which also inherits 06's
+open question about the reference's "Google" wordmark on the map screen.
