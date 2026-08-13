@@ -1,7 +1,7 @@
 # 28 — Does v1 promise availability at all?
 
 Type: grilling
-Status: open
+Status: closed (2026-08-13)
 Blocked by: 09, 12
 
 ## Question
@@ -30,3 +30,36 @@ Weigh honestly that a directory that admits what it does not know beats a live
 layer that is wrong, and that the brief explicitly asked for occupancy — so
 dropping it from v1 is a visible reduction against what was requested, not a
 quiet simplification.
+
+## Resolution (2026-08-13)
+
+**v1 ships the availability layer — and claims the directory.**
+
+1. **The layer ships.** Its mechanics are already the model's spine (derived,
+   Unknown-by-default — ADR-0002/0008), the operator app exists to write it,
+   and it is the substance behind the car platforms' "not just a list" bar
+   (23's ammunition). The thin months are honest, not wrong.
+2. **The claim is the directory.** Store listing and onboarding sell: every
+   charging station in Rwanda, connectors, rates, directions, works offline.
+   Availability is presented as "live status *when reported* by operators
+   and drivers" — a bonus, never a promise. The words **"real-time" never
+   appear anywhere** in listing, onboarding, or UI.
+3. **No adoption precondition, no per-station or global switch.** A gate
+   would treat Unknown as a failure state; ADR-0002 says it is a complete
+   answer. No gating machinery exists.
+4. **Seeding: two legitimate moves, one explicit rejection.**
+   - A **launch-week survey pass** — studio staff visit the Kigali sites v1
+     needs verified anyway (directory data, photos); their reports seed the
+     layer as genuine admin-source reports.
+   - **Pre-launch operator recruitment** of the two or three largest
+     operators (Kabisa, Numa) so the busiest sites have an operator writing
+     status from day one — the operator-onboarding fog patch's first
+     concrete shape.
+   - **Rejected: admin-marked "known-busy patterns."** Synthetic data wearing
+     the availability UI would violate the honesty rule the model is built
+     on. Never to be revisited as a "quick win".
+
+**Knock-ons routed:** 29 is now unblocked (stop *suggestions* remain
+constrained by Unknown-dominance — weigh there); the Distribution fog patch
+inherits the claim language (no "real-time" anywhere); the operator
+onboarding fog patch gains the pre-launch recruitment shape.

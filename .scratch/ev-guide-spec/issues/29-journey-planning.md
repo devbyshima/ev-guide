@@ -25,3 +25,10 @@ to place it.
 The cheap-but-real option to weigh: no planner UI at all, but a "chargers
 along this route" filter on the existing map — one Valhalla call plus a
 corridor query, no new screen.
+
+## Constraint routed from 28 (2026-08-13)
+
+The availability layer ships in v1 but is **claimed as a bonus, never a
+promise** — so any journey-planning surface must work when every station en
+route reads `Unknown`, and stop *suggestions* may rank by distance/rate/
+connector fit but must not imply live knowledge the layer doesn't have.
