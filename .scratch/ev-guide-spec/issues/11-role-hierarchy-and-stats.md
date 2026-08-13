@@ -1,7 +1,7 @@
 # 11 — Owner, operator, station: what is the hierarchy and what does each tier see?
 
 Type: grilling
-Status: open
+Status: resolved (2026-08-13)
 Blocked by: 07, 09
 
 ## Question

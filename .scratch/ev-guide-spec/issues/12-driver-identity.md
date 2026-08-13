@@ -1,7 +1,7 @@
 # 12 — Do drivers need accounts?
 
 Type: grilling
-Status: open
+Status: resolved (2026-08-13)
 Blocked by: 09
 
 ## Question

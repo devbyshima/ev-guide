@@ -1,7 +1,7 @@
 # 10 — What is a rate, who writes it, and how does it stay true?
 
 Type: grilling
-Status: open
+Status: resolved (2026-08-13)
 Blocked by: 03, 07
 
 ## Question
