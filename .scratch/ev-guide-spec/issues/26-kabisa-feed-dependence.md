@@ -74,9 +74,14 @@ points across 18 brands, live per-gun availability for 10 of them, and
 - **14 leans toward BWEZE.** "Build everything ourselves" is an argument for the
   studio's own platform over Supabase. Routed there rather than decided here.
 
-**Q2 not answered by this and carried forward:** whether to disclose the wider
-surface finding to Kabisa. Declining to use the feed does not settle whether
-to tell them about it.
+**Q2 answered 2026-08-13: yes, disclose.** Draft at
+[`correspondence/2026-08-13-kabisa-disclosure-DRAFT.md`](../correspondence/2026-08-13-kabisa-disclosure-DRAFT.md)
+— **not sent**; the founder sends it. Pure disclosure with no ask attached,
+since this ticket removed any reason to ask. Claims are held to what is
+verifiable, and the specifics are withheld from this repository until the
+operator has been notified. It does **not** claim any endpoint was exercised or
+that specific data is exposed. It discloses that the studio is building an
+adjacent product, deliberately.
 
 **Open question of interpretation, routed to 25:** whether a *one-time*
 acquisition of MININFRA's station dataset counts as external reliance. Reading
