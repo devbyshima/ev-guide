@@ -1,7 +1,7 @@
 # 17 — Screen inventory and design system from the references
 
 Type: prototype
-Status: open
+Status: claimed (2026-08-13 session)
 Blocked by: 01, 08, 13
 
 ## Question
