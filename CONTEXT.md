@@ -40,9 +40,10 @@ so the admin can mark mixed sites without inventing a concept mid-build.
 
 **Driver** — someone using EV Guide to find a charge. A car driver: moto riders
 are out of scope ([ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md)).
-Reads the whole product anonymously; needs an account to act — directions,
-saving, reporting, profile sync
-([ADR-0003](docs/adr/0003-driver-identity-and-gating.md)).
+Reads the whole product anonymously, **and gets directions anonymously**;
+needs an account to save, report, watch, or sync a profile
+([ADR-0003](docs/adr/0003-driver-identity-and-gating.md) as amended by ticket
+23 — directions were ungated over an App Store 5.1.1(v) risk).
 
 **Availability** — whether a Connector can be used right now. One of `Free`,
 `Occupied`, `OutOfService`, `Unknown`. A property of a **Connector**, never of
