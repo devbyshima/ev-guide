@@ -126,8 +126,8 @@ In scope, but not yet sharp enough to ticket. Graduates as the frontier advances
 - **Localisation** — Kinyarwanda, French, English. Sharpens once the screen
   inventory (17) exists.
 - **Data seeding** — how entries are kept fresh once entered. The *source*
-  question has graduated to ticket 25: MININFRA holds an unpublished
-  per-station dataset with coordinates, bay counts and connector types.
+  question went to ticket 25 and came back: the MININFRA annex request is
+  **held until after the build**, so seeding stays fog and manual entry stands.
 - **Distribution** — App Store and Play Store listings, Rwanda availability,
   and what the car-integration approvals need in a public listing.
 - **Analytics** — what the studio measures, and how that squares with the
@@ -142,6 +142,15 @@ Ruled beyond the destination. Does not graduate.
   displays rates and never collects them. The data model should leave room for
   a future payment effort without building any of it, and the reference's
   `Payment & payouts` settings row has no EV Guide equivalent (see 17).
+
+- **Outbound acquisition and proposals of every kind** — the MININFRA annex
+  request ([25](issues/25-obtain-mininfra-station-annex.md), drafted and held),
+  and any approach to an operator, ministry, or funder. **Founder rule
+  2026-08-13: these happen only after the product is built, never before.**
+  Not a permission question — a one-time dataset acquisition was confirmed
+  compatible with the no-external-reliance rule — but a sequencing one, so the
+  annex cannot be an input to this spec. Manual entry stands unchanged, and
+  **data seeding stays fog** rather than graduating.
 
 - **Journey planning with charging stops** — including the corridor filter and
   the "reachable on my remaining charge" isochrone. Ruled out by

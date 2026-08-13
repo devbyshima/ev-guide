@@ -63,3 +63,11 @@ quiet simplification.
 constrained by Unknown-dominance — weigh there); the Distribution fog patch
 inherits the claim language (no "real-time" anywhere); the operator
 onboarding fog patch gains the pre-launch recruitment shape.
+
+## Sequencing constraint (2026-08-13, founder rule)
+
+The seeding moves above are **post-build**: acquisition and proposals happen
+only after the product is built. "Pre-launch operator recruitment" therefore
+means after the build and before launch — **no operator, ministry, or funder
+is approached during the build**. The launch-week survey pass is unaffected
+(it is the studio's own field work, not an approach to anyone).

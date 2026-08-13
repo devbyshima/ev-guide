@@ -1,7 +1,7 @@
 # 25 — Obtain MININFRA's Annex No. 2: the existing-stations dataset
 
 Type: task
-Status: open
+Status: closed — deferred out of scope (2026-08-13)
 Blocked by: —
 
 ## Question
@@ -70,3 +70,25 @@ exchange would create the external obligation 26 ruled out.
 **Still blocked on the 26 scope question below.** The drafts exist so the
 decision is concrete rather than abstract; they cost nothing if the answer is
 "no, enter everything by hand".
+
+## Resolution (2026-08-13): deferred out of this map
+
+**Founder rule: acquisition and proposals happen only after the product is
+built, never before.** The letters are written, correct, and held.
+
+The scope question routed from 26 was answered — a *one-time* dataset
+acquisition does **not** violate the no-external-reliance rule, which targets
+runtime dependency. So the block is timing, not permission.
+
+Consequence for the spec: the annex cannot be an input to it. **The
+manual-entry model stands unchanged** — which this ticket already recorded as
+the working assumption rather than a contingency, so nothing in the spec, the
+schema, or the admin dashboard changes. The "data seeding" fog patch does not
+graduate; it stays fog, to be revisited by the post-build effort that sends
+these letters.
+
+Everything needed to act later is preserved in
+[the drafts](../correspondence/2026-08-13-mininfra-annex-request-DRAFT.md):
+three verified routes (MININFRA Energy Directorate · NTCS GreenBee, the
+authors · EU Delegation as escalation), the named DG, the address formats,
+and the reasoning behind each letter's framing.
