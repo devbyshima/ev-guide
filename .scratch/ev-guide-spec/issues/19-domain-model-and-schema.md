@@ -26,3 +26,10 @@ of it, and check the model against 18's car-template needs before locking.
 
 Offer ADRs only where the domain-modeling bar is met: hard to reverse,
 surprising without context, and the result of a real trade-off.
+
+## Constraint routed from 15 (2026-08-13)
+
+The model this ticket synthesises lands as `packages/domain` (pure types +
+the read-time availability derivation) with its persistence shape consumed
+through `packages/data`'s repository protocols (ADR-0006). Mind the seam:
+the mock and BWEZE implementations must both satisfy it.

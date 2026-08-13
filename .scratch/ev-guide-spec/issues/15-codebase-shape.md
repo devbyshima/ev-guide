@@ -1,7 +1,7 @@
 # 15 — One Expo app or two, and what runs the admin dashboard?
 
 Type: grilling
-Status: open
+Status: closed (2026-08-13)
 Blocked by: 05, 14
 
 ## Question
@@ -40,3 +40,37 @@ and the BWEZE tenant swaps in behind the same seam later. This ticket designs
 that seam. One backend, one auth realm, one user table across all three
 surfaces; the admin dashboard should lean on what BWEZE already serves rather
 than invent a stack.
+
+## Resolution (2026-08-13)
+
+1. **Two Expo apps — the brief wins over the reference.** Driver and operator
+   are separate apps sharing one auth realm; a human can be both. The
+   reference's `Switch to hosting mode` card becomes a **cross-app
+   affordance** — open-or-install the operator app, shown only to users
+   holding an Owner/Operator membership — whose exact face 17 designs.
+2. **One monorepo, pnpm workspaces**, no orchestrator until CI pain demands
+   one. `apps/driver` · `apps/operator` · `apps/admin` ·
+   `packages/domain` (types + read-time availability derivation, pure) ·
+   `packages/data` (repository protocols; the **mock implementation is a
+   first-class citizen** with the seed dataset; the BWEZE implementation
+   lands later behind the same protocols — ADR-0005's seam) ·
+   `packages/ui` (the RN design system both mobile apps share, built 1:1
+   from the reference in 17). The future car module is a fourth package
+   calling into `packages/data`.
+3. **Admin dashboard: Vite + React SPA** — the BWEZE console's own shape,
+   deployed as a BWEZE-hosted static app. Shares `domain` and `data`, not
+   `packages/ui`; visual kinship via shared design tokens only. Internal
+   tooling: the 1:1 reference rule does not govern it.
+4. **Platform floor as a rule, not a number:** latest stable Expo SDK pinned
+   at build start, New Architecture on (already mandatory for the car-module
+   path), SDK-default minimum OS versions — no hand-raised floors.
+
+Standing constraint restated: **no `create-expo-app` until the build effort
+starts** — initialisation bakes in answers, and the build is a separate
+effort from this map.
+
+Recorded as [ADR-0006](../../docs/adr/0006-codebase-shape.md).
+
+**Knock-ons routed:** 17 — design the cross-app affordance that replaces the
+mode-switch card, and `packages/ui` is where its design system lands; 19 —
+`packages/domain` is the concrete home of the model it synthesises.

@@ -58,3 +58,12 @@ The route preview (route line, driving distance, ETA — ADR-0004) must live
 reference contains no route/navigation screen and none is to be invented
 without this ticket deciding it. Also design the ADR-0003 inline auth sheet
 that gates the directions tap and auto-resumes the hand-off.
+
+## Constraint routed from 15 (2026-08-13)
+
+Driver and operator are **two apps** (ADR-0006). The reference's `Switch to
+hosting mode` card is therefore a **cross-app affordance** — open-or-install
+the operator app, visible only to users holding an Owner/Operator
+membership — and this ticket designs its face. The design system this ticket
+produces lands as `packages/ui`, shared by both mobile apps; the admin
+dashboard takes tokens only.
