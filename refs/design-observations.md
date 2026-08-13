@@ -13,17 +13,29 @@ The reference is a Kigali car-rental app. EV Guide adopts its UI 1:1.
 3. **Map + preview sheet** — same map with a bottom sheet for the selected item
 4. **Detail** — hero carousel, title block, owner row, description, feature chips, sticky price bar
 
-## Palette
+## Palette — MEASURED (2026-08-13, ticket 01)
 
-| Role | Value (approx — sample from source files) |
-| --- | --- |
-| Background | Pure black `#000000` |
-| Surface / card | `#1A1A1A`–`#1C1C1C` |
-| Surface raised (circle buttons) | `#2A2A2A`–`#3A3A3A` |
-| Accent (lime) | ~`#C7F531` chartreuse |
-| Text primary | White |
-| Text secondary | ~`#9E9E9E` |
-| Divider | ~`#2A2A2A` |
+Sampled by histogram from the source PNGs now on disk. **The earlier table was
+eyeballed and materially wrong in three rows** — it is replaced, not annotated,
+because under the 1:1 rule a wrong hex is worse than no hex.
+
+| Role | Measured | Where | Earlier guess |
+| --- | --- | --- | --- |
+| Page background | **`#121212`** | 80% of `02`, 64% of `04` | ~~`#000000`~~ — pure black is 0.34% of `01` |
+| Map canvas | **`#212121`** | 85% of `01`, 68% of `03` | not distinguished from background |
+| Surface / card | **`#393939`** | hosting card, quick-action circles | ~~`#1A1A1A`–`#1C1C1C`~~ |
+| Surface raised | **`#3C3C3C`** / `#3E3E3E` | pin-adjacent chrome, pressed states | ~~`#2A2A2A`–`#3A3A3A`~~ |
+| Accent (lime) | **`#C7FC2F`** | identical in all four screens | ~~`#C7F531`~~ |
+| Accent shade (pressed/edge) | `#9EC52B`, `#9AC128` | anti-aliased pin outlines | — |
+| Text primary / pin glyph | `#FFFFFF` | — | correct |
+| Pin fill | `#F3F3F3` | teardrop body | — |
+
+The accent is exactly one value across every screen — no tints, no gradients.
+Its share of the map screens (~3.9%) is a useful budget: the reference spends
+lime on pin outlines, one CTA, and nothing else.
+
+**Capture geometry:** 1206 × 2622 px = iPhone 16 Pro at @3x (402 × 874 pt).
+Divide by 3 for point measurements.
 
 The accent carries a heavy load: primary button fills (with **black** label
 text), avatar rings, active page indicator, link text, notification dots,
