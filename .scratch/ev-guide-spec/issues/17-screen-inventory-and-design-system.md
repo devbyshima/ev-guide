@@ -1,7 +1,7 @@
 # 17 — Screen inventory and design system from the references
 
 Type: prototype
-Status: claimed (2026-08-13 session)
+Status: closed (2026-08-13)
 Blocked by: 01, 08, 13
 
 ## Question
@@ -87,3 +87,127 @@ freshness; the carousel (Photos), owner row (Owner public face), and heart
 
 Directions are ungated (ADR-0003 amendment) — the inline auth sheet's
 triggers are now the save (heart) and report actions, not the directions CTA.
+
+## Resolution (2026-08-13)
+
+Two rounds of measurement and adversarial review, every pixel claim
+independently re-measured by the reviewer rather than taken from the documents.
+
+### Deliverables
+
+- **[design/10-design-system-v2.md](../design/10-design-system-v2.md)** — the
+  measured design system: typeface analysis, type scale, spacing, radii, eleven
+  components, icon system, elevation, the `packages/ui` token set, and a
+  **basemap style-token set** (the reference's map is monochrome — no green, no
+  blue anywhere).
+- **[design/11-driver-screens-v2.md](../design/11-driver-screens-v2.md)** — 15
+  driver screens (4 from reference, 8 by extension, 3 sheets), every state and
+  string, `Unknown` drawn first everywhere, 34 raises.
+- **[design/12-operator-admin-screens-v2.md](../design/12-operator-admin-screens-v2.md)**
+  — the operator app (9 screens) and web admin, each named against the reference
+  component it is assembled from, 16 raises.
+- Verdicts: [round 1](../design/13-design-verdict-v1.md) ·
+  [round 2](../design/13-design-verdict-v2.md).
+
+### What the measurements corrected
+
+The observation record was written from memory during charting and was wrong in
+ways that would each have produced a visible 1:1 failure:
+
+- **The CTA is not a pill** — r ≈ 13 px on a 137 px-tall button, and it is not
+  full-width (the locate button takes the right end). The record's "full-width
+  lime pill" would have shipped at r = 68.
+- **There is no grey *text*.** Every text core is pure `#FFFFFF`; the grey
+  appearance is ExtraLight weight anti-aliasing. Hierarchy is size plus four
+  measured weight classes. (Icons are a different matter — see below.)
+- **The `03` sheet is a floating card**, not a bottom sheet: all four corners
+  rounded at r ≈ 14 px, with 64 rows of map visible beneath it. There is no
+  sheet primitive and no scrim in this system.
+- **The drag handle is 180 × 13 px**, not the 12 px first recorded.
+- **The one link in the system is underlined** — 2 px, `#C7FC2F`, no descender
+  skip — and nothing had recorded it.
+- **The basemap palette was never measured** across ~85% of the front door.
+  Under MapLibre that style is EV Guide's to author, so it is 1:1 work; it is
+  now a style-JSON token set.
+
+### The typeface, honestly
+
+**Poppins is ruled out** (the `a` is double-storey). The decisive evidence is
+that the figures are **old-style** — `3 4 5` descend below the baseline in
+`135 000`, `2024` and `T5` — which eliminates every geometric candidate that
+otherwise fits, since Circular, Aeonik, Gilroy, Satoshi, Montserrat, Proxima
+Nova and Cereal all ship lining figures by default. Raleway was the leading
+candidate at 65–70% and was then **demoted to ~15%** when the metrics were
+re-derived from flat-topped glyphs only: x-height/cap is 0.750 ± 0.006 across
+six runs and `o` w/h is 1.028, both running 4–10% away from Raleway in the same
+direction. **The face is not identified.** What ships instead is the acceptance
+band a substitute must hit (§1.4): x-height/cap 0.75 ± 0.02, ascender/cap
+1.02–1.04, `o` w/h ≈ 1.00, four weights from ExtraLight to Bold, zero tracking,
+and **old-style figures as the default** — that last one is non-negotiable if
+the reference is to be reproduced, and is itself a raise if no candidate has it.
+
+### The ticket's own questions, answered
+
+- **Pin availability, solved 1:1**: the reference's own status dot (⌀20 px lime
+  with a white ring) is re-tenanted onto the pin head, drawn only when a bay is
+  free *for this driver*. Additive-only, so freshness needs no channel — the dot
+  decays out by construction. No new visual language.
+- **The crosshair rule** is the content-column datum, reproduced verbatim with
+  no behaviour; three tempting jobs for it were explicitly rejected.
+- **Quick actions** → `Saved` · `My plug` · `Alerts`. Trips and Messages have no
+  domain and die.
+- **`Payment & payouts` → `Offline & map data`**, which is where the 76 MB
+  Rwanda pack row lives.
+- **The hosting card** is a universal-link cross-app affordance with four
+  states, absent entirely without a membership — owners are admin-minted, so an
+  invitation would be a lie.
+- **The route preview** lives inside the existing card, in the slot the category
+  chip occupies, plus a lime line on the map. No route screen was invented.
+
+### Impossibilities raised, not resolved
+
+The standing rule was honoured: 50+ raises across the three documents. The two
+true impossibilities are the **`Google` wordmark** (recommendation: the
+legally-required `© OpenStreetMap contributors` in the same slot and type) and
+**Sign in with Apple**, which Guideline 4.8 compels and which cannot be
+restyled to the accent. A third was found that nobody had noticed: the location
+puck is Google's `#4285F4` — a second Google-provenance pixel.
+
+Also raised: the reference contains **no form control of any kind** — no text
+input, toggle, progress, error colour, pressed or disabled state, no empty
+state, no tab bar. Neither app can be built without them, and they are net-new
+`packages/ui` components the reference cannot supply. And the whole system is
+dark-only, for a product used outdoors in equatorial sunlight.
+
+### Closing the last three defects
+
+Round 2 killed all five round-1 fatals and left three that the reviewer itself
+called mechanical, requiring no design decision. All three are now fixed:
+
+1. **The forbidden-string list had four claimed homes**, none a superset of the
+   others. It now lives once, as the union, in
+   [docs/availability-display.md §2.2b](../../../docs/availability-display.md),
+   cited by the others and copied by none.
+2. **File 11 declared its own measurements authoritative** over a file 10 that
+   had not yet landed, and **file 10-v2 renumbered wholesale**, so every
+   citation into it resolved to the wrong section. Both files now carry an
+   authority note fixing file 10-v2 as the measurement authority (settling the
+   r16/r14 conflict at **r ≈ 14 px**) and a v1→v2 section map that resolves
+   every stale citation deterministically.
+
+### Routed
+
+**19/`packages/domain`**: the closed vocabulary including report-action labels;
+`rateShort`; `Station.description`; `Bay` label; `RateFlag`, `Invitation` and an
+audit entity; deletion semantics; `sourceOnline` **must not** be wired to device
+connectivity (it would void the offline queue); the two owner stats with no data
+source. **21/SPEC**: the design system and inventories; the founder rulings; the
+**knowing-deviation register** (Google wordmark, Sign in with Apple, the
+`#4285F4` puck, the basemap style, the 1.21:1 badge); and the net-new component
+list. **06**: the basemap style JSON. **ADRs**: a new ADR for the net-new
+`packages/ui` set and the dark-only-outdoors problem; ADR-0007 absorbs basemap
+style ownership, since the offline pack and the style are one artefact.
+
+One operational catch worth keeping: the operator's station list sorts
+stalest-first, and that key is null for ~87% of rows — **nulls must sort first**
+or the queue buries exactly the stations it exists to surface.

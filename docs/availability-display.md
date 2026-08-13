@@ -122,6 +122,22 @@ is named **once, uncounted**, on one side of the partition: `2 other bays`.
    recent report` — because the offline override yields `Unknown` from a
    30-second-old report, which would make the second string false.
 
+### 2.2b The forbidden strings — the one and only home
+
+Every surface cites this list. **No other document may hold a copy**, because
+three of them tried during ticket 17 and produced four lists that were not the
+same list.
+
+| Forbidden | Why | Say instead |
+| --- | --- | --- |
+| `unreported`, `not reported`, `no recent report`, `no report yet` | Asserts report history. The offline override yields `Unknown` from a 30-second-old report, so these are false. | `no confirmed status` |
+| `unknown rate`, `rate unavailable`, `no rate reported`, `no published rate` | Same, for rates. | `no confirmed rate` |
+| `real-time`, `live` (as a promise) | Ticket 28: availability is claimed as a bonus, never a promise. Banned in the UI, the store listing and onboarding alike. | say nothing; show freshness |
+| `0 of N free` | Grammar law 1 — a denominator may only appear when `u = 0`. | Regime 3 counts, no total |
+| `busy` applied to any bay that is `Unknown` or `OutOfService` | Law 3. | the state's own word |
+| any availability word on the accent/hero badge | An accent chip reading "no confirmed status" on ~87% of stations paints the product as an apology, which ADR-0002 forbids. The badge also measures 1.21:1 contrast and may carry no value a driver must read. | badge carries peak power, or is absent |
+| `in use` | A second word for `Occupied`. One word, one state. | `busy` |
+
 ### 2.3 Freshness returns structure, not a word
 
 ```
