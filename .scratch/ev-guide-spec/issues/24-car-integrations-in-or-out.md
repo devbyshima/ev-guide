@@ -37,3 +37,11 @@ regardless.
 This is a scoping act, so the outcome is either a live decision recorded in
 **Decisions so far** or a line in **Out of scope** — the founder's call, not a
 research finding.
+
+## Inputs routed from 05 (2026-08-13)
+
+The build cost is now known: custom Expo module + owned config plugin (no
+adoptable library implements the POI templates today). Two dated re-checks
+belong in this decision: whether `@iternio/react-native-auto-play` has grown
+POI templates, and whether Expo has shipped UIScene prebuild support
+(expo/expo#46663), both moving fast as of 2026-08-13.

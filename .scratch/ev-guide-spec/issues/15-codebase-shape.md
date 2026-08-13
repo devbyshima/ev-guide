@@ -23,3 +23,11 @@ Architecture position.
 
 Until this resolves, no Expo app is initialised — running `create-expo-app`
 would bake in an answer this ticket hasn't made.
+
+## Constraint routed from 05 (2026-08-13)
+
+Managed **CNG/prebuild + dev-client from day one** — never bare, never Expo Go.
+The car integrations, when they come, are a **custom Expo module** with an
+owned config plugin; nothing in v1 needs to change for that except keeping the
+station-read surface (`stationsNear`, station detail) behind a seam a native
+module can later call.
