@@ -30,7 +30,10 @@ only ([ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md)); the tag exists
 so the admin can mark mixed sites without inventing a concept mid-build.
 
 **Driver** — someone using EV Guide to find a charge. A car driver: moto riders
-are out of scope, see [ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md). Browsing is the driver's
+are out of scope, see [ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md).
+May read the whole product anonymously; needs an account to act — directions,
+saving, reporting, profile sync. See
+[ADR-0003](docs/adr/0003-driver-identity-and-gating.md). Browsing is the driver's
 primary act; whether a Driver needs an account is ticket 12.
 
 **Availability** — whether a Connector can be used right now. One of `Free`,
@@ -49,12 +52,29 @@ Station they are at.
 **Freshness** — how long ago a Report was made, carried as `lastConfirmedAt`
 alongside every Availability. An axis, never a state.
 
+**Rate** — what a Connector costs to use, in RWF per kWh. A property of the
+**Connector**, not the Station: a 7 kW AC bay and a 120 kW DC bay at one site do
+not cost the same. Carries its own Freshness and `Unknown` case, like
+Availability. EV Guide displays a Rate and never collects it.
+
+**Owner** — the party responsible for one or more Stations. A Station has
+exactly one Owner. Created by the Admin; creates their own Operators.
+
+**Operator** — someone who works a Station day to day. Assigned to one or more
+Stations by their Owner. Writes Availability, not Rate.
+
+**Membership** — the edge binding a person to a Station as Owner or Operator.
+Role lives on this edge, never on the person: the same human may be an Owner at
+one Station and an Operator at another.
+
 **Admin** — FullTime Studio. Creates Stations manually and creates the station
 managers above them. Sits over both mobile apps and uses the web dashboard.
 
 ## Deliberately not yet defined
 
-*Operator* and *Owner* (ticket 11), *Session*.
+*Session* — and it may never be needed: EV Guide never observes a charging
+session, which is why the operator statistics contain no kWh, revenue or session
+count.
 
 *Confidence* will not be defined: ADR-0002 expresses it as **source plus
 Freshness** rather than as a score, so there is no such term.
