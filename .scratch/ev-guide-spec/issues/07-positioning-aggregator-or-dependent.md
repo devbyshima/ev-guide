@@ -1,7 +1,7 @@
 # 07 — Neutral aggregator, or dependent on operator cooperation?
 
 Type: grilling
-Status: resolved (2026-08-13)
+Status: closed (2026-08-13)
 Blocked by: 03
 
 ## Question

@@ -1,7 +1,7 @@
 # 04 — What do CarPlay and Android Auto actually require of an EV-charging app?
 
 Type: research
-Status: resolved (2026-08-13)
+Status: closed (2026-08-13)
 Blocked by: —
 
 ## Question

@@ -1,7 +1,7 @@
 # 02 — Which connector standards actually matter in Rwanda?
 
 Type: research
-Status: resolved (2026-08-13)
+Status: closed (2026-08-13)
 Blocked by: —
 
 ## Question

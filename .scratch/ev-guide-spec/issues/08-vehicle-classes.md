@@ -1,7 +1,7 @@
 # 08 — Cars only, or e-motos and battery swap too?
 
 Type: grilling
-Status: resolved (2026-08-13)
+Status: closed (2026-08-13)
 Blocked by: 02, 03
 
 ## Question

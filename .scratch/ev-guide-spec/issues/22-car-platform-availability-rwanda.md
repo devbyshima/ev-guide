@@ -1,7 +1,7 @@
 # 22 — Are CarPlay and Android Auto usable in Rwanda at all?
 
 Type: research
-Status: resolved (2026-08-13)
+Status: closed (2026-08-13)
 Blocked by: 04
 
 ## Question

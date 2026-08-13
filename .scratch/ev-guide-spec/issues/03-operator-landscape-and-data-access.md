@@ -1,7 +1,7 @@
 # 03 — Who operates Rwanda's stations, and can any of them be read programmatically?
 
 Type: research
-Status: resolved (2026-08-13)
+Status: closed (2026-08-13)
 Blocked by: —
 
 ## Question
