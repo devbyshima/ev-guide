@@ -1,7 +1,7 @@
 # 18 — What does EV Guide look like on a car screen?
 
 Type: prototype
-Status: open
+Status: claimed (2026-08-13 session)
 Blocked by: 04, 09, 13
 
 ## Question

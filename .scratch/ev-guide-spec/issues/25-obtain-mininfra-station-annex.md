@@ -42,3 +42,31 @@ a request for a government dataset produced under a public EU contract is
 reference material the studio would own outright thereafter, and admin-entered
 stations were always the design. Under the opposite reading this ticket closes
 and all 224 sites are entered by hand from scratch.
+
+## Progress (2026-08-13) — drafted, NOT sent
+
+Drafts and contacts: [correspondence/2026-08-13-mininfra-annex-request-DRAFT.md](../correspondence/2026-08-13-mininfra-annex-request-DRAFT.md).
+**Nothing has been sent.** Two things are owed by the founder before anything
+goes out — the 26 scope confirmation below, and a contact email/phone for the
+letters.
+
+**Authorship established** (new, beyond what the ticket knew): the master plan
+was delivered by **NTCS GreenBee** (The Hague, `office@ntcs.nl`) "in
+collaboration with the Ministry of Infrastructure Rwanda and **Ginger
+Sofreco**", **funded by the European Commission**. That gives three
+independent routes to the same annex rather than one:
+
+1. MININFRA Energy Directorate — `info@mininfra.gov.rw`, +250 788 387 125;
+   DG Energy **Jean Bosco Mugiraneza**; address format `first.last@…` for a
+   named follow-up.
+2. NTCS GreenBee — the authors, who likely still hold the working files.
+3. EU Delegation to Rwanda — `DELEGATION-RWANDA@eeas.europa.eu` — held as
+   escalation only, since using the funder before the client is discourteous.
+
+Send 1 and 2 in parallel; hold 3 for two weeks of silence. The letters ask for
+**all** annexes, not just No. 2, and deliberately offer nothing in return — an
+exchange would create the external obligation 26 ruled out.
+
+**Still blocked on the 26 scope question below.** The drafts exist so the
+decision is concrete rather than abstract; they cost nothing if the answer is
+"no, enter everything by hand".
