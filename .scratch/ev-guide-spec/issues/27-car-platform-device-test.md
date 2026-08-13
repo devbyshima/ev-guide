@@ -30,3 +30,11 @@ Any car sold by Toyota Rwanda with the 8" touchscreen is a valid test rig.
 
 Record what was tested, on what hardware and accounts, and the verbatim
 result. Feeds directly into 24.
+
+## Verification items routed from 13 (2026-08-13)
+
+Two undocumented behaviours ADR-0004 depends on for the *enhanced* car
+experience (the phone hand-off is the spec'd guarantee either way):
+
+1. Android Auto: is Google Maps a guaranteed `ACTION_NAVIGATE` receiver?
+2. CarPlay: does `comgooglemaps://` launch Google Maps onto the car display?

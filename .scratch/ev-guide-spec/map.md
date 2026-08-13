@@ -97,6 +97,7 @@ carries the escalation.
 - [11 — Owner, operator, station](issues/11-role-hierarchy-and-stats.md) — Owner→Stations one-to-many; **role is a membership edge, not a user attribute**; **owners create their own operators**. Conflicts: **most recent wins regardless of source**, source always shown. Stats are **four metrics** — views, direction taps, reports received, own uptime — because EV Guide never sees a charging session, so there is no kWh, revenue or session count to report.
 - [12 — Do drivers need accounts?](issues/12-driver-identity.md) — **Read anonymously, act with an account.** Directions, saving, reporting and profile sync are gated; the whole read surface is not. Google + Apple + email magic link, **no SMS**. [ADR-0003](../../docs/adr/0003-driver-identity-and-gating.md). Knock-on: the car surfaces now need a signed-in user for their primary action — a 5.1.1(v) review risk routed to 23.
 - [08 — Cars only, or e-motos and battery swap too?](issues/08-vehicle-classes.md) — **Cars only**, and the escalation is closed: the destination is unchanged. The 13:1 moto ratio is a March 2024 figure whose car side has since quintupled; the only live availability source is car-only; and closed swap subscriptions give a directory no choice to aggregate. `Station` carries a nullable vehicle-class **tag** that nothing branches on. [ADR-0001](../../docs/adr/0001-cars-only-swap-out-of-scope.md).
+- [13 — In-app turn-by-turn, or route preview then hand off?](issues/13-directions.md) — **Preview in-app, hand off the drive to Google Maps** (the only viable target: Apple Maps has no directions in Rwanda). Preview is studio-owned: **self-hosted Valhalla** on the 06 OSM extract — route line, driving distance, ETA; founder direction: mature open-source engines over building or omitting. Deep-link by `lat,lng`, no chooser; inline auth sheet auto-resumes the hand-off; phone hand-off is the car-screen guarantee, display-launch verification routed to 27. [ADR-0004](../../docs/adr/0004-directions-preview-and-handoff.md). Journey planning graduated to 29.
 - [04 — What do CarPlay and Android Auto actually require?](issues/04-carplay-android-auto-requirements.md) — `carplay-charging` confirmed; the harder entitlement is `carplay-maps` and directions hand-off needs none of it; Android's `CHARGING` category is **deprecated**, use `POI`. Fourteen data-model constraints enumerated. **Neither platform ships in Rwanda**, and Apple Maps cannot navigate here at all.
 
 ## Not yet specified
@@ -105,8 +106,6 @@ In scope, but not yet sharp enough to ticket. Graduates as the frontier advances
 
 - **Notifications** — "tell me when a bay frees up", "this station went
   offline". Not in the brief; plausible once the availability model exists.
-- **Journey planning with charging stops** — EVP's app does this. Whether EV
-  Guide competes there depends on the directions decision (13).
 - **Station media and community signal** — photos, reviews, ratings, "is it
   actually working" reports. Adjacent to availability (09) and may fold into it.
 - **Admin moderation** — if availability is crowdsourced, someone arbitrates

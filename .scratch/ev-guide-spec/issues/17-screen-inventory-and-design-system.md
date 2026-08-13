@@ -50,3 +50,11 @@ upstream.
 
 Per the standing rule, raise this as an impossibility rather than quietly
 substituting an alternative.
+
+## Constraint routed from 13 (2026-08-13)
+
+The route preview (route line, driving distance, ETA — ADR-0004) must live
+**within the existing reference screens** (map + bottom sheet, or detail). The
+reference contains no route/navigation screen and none is to be invented
+without this ticket deciding it. Also design the ADR-0003 inline auth sheet
+that gates the directions tap and auto-resumes the hand-off.

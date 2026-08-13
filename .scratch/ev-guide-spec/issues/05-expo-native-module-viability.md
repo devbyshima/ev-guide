@@ -1,7 +1,7 @@
 # 05 — Can Expo carry CarPlay and Android Auto, and at what cost?
 
 Type: research
-Status: open
+Status: claimed (research subagent, 2026-08-13)
 Blocked by: 04
 
 ## Question

@@ -57,6 +57,12 @@ alongside every Availability. An axis, never a state.
 not cost the same. Carries its own Freshness and `Unknown` case, like
 Availability. EV Guide displays a Rate and never collects it.
 
+**Route** — the driving path from the Driver to a Station, computed by the
+studio's own routing engine (Valhalla, on the same OSM extract as the tiles)
+and shown as a preview: line, driving distance, ETA. EV Guide never guides the
+drive itself — one tap hands off to Google Maps, deep-linked by coordinates.
+See [ADR-0004](docs/adr/0004-directions-preview-and-handoff.md).
+
 **Owner** — the party responsible for one or more Stations. A Station has
 exactly one Owner. Created by the Admin; creates their own Operators.
 

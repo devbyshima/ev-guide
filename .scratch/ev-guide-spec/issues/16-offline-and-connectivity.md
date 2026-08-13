@@ -32,3 +32,11 @@ becomes the strongest option and 06 must be revisited.
 
 Measured, so the cost is known: **Kigali metro as an offline vector basemap is
 5.6 MB; all of Rwanda is 76 MB** — within Cloudflare R2's free tier.
+
+## Constraint routed from 13 (2026-08-13)
+
+The route preview (ADR-0004) is a **server call** to Valhalla. Decide its
+offline behaviour: degrade to straight-line distance from cached station
+coordinates, or hide the preview and leave the hand-off button (Google Maps
+handles its own offline story). The hand-off itself must never be blocked by
+the preview failing.

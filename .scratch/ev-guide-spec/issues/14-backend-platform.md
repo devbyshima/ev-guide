@@ -29,3 +29,11 @@ That is an argument for **BWEZE**, the studio's own platform, over Supabase or
 another third-party BaaS. Weigh it against the risk noted in this ticket's body
 — BWEZE is itself a product in flight, and dogfooding a moving platform under a
 free product with no revenue to fund operations is a real cost.
+
+## Constraint routed from 13 (2026-08-13)
+
+The platform now hosts **two self-owned geo services**: the OSM vector tile
+server (06) and a **Valhalla routing instance** (ADR-0004), both consuming one
+OSM extract job. Whatever this ticket picks must run long-lived containers with
+a periodic data-refresh pipeline — this strengthens the self-host lean and is a
+concrete test case for the BWEZE question.
