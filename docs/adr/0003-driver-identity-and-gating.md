@@ -1,7 +1,8 @@
 # ADR-0003 — Anonymous reading, authenticated acting; no SMS
 
 Date: 2026-08-13
-Status: Accepted
+Status: Accepted — **amended 2026-08-13 by ticket 23: directions are no
+longer gated** (see Amendment below)
 
 ## Context
 
@@ -66,3 +67,20 @@ the total addressable user base is a few thousand people.
 
 **Phone/OTP.** Rejected on recurring cost against no revenue, with no offsetting
 benefit for this demographic.
+
+## Amendment (2026-08-13, ticket 23)
+
+**Directions come out of the account gate, everywhere.** The gated acts are
+now saving, reporting, and profile sync — all inherently account-based,
+exactly what App Store Guideline 5.1.1(v) permits.
+
+This executes the relaxation this ADR pre-planned ("the gate can move to
+saving and reporting without touching the identity model"), triggered by
+review risk rather than usage data: on the car surfaces, directions is the
+primary action, keyboards are unavailable while driving, and a reviewer
+already probing "more than a list of chargers" would meet a sign-in wall
+first. A hand-off is a deep link to Google Maps — barely an act, and gating
+it bought a rejection magnet plus a hostile moment at the driver's
+highest-urgency point. The identity model, providers, and no-SMS rule are
+unchanged. The inline auth sheet from ADR-0004 now fires on save and report,
+not on the directions tap.

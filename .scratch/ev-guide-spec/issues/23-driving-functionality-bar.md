@@ -1,7 +1,7 @@
 # 23 — What is EV Guide's "meaningful functionality relevant to driving"?
 
 Type: grilling
-Status: open
+Status: closed (2026-08-13)
 Blocked by: 04
 
 ## Question
@@ -42,3 +42,36 @@ account-based, and a reviewer already looking for "more than a list of chargers"
 will meet a sign-in wall first. Establish whether the car surfaces should permit
 anonymous directions as an exception, and whether that undermines the gate on
 the phone.
+
+## Resolution (2026-08-13)
+
+**The bar is cleared by three functions, one gate removal, and a fallback
+ladder — nothing is panic-built.**
+
+1. **The car function set:** nearby stations ranked with live availability +
+   freshness, one-tap directions hand-off, and **bay-watch notifications**
+   ("tell me when a bay frees up"). Notifications graduate from the fog to
+   ticket 30 — not review theater: a watch on one station is the most useful
+   thing a thin availability layer can do for a driver, it is explicitly
+   sanctioned for EV charging apps on CarPlay, and it resets Android's
+   template quota. Scoped to the **car effort's package**, not the v1 phone
+   launch. The dog is wagging the tail: the feature is wanted on its own
+   merits, the car surface just makes it mandatory.
+2. **Directions are ungated everywhere** — ADR-0003 amended (its own
+   pre-planned relaxation, executed for review risk rather than usage data).
+   Gated acts are now saving, reporting, profile sync: inherently
+   account-based, exactly what 5.1.1(v) permits. The ADR-0004 inline auth
+   sheet moves to save/report taps.
+3. **One function set for both platforms.** The difference is submission
+   framing only (20's job): Apple review notes walk availability + watch;
+   Google's declaration answers PF-1 with the same three functions.
+4. **Fallback ladder if rejected:** (1) resubmit with bay-watch live and a
+   review-notes walkthrough of the availability layer; (2) ship phone-only
+   and retry once the layer has real data — the phone product is complete
+   without the car. **Session control and payment stay permanently out no
+   matter what a reviewer hints.**
+
+**Knock-ons routed:** 30 created (bay-watch scope); 18 — the car template
+must show the watch action and anonymous directions; 20 — carries the
+submission framing and the fallback ladder; 17 — the auth sheet's trigger
+moves to save/report.

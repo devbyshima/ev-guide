@@ -34,3 +34,11 @@ The car surface renders from the fixed projections in docs/domain-model.md
 a locked-phone-readable protection class, containing only non-sensitive
 directory + availability data. Marker = Owner icon + ≤3-char markerLabel.
 Rate never appears on a row; availability never in a title.
+
+## Constraint routed from 23 (2026-08-13)
+
+The template design must show the three bar-clearing functions: ranked
+nearby stations with availability + freshness, **anonymous** one-tap
+directions (ADR-0003 as amended — no sign-in wall anywhere on the car
+screen), and the bay-watch arm/disarm affordance (ticket 30). These are what
+the 20 submissions will demonstrate.

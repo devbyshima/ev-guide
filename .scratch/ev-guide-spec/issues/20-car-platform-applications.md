@@ -23,3 +23,12 @@ account, what each party asked for, and any response or conditions.
 Anything either platform demands that the spec doesn't yet cover comes back as
 a new ticket — a rejection or a condition is information about the product, not
 just paperwork.
+
+## Inputs routed from 23 (2026-08-13)
+
+The submissions' framing is decided: one function set, per-platform words.
+Apple review notes walk live availability + bay-watch as "more than a list";
+Google's declaration answers PF-1 with the same three functions. Fallback
+ladder if rejected on this ground: resubmit with bay-watch live and a
+walkthrough; then ship phone-only and retry when the layer has real data.
+Session control/payment are never built to satisfy review.

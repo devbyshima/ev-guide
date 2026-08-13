@@ -16,9 +16,10 @@ EV Guide **previews** the route and **hands off** the drive.
 - **No in-app turn-by-turn in v1.** No voice guidance, no rerouting, no
   driving UI, and therefore no CarPlay *navigation* entitlement — only the
   charging entitlement (ticket 04).
-- **Auth at the tap.** Directions are account-gated (ADR-0003). The gate is an
-  inline sheet over the current screen that auto-resumes the hand-off on
-  completion.
+- **Auth at the tap.** ~~Directions are account-gated (ADR-0003).~~
+  *Superseded 2026-08-13 by ADR-0003's amendment (ticket 23): directions are
+  ungated everywhere.* The inline-sheet-with-auto-resume pattern survives —
+  it now fires on the gated acts (save, report) instead.
 - **Car screens.** The phone hand-off is the specified guarantee. Launching
   Google Maps onto the CarPlay/Android Auto display is undocumented and
   unverified; it is an enhancement pending ticket 27's device test, and

@@ -82,3 +82,8 @@ not the operator) and the Owner's `markerLabel` + icon; availability strings
 derived from structured fields, never prose; rate is per-Connector with
 freshness; the carousel (Photos), owner row (Owner public face), and heart
 (SavedStation) are all model-backed. See docs/domain-model.md §Projections.
+
+## Constraint routed from 23 (2026-08-13)
+
+Directions are ungated (ADR-0003 amendment) — the inline auth sheet's
+triggers are now the save (heart) and report actions, not the directions CTA.
