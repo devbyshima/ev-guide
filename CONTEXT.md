@@ -24,7 +24,13 @@ matter in Rwanda is ticket 02.
 the Rate and never collects it; there is no payment anywhere in the product.
 Its units, currency, and who is entitled to write it are ticket 10.
 
-**Driver** — someone using EV Guide to find a charge. Browsing is the driver's
+**Vehicle Class** — the kind of vehicle a Station serves. A nullable **tag**
+on Station, not a dimension: nothing in v1 branches on it. EV Guide serves cars
+only ([ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md)); the tag exists
+so the admin can mark mixed sites without inventing a concept mid-build.
+
+**Driver** — someone using EV Guide to find a charge. A car driver: moto riders
+are out of scope, see [ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md). Browsing is the driver's
 primary act; whether a Driver needs an account is ticket 12.
 
 **Admin** — FullTime Studio. Creates Stations manually and creates the station
@@ -33,7 +39,12 @@ managers above them. Sits over both mobile apps and uses the web dashboard.
 ## Deliberately not yet defined
 
 *Availability / Occupancy* (ticket 09), *Operator* and *Owner* (ticket 11),
-*Vehicle Class* (ticket 08), *Session*, *Report*, *Confidence*, *Staleness*.
+*Session*, *Report*, *Confidence*, *Staleness*.
+
+**Never to be defined here:** *Battery Swap*, *Battery Stock*. Out of scope by
+[ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md) — a swap station holds
+battery stock rather than occupied bays, and carrying both concepts would
+corrupt the bay/connector model. Not a gap to fill.
 
 These are the terms most likely to be got wrong by assumption, so they are
 left blank until their tickets resolve.

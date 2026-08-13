@@ -73,3 +73,26 @@ permanently operator-asserted — the manual-entry model is confirmed, not merel
 convenient.
 
 **Surfaced, now ticket 25:** the seed dataset exists and is unpublished.
+
+## Amendment from live data (2026-08-13, while working 08)
+
+02 flagged GB/T at **medium confidence** — "attested as installed by the World
+Bank but I could not name one Rwandan station with a GB/T gun". Kabisa's feed
+settles it, and more strongly than either study predicted.
+
+Of 77 Rwandan charge points: **55 are GB/T alone**, plus `GBT,CSS2` ×6,
+`CSS2,GBT` ×1 — **62 of 77 carry a GB/T gun**. Against that: `Type 2` ×6,
+`CSS2` alone ×2, `CCS,chademo` ×1, and three domestic wall sockets
+(`Schuko F` ×2, `Schuko G` ×1).
+
+**GB/T is the dominant standard in Rwanda by a wide margin** — not the
+co-equal partner MININFRA's Type 2 + GB/T recommendation implies, nor the
+junior partner in the World Bank's CCS2 + GB/T. The recommended tier-1 enum
+still holds, but the *ordering* should reflect that GB/T is the common case and
+Type 2 the exception.
+
+Two smaller confirmations: **CHAdeMO appears exactly once**, corroborating that
+the LHD import rule closed that channel; and the feed's own spellings are
+inconsistent (`CSS2` is a typo for CCS2, alongside `GBT`, `chademo`, `Schuko F
+(German)`), which is a concrete instance of 04's constraint 8 — never persist a
+vendor enum, map at every boundary.

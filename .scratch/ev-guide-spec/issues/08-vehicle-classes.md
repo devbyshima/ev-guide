@@ -1,7 +1,7 @@
 # 08 — Cars only, or e-motos and battery swap too?
 
 Type: grilling
-Status: open
+Status: resolved (2026-08-13)
 Blocked by: 02, 03
 
 ## Question
@@ -48,3 +48,45 @@ recommendation builds for the smaller side of a 13:1 split, and the reason for
 it — that CarPlay and Android Auto commit the product to car drivers — is itself
 now in doubt (22, 24). **Escalate: this may be a destination-level question
 about which surface EV Guide builds first, not a scoping detail.**
+
+## Answer
+
+**EV Guide serves car drivers. Moto riders and battery swap are out of scope.
+Station carries a nullable vehicle-class tag from day one.**
+
+Recorded as [ADR-0001](../../../docs/adr/0001-cars-only-swap-out-of-scope.md).
+
+**Cars only (Q1).** Three independent reasons converge, and they outweigh the
+13:1 fleet ratio that prompted the escalation:
+
+- **The ratio is stale and closing.** It is a March 2024 figure. Car imports ran
+  512 across 2020–2024 and then 1,555 in the nine months to March 2026 — the car
+  side roughly quintupled, with no comparable moto growth figure available. The
+  gap is materially narrower than 13:1 today.
+- **The only live availability data in Rwanda is car-only.** Kabisa's feed
+  carries 77 charge points and zero moto or swap records. EV Guide's core
+  promise is undeliverable for riders — a rider-facing app would be a static
+  list, which is exactly what the product is trying not to be.
+- **Swap networks are closed loops.** An Ampersand rider swaps at Ampersand
+  stations on an Ampersand subscription. There is no cross-network choice to
+  inform, and informing choice among alternatives is the whole value of a
+  directory. Car charging shows 18 brands in a single feed; moto energy has
+  captive subscribers.
+
+**Swap is out of scope, not deferred (Q2).** It does not fit the model: a swap
+station holds **battery stock**, not occupied bays, so `Bay`, `Connector` and
+per-connector availability are all meaningless for it. Carrying both concepts in
+one schema would corrupt the one that works. Swap is a different domain that
+happens to share a customer — if it is ever built it is a fresh effort with its
+own premise, not this map widened.
+
+**Vehicle class is a tag, not a dimension (Q3).** One nullable enum on Station.
+It costs a column now against a migration later, and it lets the admin mark the
+handful of mixed sites without inventing a concept mid-build. **Nothing branches
+on it in v1.** Note that connector type already discriminates moto-adjacent
+hardware well on its own, with GB/T at 62 of 77 points — the tag is insurance,
+not a filter.
+
+**Escalation closed.** This ticket carried a flag that it might be a
+destination-level question about which surface ships first. It is not: cars only
+confirms the existing framing, and the destination is unchanged.

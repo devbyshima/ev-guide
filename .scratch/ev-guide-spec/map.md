@@ -90,6 +90,7 @@ carries the escalation.
 - [03 — Who operates Rwanda's stations, and can any be read?](issues/03-operator-landscape-and-data-access.md) — **READ, narrowly.** Kabisa serves an unauthenticated public GeoJSON feed carrying **77 Rwandan charge points across 18 brands including EVP's**, with live per-gun availability for 10 and `pricePerKwh` for 12 (600 RWF/kWh). Verified independently. **67 of 77 report `{0,0}` = unknown, not full**, and availability disagrees with `onlineStatus`. RURA keeps **no licence register and requires no tariff filing** — a confirmed absence. Whether to build on that feed is ticket 26.
 - [06 — Which map provider?](issues/06-map-provider.md) — **MapLibre + self-hosted OSM vector tiles**, near-black custom style, deep-link out. Google's mobile loads are free and unlimited but its ToS **forbids tile caching**, and offline is the discriminator; all of Rwanda is 76 MB. Conditional on 16. Two founder calls left: Google's "directory service" clause, and the **"Google" wordmark the reference shows but no other provider can reproduce**.
 - [22 — Are the car platforms usable in Rwanda?](issues/22-car-platform-availability-rwanda.md) — **The vendors differ.** Apple treats country support as a prerequisite; Google's list is explicitly *marketing rights* and neither Google source says the software refuses to run. **Hardware is not the obstacle** — Toyota Rwanda ships CarPlay below the power-windows line. Undecidable from documentation; needs ticket 27's device test.
+- [08 — Cars only, or e-motos and battery swap too?](issues/08-vehicle-classes.md) — **Cars only**, and the escalation is closed: the destination is unchanged. The 13:1 moto ratio is a March 2024 figure whose car side has since quintupled; the only live availability source is car-only; and closed swap subscriptions give a directory no choice to aggregate. `Station` carries a nullable vehicle-class **tag** that nothing branches on. [ADR-0001](../../docs/adr/0001-cars-only-swap-out-of-scope.md).
 - [04 — What do CarPlay and Android Auto actually require?](issues/04-carplay-android-auto-requirements.md) — `carplay-charging` confirmed; the harder entitlement is `carplay-maps` and directions hand-off needs none of it; Android's `CHARGING` category is **deprecated**, use `POI`. Fourteen data-model constraints enumerated. **Neither platform ships in Rwanda**, and Apple Maps cannot navigate here at all.
 
 ## Not yet specified
@@ -125,3 +126,12 @@ Ruled beyond the destination. Does not graduate.
   displays rates and never collects them. The data model should leave room for
   a future payment effort without building any of it, and the reference's
   `Payment & payouts` settings row has no EV Guide equivalent (see 17).
+
+- **Moto riders and battery swap.** Ruled out by
+  [ADR-0001](../../docs/adr/0001-cars-only-swap-out-of-scope.md) on
+  deliverability, not market size — the only live availability data in Rwanda is
+  car-only, and swap holds battery stock rather than occupied bays, so the
+  bay/connector model cannot represent it without corruption. **Out of scope,
+  not deferred**: serving riders later is a fresh effort with its own premise,
+  not this map widened. The nullable vehicle-class tag on Station is the seam
+  that keeps that cheap; it is not a commitment to cross it.
