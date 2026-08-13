@@ -42,3 +42,10 @@ nearby stations with availability + freshness, **anonymous** one-tap
 directions (ADR-0003 as amended — no sign-in wall anywhere on the car
 screen), and the bay-watch arm/disarm affordance (ticket 30). These are what
 the 20 submissions will demonstrate.
+
+## Constraint routed from 30 (2026-08-13)
+
+Bay-watch specifics for the template design: arm/disarm lives on the station
+detail template, label "Notify me when a bay frees up", with an armed-state
+row; visible to signed-in users only; the notification deep-links back to
+the station detail. One-shot, 2h expiry — no management UI beyond disarm.

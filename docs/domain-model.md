@@ -56,6 +56,12 @@ Owner 1 ──── N Station 1 ──── N Bay 1 ──── N Connector 1
 - **Membership** — `(userId, stationId, role ∈ {owner, operator})`, unique.
   Role lives on the edge, never on the person (ticket 11).
 - **SavedStation** — `(userId, stationId)`, unique. The heart icon.
+- **Watch** — `(userId, stationId, connectorTypes[], armedAt)`, one-shot,
+  auto-expiring 2 h after `armedAt`, max 3 armed per user (ticket 30). Fires
+  once on a **report-driven** transition of any matching Connector into
+  effective `Free` — decay never fires it. Deleted on fire or expiry. Ships
+  with the car effort's package; the push token beside it is user-scoped and
+  **never enters the car cache** (car constraint 9).
 
 **Deliberately absent:** any stored availability column (below); any route,
 maneuver, or polyline entity (directions need only a coordinate + display

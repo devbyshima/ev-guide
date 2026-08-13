@@ -79,6 +79,12 @@ shown on car screens.
 **Saved Station** — a Driver's bookmark of a Station (the heart icon).
 Requires an account ([ADR-0003](docs/adr/0003-driver-identity-and-gating.md)).
 
+**Watch** — a Driver's one-shot request to be told when a Bay frees up at a
+Station, optionally narrowed to their own Connector types. Fires once on a
+report-driven transition into `Free` — never on decay, because ceasing to know
+is not an event — then completes; unfired Watches lapse after two hours. An
+errand, not a subscription. Requires an account.
+
 **Owner** — the party responsible for one or more Stations, and the **brand**
 drivers see (public display name, short name, ≤3-character marker label, and a
 bundled icon — Owners are a bounded, enumerable set, never free text). A
