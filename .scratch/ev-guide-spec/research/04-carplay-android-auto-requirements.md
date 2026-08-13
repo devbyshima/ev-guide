@@ -624,10 +624,13 @@ one directions abstraction, not two.
 ## 2.1 Read this first: Android Auto is not available in Rwanda
 
 Google publishes the country list at
-<https://support.google.com/androidauto/answer/6348019>. It names ~47
+<https://support.google.com/androidauto/answer/6348019>. It names **46**
 countries. **Rwanda is not among them. South Africa is the only African country
 on the list.** Google's own caveat on that page: *"Most features won't work if
 you use Android Auto outside these countries."*
+
+(§3.3 revisits what "not listed" operationally means — the short version is that
+it does **not** restrict distribution, and the list has not grown in four years.)
 
 This is not a footnote. It means the Android Auto integration cannot be
 exercised by EV Guide's users, in EV Guide's only market. See §3 below for how
@@ -1245,6 +1248,353 @@ is the strongest primary evidence available.
   will be asked to approve a driving feature for a country where it does not
   ship CarPlay. That is a founder decision, not a research finding.
 
+## 3.3 Region gating: blocked, or merely unsupported?
+
+§3.2 established that Rwanda is **not listed** by either vendor. "Not officially
+supported" and "does not function" are different findings, and the scoping
+decision turns on which one this is. This section separates them.
+
+**Short answer: the distribution question resolves cleanly and favourably — car
+support does not restrict where the app ships. The device-gating question does
+not resolve from public documentation at all, but it can be settled by a
+~30-minute desk test using the head-unit emulators (§3.3.3).**
+
+### 3.3.1 CarPlay: the country list is the *Siri* country list
+
+Apple's setup page states two prerequisites side by side
+(<https://support.apple.com/en-us/108415>):
+
+> *"Make sure that your **country or region supports CarPlay** and that your car
+> supports CarPlay."*
+>
+> *"Start your car, then **make sure that Siri is on**."*
+
+**A verified structural finding.** On Apple's iOS feature availability page
+(<https://www.apple.com/ios/feature-availability/>), the country list under
+**"Apple CarPlay"** and the country list under **"Siri"** are **exactly
+identical** — 37 entries each, with **zero** countries in either set that are
+not in the other. (Verified by extracting both lists from the page and
+differencing them, not by reading them side by side.)
+
+That is very unlikely to be coincidence. The most economical reading is that
+**CarPlay's regional availability is inherited from Siri's**, which fits Apple
+requiring Siri to be on. It also explains Rwanda's absence without positing any
+CarPlay-specific gate: **Rwanda has no Siri**, so it has no CarPlay listing.
+
+This is inference, clearly labelled. Apple nowhere states "CarPlay availability
+is derived from Siri availability."
+
+**No Apple-authored error string was found**, and this was looked for
+specifically, since a documented "CarPlay isn't available in your country or
+region" message would have settled the question outright. Apple's own
+troubleshooting page, *If you need help with CarPlay*
+(<https://support.apple.com/en-us/105109>), names no such message. The phrasing
+appears **only in third-party troubleshooting blogs**, which are also the only
+sources claiming that changing Settings → General → Language & Region fixes it.
+Treat those as unverified.
+
+### 3.3.2 Android Auto: Google's own wording is soft, and the historical gate is gone
+
+Google's language is degradation, not prohibition
+(<https://support.google.com/androidauto/answer/6348019>):
+
+> *"**Most features won't work** if you use Android Auto outside these
+> countries."*
+
+Not "is unavailable", not "is blocked". And the historical hard gate has been
+removed from underneath the question: Android Auto **is no longer a Play Store
+app**
+(<https://support.google.com/androidauto/answer/9468382>):
+
+> *"Android Auto is built into the phone as a technology that enables your phone
+> to connect to your car display. This means you **do not have to install a
+> separate app from the Play Store** to use Android Auto with your car
+> display."*
+
+That matters because the classic symptom reported in unsupported countries —
+**"This item isn't available in your country"** — is a *Play Store listing*
+error, i.e. the old distribution gate. With Android Auto shipped as a system
+component since Android 10, **there is no longer a Play listing for a country
+restriction to attach to.** *(The error string itself is attested only in
+secondary sources — an XDA thread,
+<https://xdaforums.com/t/use-android-auto-without-this-item-isnt-available-in-your-country.3564362/>,
+from the era when Android Auto was still a Play app.)*
+
+Against that: secondary reporting claims Google acknowledged an error code
+firing in unsupported regions
+(<https://www.autoevolution.com/news/mysterious-bug-kills-android-auto-in-unsupported-countries-158592.html>
+— **could not be read; the site returns HTTP 403**, so this rests on a search
+snippet alone and should not be relied on). The two Google Community threads
+directly on this question
+(<https://support.google.com/androidauto/thread/27902861>,
+<https://support.google.com/androidauto/thread/33440907>) are JavaScript-rendered
+and could not be read by any available tool.
+
+**And Google's second publication of the same list frames it as a *marketing*
+constraint, not a technical one.** Google's Partner Marketing Hub carries the
+identical 46-country list under the heading of what partners may promote, and
+opens with (verified verbatim):
+
+> *"You can only market Android Auto in countries where it is available."*
+> — <https://partnermarketinghub.withgoogle.com/brands/android-auto/overview/country-availability/>
+
+That page is a **branding/marketing-rights document for partners**, not a
+statement of technical availability to users. Read together with the soft
+"most features won't work" phrasing on the consumer help page, the two Google
+sources point the same way: **the list governs where Android Auto may be
+advertised and supported, and predicts feature degradation — neither says the
+software refuses to run.**
+
+**Net: Google documents feature degradation and a marketing restriction, not a
+block. Whether a hard error still fires on a current Android build in an
+unlisted country is unresolved.** Note the asymmetry with Apple, whose support
+page makes country support a *prerequisite* (§3.3.1) — the two vendors' wordings
+genuinely point in different directions, which is why §3.3.3's test matters.
+
+### 3.3.3 Which gate does it follow? Undocumented on both platforms
+
+Neither vendor publishes the mechanism. What can be said:
+
+- **Not the head unit.** Apple treats "does your car support CarPlay" and "does
+  your country support CarPlay" as two separate prerequisites in the same list
+  (108415). Car support is a hardware property; country support is not.
+- **Not the SIM or carrier** — no source, primary or secondary, points to
+  carrier-based gating for either platform.
+- **Probably device region plus account country, for Apple.** Apple documents
+  exactly that mechanism for Siri — but **on Apple TV, not iPhone**
+  (<https://support.apple.com/en-us/105019>):
+
+  > *"Select Settings, select General, select Language and Region, then make
+  > sure that you selected a supported language and country or region [and that
+  > the] **billing information for your Apple Account is based in the same
+  > country or region**. For example, even if you set your system language to a
+  > supported Siri language, Siri won't be available if your billing information
+  > is based in a different country or region."*
+
+  **This is an Apple TV page and must not be presented as an iPhone rule.** It
+  is worth citing only because it shows the shape of gate Apple uses for Siri —
+  device Language & Region *and* Apple Account billing country — and because
+  §3.3.1 found CarPlay's list to be Siri's list.
+
+- **For Android Auto, nothing at all is documented.**
+
+**Consequence for the founder's question about edge cases.** If the Apple-TV
+pattern does hold on iPhone, then the practical outcome is:
+
+| User | Likely CarPlay outcome |
+|---|---|
+| Rwandan Apple ID, region set to Rwanda | **No** — no Siri, therefore no CarPlay |
+| Rwandan resident with a US/UK Apple ID and matching region | **Probably yes** |
+| Imported car with a CarPlay head unit | Irrelevant to the gate — the hardware is not what is checked |
+
+That table is **inference stacked on an Apple TV citation**. It is a hypothesis
+to test, not a finding.
+
+**And the test does not need a car.** Both platforms ship a desk-based head unit
+emulator that this research already documented for other reasons:
+
+- **CarPlay Simulator** — a Mac app in *Additional Tools for Xcode*, also
+  reachable via Device Hub. *"Connect iPhone using a USB cable. CarPlay starts on
+  iPhone just as if you had it connected to a car."* (Developer Guide p.8, §1.3.)
+- **Desktop Head Unit (DHU)** — Android Studio → SDK Manager → SDK Tools, then
+  `adb forward tcp:5277 tcp:5277` and `./desktop-head-unit`
+  (<https://developer.android.com/training/cars/testing/dhu>, §2.8).
+
+So the decisive experiment is roughly a **30-minute desk test on hardware the
+studio already has**: set a spare iPhone's Settings → General → Language & Region
+to Rwanda (and, if the Apple-TV pattern holds, sign in with a Rwanda-billing
+Apple Account), connect it to CarPlay Simulator, and see whether CarPlay starts
+at all. Repeat the equivalent on an Android phone against the DHU.
+
+*Caveat:* the Developer Guide notes that Xcode and Simulator need a
+CarPlay-capable provisioning profile **to run your own app**. Observing whether
+CarPlay itself activates should not require one, but if the simulator refuses for
+signing reasons rather than regional ones, the two failure modes must not be
+confused.
+
+This collapses the largest remaining uncertainty in the ticket at near-zero cost,
+and it is worth doing **before** filing the CarPlay entitlement request, not
+after.
+
+### 3.3.4 Distribution: no restriction, on either platform — this is the good news
+
+This is the question that turns out to matter most, and it resolves cleanly.
+
+**Apple.** App availability is set by the developer across **175 countries or
+regions**, with three options (All / Specific / Pre-Order). The **only**
+documented constraint is legal:
+
+> *"Your app may not be available for download or use in some countries or
+> regions due to **legal or regulatory requirements**."*
+> — <https://developer.apple.com/help/app-store-connect/manage-your-apps-availability/manage-availability-for-your-app-on-the-app-store/>
+
+**That page contains no entitlement-, capability- or feature-based territory
+restriction of any kind.** I checked it specifically because a search engine
+summary asserted that CarPlay entitlements are "limited to use only in the iOS
+or iPadOS App Store in specific storefronts" — **that claim is unsupported by
+any Apple page I could find and should be disregarded.**
+
+Structurally it also could not work that way: the CarPlay entitlement is an
+**account-level managed capability** applied through an App ID and a
+provisioning profile (§1.3), and nothing in that chain is territorial.
+
+Corroborating detail: **the 67-page CarPlay Developer Guide contains no
+country-availability statement at all.** Its only two uses of "country" are a
+navigation-app guideline (*"Ensure that your map is appropriate in each supported
+country"*, p.6) and the copyright notice. A document that specifies template
+depth limits to the integer says nothing about regions — consistent with
+regional availability being a consumer-side property of the *device*, not a
+developer-side property of the *app*.
+
+**Rwanda is an App Store territory** — verified on Apple's feature availability
+page, where Rwanda appears under **"App Store: Apps"** and **"App Store:
+Games"**.
+
+**Google.** Android Auto is a **form-factor opt-in** shipped inside the ordinary
+phone artifact (§2.6); country availability is configured separately, per track,
+in the Production track's Countries/regions tab
+(<https://support.google.com/googleplay/android-developer/answer/7550024>). The
+Android for Cars distribution page
+(<https://developer.android.com/training/cars/distribute>) says **nothing** about
+country restrictions — its only geographic clause is the mock-GPS *testing*
+obligation already captured in §2.6.
+
+**Rwanda is a full Play Store country, paid apps included** — it appears in the
+paid-Android-apps list at
+<https://support.google.com/googleplay/answer/2843119>. (Verified by extracting
+the list directly; a summariser had wrongly reported Rwanda as absent from it.)
+Since EV Guide is free with no monetisation anywhere, only the free-app path is
+needed, and that is a superset.
+
+**Conclusion, and it is the cheap outcome:** declaring the CarPlay entitlement or
+the Android Auto POI category **does not restrict where the app can ship**. EV
+Guide lists and installs normally in Rwanda on both stores. If the device gate
+does bite, the car feature is simply **inert** for affected users — the phone app
+is unaffected. That is the situation the coordinator hoped for rather than its
+reverse.
+
+*One practical wrinkle worth remembering at submission time, not a blocker:* a
+developer reports CarPlay entitlements present in the development provisioning
+profile but **missing from the downloaded App Store distribution profile**
+(<https://developer.apple.com/forums/thread/691364>). Verify the entitlement
+survives into the distribution profile before shipping.
+
+### 3.3.5 Are the lists expanding? Measured: essentially no
+
+The question "will Rwanda be added?" cannot be answered directly — neither vendor
+publishes a roadmap or a process for adding a country. But the *rate* of
+expansion can be measured, by diffing archived copies of the vendors' own pages
+against today's. That was done:
+
+**Apple CarPlay — one net addition in four years.**
+
+| Snapshot | Countries |
+|---|---|
+| [1 June 2022](https://web.archive.org/web/20220601/https://www.apple.com/ios/feature-availability/) | 36 |
+| [1 June 2023](https://web.archive.org/web/20230601/https://www.apple.com/ios/feature-availability/) | 36 |
+| [1 June 2024](https://web.archive.org/web/20240601/https://www.apple.com/ios/feature-availability/) | 36 |
+| Today | **37** |
+
+Diffing 2022 against today: **added `Vietnam`; "Turkey" → "Türkiye"** (a rename,
+not a new country); **nothing removed**. So the real change over four years is
+**one country, and it is not in Africa.**
+
+**Google Android Auto — zero change in four years.**
+
+Diffing the
+[1 June 2022](https://web.archive.org/web/20220601/https://support.google.com/androidauto/answer/6348019)
+and [1 June 2024](https://web.archive.org/web/20240601/https://support.google.com/androidauto/answer/6348019)
+snapshots against the live page: the list is **46 countries, identical in all
+three**. Zero added, zero removed. The single textual difference in four years is
+that Japan's *"(wireless not supported)"* qualifier has been dropped.
+
+**Reading.** Both lists are effectively frozen. Africa has had exactly one entry
+— South Africa — throughout, on both platforms. **Planning on Rwanda being added
+within this project's horizon is not a plan.** If the car integrations are built,
+they should be justified by something other than expected regional expansion
+(South Africa or diaspora reach, portfolio credibility, or simply that the cost
+is bounded per §3.3.4 — the app still ships fine and the feature lies dormant).
+
+This measurement is a stronger answer than a vendor statement would have been:
+it is Apple's and Google's own pages, four years apart, differenced
+mechanically. It says nothing about *intent*, only about *rate*.
+
+### 3.3.5b The hardware is in Rwanda — so this is purely a permission question
+
+A separate market sweep established, from **importers' own published spec
+sheets**, that CarPlay/Android Auto head units are unambiguously present in
+Rwanda's new-vehicle channel:
+
+- **Toyota Rwanda / CFAO** ([toyotarwanda.com](https://www.toyotarwanda.com/))
+  names *"Apple CarPlay, Android Auto"* verbatim in the downloadable spec PDFs
+  for Hilux Double Cab (all five grades), Fortuner, Land Cruiser Prado, Starlet
+  Cross and Corolla Cross Hybrid. The sharpest data point: the **Hilux `2.4GD
+  Work`** grade — vinyl seats, no power windows, no central locking, two
+  speakers — still lists an 8" touchscreen with CarPlay and Android Auto. **In
+  this market CarPlay sits below the power-windows line, not in luxury trim.**
+- **Counter-example worth keeping:** the *petrol* Corolla Cross brochure lists a
+  6.8" touchscreen on the base grade and never names CarPlay or Android Auto on
+  any grade. **A touchscreen does not imply projection.**
+- **VW Rwanda** ([volkswagen.rw](https://www.volkswagen.rw/en.html)) markets
+  "Wired & Wireless App-Connect" as standard on both T-Cross trims but **never
+  writes "CarPlay"** — App-Connect is VW's umbrella term that includes it.
+
+**Head units are not geofenced; the divide is hardware/firmware SKU.** A
+Gulf/European/East-Africa-spec unit runs CarPlay wherever it is driven. The real
+exposure is the **used-import fleet**: Toyota Japan's own release
+(<https://global.toyota/jp/newsroom/toyota/32230106.html>, 10 April 2020) states
+CarPlay/Android Auto was an **optional extra-cost service** on Display Audio and
+only became standard from June 2020, with SmartDeviceLink the prior domestic
+default. A JDM unit that lacks CarPlay lacks it in Kigali exactly as in Osaka.
+
+**Conclusion: this is not a hardware-availability problem. It is purely a
+platform-permission question** — which is precisely what §3.3.3's desk test
+resolves.
+
+*One data-quality trap recorded for whoever builds station or vehicle ingestion:*
+[auto24.rw](https://auto24.rw/) exposes CarPlay/Android Auto as **structured
+listing fields**, but all live Rwandan listings return character-identical
+feature lists — a 2020 Corolla, a Leapmotor T03 and a Fiat Titano all claim
+wireless CarPlay, 360° camera and adaptive cruise. **That is per-listing
+boilerplate, not verified spec.** It evidences only that the Rwandan market
+treats CarPlay as an expected selling point.
+
+**Still not established:**
+
+- **Whether CarPlay or Android Auto is reported working in Rwanda, Kenya, Uganda
+  or Tanzania — the record is genuinely empty, not merely hard to search.** No
+  reports were found in *either* direction. The nearest retrievable account is a
+  2016 Apple Community thread from a **Malta** user whose CarPlay-equipped SEAT
+  Leon would not activate (secondary, anecdotal, unanswered) — and Malta is still
+  absent from Apple's list in 2026, which is weak evidence that the gate does
+  bite. Two directly on-point XDA threads were blocked by Cloudflare and could
+  not be read. A probe of the Android Auto Play listing under `gl=RW/KE/UG/TZ`
+  versus `gl=ZA/US` returned HTTP 200 everywhere with no unavailability marker,
+  but the web storefront's `gl` parameter does not reliably reflect per-country
+  distribution — **reported here as a failed test, not as evidence of
+  availability.**
+- **What Rwandan EV drivers actually drive** — no model-level registration data
+  is public. Owned by ticket 02.
+
+### 3.3.6 What this does and does not change
+
+- **It removes distribution as a risk.** Nothing about car support constrains
+  Rwandan availability of the app itself. §3.2's framing should be read as
+  "unusable by most Rwandan users", **not** "unshippable in Rwanda".
+- **It leaves the user-reach question open**, and open in a way that only a
+  five-minute hardware test can close.
+- **It does not change any data-model conclusion.** Every item in *What this
+  forces on the data model* follows from the template APIs and review rules,
+  which are region-independent.
+- **It bounds the cost of being wrong** — a dormant feature, not a blocked
+  listing — which makes building the car surfaces eventually a cheaper bet than
+  §3.2 implied. But §3.3.5 removes the optimistic reading in the other
+  direction: the lists are frozen, so "Rwanda will be added" is not available as
+  a justification.
+- **It does not support filing the CarPlay entitlement request yet.** That should
+  wait on the desk test in §3.3.3, which is cheap, decisive, and answers the one
+  question that actually governs the decision.
+
 ---
 
 ## What this forces on the data model
@@ -1398,6 +1748,41 @@ regardless, because both Android enums can hand one back.
 Store `power_kw` and `voltage` as **numbers**, not strings — that is the shape
 Apple's own initializer takes (`init(connector:voltage:power:)`).
 
+**A third authority settles which members the enum actually needs.** Rwanda's
+own regulator enumerates the recognised charging technologies — verified
+directly from the PDF, Art. 3(c) of **RURA Regulation No 011/ENERGY/RURA/2026**
+([Regulations Governing Electric Vehicle Charging Infrastructures in
+Rwanda](https://www.rura.rw/fileadmin/user_upload/RURA/Documents/Sectors/Energy/Regulatory_Instruments/Energy_Regulations_and_Guidelines/Regulations_Governing_Electric_Vehicle_charging_Infrastructures_in_Rwanda.pdf)):
+
+> *"'Electric Charging Technologies' refers to the EV charging technologies,
+> including Combined Charging System (CCS) I and II, GB/T, CHAdeMO, NACS (North
+> American Charging Standard), Type 1 / Type 2 AC chargers **and others which
+> may be adopted from time to time**."*
+
+That is **six families, with an explicit open clause** — and it maps cleanly onto
+both platform enums: CCS1, CCS2, GB/T (AC and DC), CHAdeMO, NACS (AC and DC),
+Type 1 (`j1772`), Type 2 (`mennekes`). **Every RURA family exists in Apple's
+9-case enum**, which is a useful accident: the app enum can be RURA's list, and
+still round-trip to CarPlay without loss.
+
+**[derived]** So the enum is: `ccs1, ccs2, chademo, gbt_ac, gbt_dc, nacs_ac,
+nacs_dc, type1_j1772, type2_mennekes, other, unknown`. The `other` member is not
+optional — RURA's "and others which may be adopted from time to time" makes
+extensibility a regulatory expectation, and Android supplies `OTHER=101`
+regardless.
+
+*Cross-reference:* ticket 02 (Rwanda connectors and fleet) owns which of these
+are actually deployed in Rwanda. This section only establishes what the enum must
+be **able** to express so that the car surfaces and the regulator's vocabulary
+both round-trip.
+
+One further corroboration for the display-only rates decision: **Art. 27(2) of
+the same regulation requires licence holders to "clearly display applicable
+tariffs, fees, charging conditions"** — so a station's rate is a regulated public
+disclosure, not proprietary data. That strengthens the case for `rate` being a
+first-class, always-present station field, even though the car templates push it
+off the row and onto the detail screen (§5).
+
 ### 9. The car surface must render from an on-device cache, readable while the phone is locked **[hard]**
 
 Two independent forces:
@@ -1544,6 +1929,43 @@ by direct text extraction of Apple's page, not by a summariser).
     screen and no React reconciler. An Expo build needs custom native modules,
     config plugins for the manifest/`Info.plist` entries, and a prebuild, for
     **both** platforms. There is no official Expo binding for either. This is an
-    inference from the API shapes, and it deserves its own ticket before the car
-    work is scheduled.
+    inference from the API shapes. *Routed to ticket 05 — not pursued here.*
+12. **The CarPlay device-gating mechanism on iPhone.** Apple states "make sure
+    your country or region supports CarPlay" as a prerequisite but never says
+    what is checked. The device-region + Apple-Account-billing-country rule
+    quoted in §3.3.3 is from an **Apple TV** page and must not be presented as an
+    iPhone rule. No Apple-authored "CarPlay isn't available in your country"
+    error string exists in any Apple page found. **Settle by testing: connect a
+    Rwandan-region iPhone to a CarPlay head unit.** Cheap, decisive, and worth
+    doing before the entitlement request is filed.
+13. **Whether Android Auto hard-fails in an unlisted country on a current
+    build.** Google's own wording is soft ("most features won't work"), and the
+    historical Play-listing gate no longer exists. But the two Google Community
+    threads on exactly this question are JavaScript-rendered and unreadable, and
+    the one secondary article claiming a Google-confirmed error code returns
+    HTTP 403. **Settle by testing on a Rwandan-region Android phone.**
+14. **Whether Siri's absence is the *cause* of CarPlay's absence in Rwanda.** The
+    two country lists being byte-for-byte identical (§3.3.1) is verified;
+    causation is inferred. Apple never states the dependency.
+15. **A methodological warning about this document.** Three claims produced by
+    search-result summarisation turned out to be wrong or unsupported when
+    checked against the source text: that Rwanda appears in Apple's Maps
+    Turn-by-Turn list (it does not); that Rwanda is absent from Google Play's
+    paid-apps list (it is present); and that CarPlay entitlements restrict an app
+    to "specific storefronts" (no Apple page supports this). Every country-list
+    and limit claim in this document was subsequently verified by extracting the
+    source text directly. **Anything a future reader adds from a search summary
+    should be verified the same way before it becomes a spec decision.**
+16. **Whether the device gate actually bites in Kigali — the one that matters.**
+    §3.3.5b closed the hardware question (the head units are there) and §3.3.1–2
+    found the two vendors' wordings pointing in *different* directions: Apple
+    makes country support a prerequisite, Google frames its list as a marketing
+    restriction. **The empirical record is genuinely empty** — no report was
+    found in either direction for Rwanda, Kenya, Uganda or Tanzania. One probe
+    (Play listing under `gl=RW`) was inconclusive and is recorded as a failed
+    test. **This is the single highest-value open question in the ticket and
+    §3.3.3 says exactly how to close it.**
+17. **What Rwandan EV drivers actually drive.** No model-level registration data
+    is public. Owned by ticket 02; matters here only for sizing the
+    dormant-feature audience, not for deciding whether to build.
 

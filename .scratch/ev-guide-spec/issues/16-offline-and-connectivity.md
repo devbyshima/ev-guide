@@ -22,3 +22,13 @@ connection at all.
 This is also where the honesty rule from 09 gets its hardest test: an offline
 app showing confident availability is the exact failure that would destroy
 trust in the product.
+
+## Finding routed from 06 (2026-08-13)
+
+**This ticket now gates the map provider choice.** 06 recommends MapLibre with
+self-hosted OSM tiles *because* Google's ToS §3.2.3(a) forbids tile caching and
+offers no offline API. If offline tiles turn out not to be required, Google
+becomes the strongest option and 06 must be revisited.
+
+Measured, so the cost is known: **Kigali metro as an offline vector basemap is
+5.6 MB; all of Rwanda is 76 MB** — within Cloudflare R2's free tier.

@@ -35,3 +35,16 @@ still dwarf the ~20 car sites, and RURA Regulation No 011/ENERGY/RURA/2026 is
 the place to check whether two- and three-wheelers and battery swapping are
 regulated as the same category as car charging. If the regulator treats them
 separately, that is a strong argument for EV Guide doing the same.
+
+## Finding routed from 04 follow-up (2026-08-13) — challenges this ticket's default
+
+Primary data, MININFRA/EU EVCI Master Plan Table 11, sourced to RRA: in March
+2024 Rwanda had **363 battery-electric cars** against **4,823 electric
+motorcycles**. Motorcycles outnumber electric cars roughly **13:1**. The widely
+cited "7,000+ EVs" headlines count hybrids and motorcycles together.
+
+The charting recommendation was "cars only for v1". On this evidence that
+recommendation builds for the smaller side of a 13:1 split, and the reason for
+it — that CarPlay and Android Auto commit the product to car drivers — is itself
+now in doubt (22, 24). **Escalate: this may be a destination-level question
+about which surface EV Guide builds first, not a scoping detail.**

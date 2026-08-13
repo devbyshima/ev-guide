@@ -34,3 +34,19 @@ language, and what the crosshair rule across the top of the map screen is for.
 Then enumerate every screen the three surfaces need, flagging which have a
 reference and which must be designed by extension — and for those, which
 reference components they are assembled from.
+
+## Finding routed from 06 (2026-08-13) — a genuine 1:1 conflict
+
+The reference screenshots are Google Maps in dark style, and the **"Google"
+wordmark bottom-left cannot be reproduced under any non-Google provider**. 06
+recommends MapLibre, so a strict 1:1 reading of the reference and the map
+provider recommendation are in direct conflict over exactly one element.
+
+Everything else is matchable — the chrome is provider-independent and the
+basemap palette is arguably *better* under MapLibre, since label fonts and layer
+order are yours. Two neighbourhood labels visible in the references, **Rebero
+and Remera, do not exist in OSM as places at all** and would need adding
+upstream.
+
+Per the standing rule, raise this as an impossibility rather than quietly
+substituting an alternative.

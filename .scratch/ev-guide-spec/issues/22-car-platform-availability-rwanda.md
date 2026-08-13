@@ -1,7 +1,7 @@
 # 22 — Are CarPlay and Android Auto usable in Rwanda at all?
 
 Type: research
-Status: claimed (research agent, 2026-08-13)
+Status: resolved (2026-08-13)
 Blocked by: 04
 
 ## Question
@@ -32,3 +32,42 @@ answer and tells the founder exactly what to do next.
 ## Context pointer
 
 Findings append to `research/04-carplay-android-auto-requirements.md` as §3.3.
+
+## Answer
+
+Findings appended as §3.3 of
+[`research/04-carplay-android-auto-requirements.md`](../research/04-carplay-android-auto-requirements.md).
+
+**The two vendors genuinely differ, and that is the finding.**
+
+- **Apple treats country support as a prerequisite.** Rwanda is absent from the
+  37-country CarPlay list.
+- **Google treats it as marketing rights.** The same 46-country list appears on
+  Google's Partner Marketing Hub opening, verbatim: *"You can only market
+  Android Auto in countries where it is available."* That is a
+  branding-rights document for partners, not a technical availability
+  statement. The consumer page says only that "most features won't work".
+  **Neither Google source says the software refuses to run.**
+
+**Hardware is not the problem — this is purely a platform-permission
+question.** Toyota Rwanda's own downloadable spec sheets name CarPlay and
+Android Auto across the range. The decisive data point is the Hilux `2.4GD
+Work` grade: vinyl seats, no power windows, no central locking, two speakers —
+and still an 8" touchscreen with CarPlay. **In this market CarPlay sits below
+the power-windows line.** Counter-example on the record: the petrol Corolla
+Cross has a touchscreen and no projection on any grade, so a touchscreen does
+not imply CarPlay. Caveat for used imports: Toyota Japan confirms CarPlay was
+an extra-cost Display Audio option until June 2020, with SmartDeviceLink the
+domestic default — a JDM unit without CarPlay lacks it in Kigali too.
+
+**Not settled, and it cannot be settled from documentation.** The record is
+empty in *both* directions — no report of it working, none of it refusing. A
+probe of the Play listing under `gl=RW` is recorded as a **failed test**, not
+as evidence, because the storefront parameter does not reflect per-country
+distribution. This now needs a device, which is **ticket 27**.
+
+**Bonus finding, routed to 02 and 19.** RURA Art. 3(c) enumerates six connector
+families, and **every one exists in Apple's 9-case enum**, so EV Guide's app
+enum can be RURA's list and still round-trip to CarPlay without loss. Art. 27(2)
+requires public tariff display, making rate a *regulated disclosure* and
+strengthening it as an always-present field.

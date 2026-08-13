@@ -38,3 +38,27 @@ Also from 02, constraining what "read from the operator" could ever mean:
 **Kabisa runs OCPP 1.6**, which carries connector *status* but has no
 connector-type field. Ticket 03 is establishing whether that backend is
 reachable at all.
+
+## Findings routed from 03 (2026-08-13)
+
+A live availability source exists — see 03 — and its shape dictates this model.
+
+**Three states are mandatory, not optional.** 67 of 77 Rwandan records report
+`{available: 0, total: 0}`, which means **unknown**, not full. A two-state model
+renders 87% of the country as occupied. Verified directly by the coordinator.
+
+**Availability and liveness disagree and must be modelled separately.**
+`EV Plugin Kacyiru 120kw` reports 3/4 available while `onlineStatus` is
+`OFFLINE`. Only 3 of the 10 records carrying real numbers are actually ONLINE.
+Trusting `availability` alone renders stale data as live — the precise failure
+this ticket exists to prevent.
+
+**Freshness is per-record and mostly batched** — only 9 distinct `liveUpdatedAt`
+values across 77 records, and one has read `IN_USE` since 19 February 2026. A
+single feed-level timestamp would be a lie about 76 of them.
+
+**Regulatory hook worth considering.** RURA mandates 97% uptime and 1-hour
+outage reporting. EV Guide would hold data bearing on a licensed operator's
+compliance, and unlicensed operation carries a FRW 1,000,000 fine. Publishing
+uptime or reliability history about named operators is therefore not a neutral
+product decision — weigh it here rather than discovering it later.

@@ -44,13 +44,31 @@ anything about connectors, tariffs, licensing or registries. Apple's **CarPlay
 Developer Guide (June 2026 PDF)**, not the HTML docs, is the only place the
 category→template matrix and review criteria are published.
 
-**Market context found while charting.** Rwanda's charging market is genuinely
-multi-operator — EVP Charger (~95 e-moto + ~20 car stations), Kabisa (26 public
-points, 7 at SP fuel stations), Volkswagen Mobility Solutions Rwanda with
-Siemens — and reached ~200 public stations in Kigali by Feb 2026. **EVP Charger
-shipped its own app in July 2026** (locator, journey planning, cashless
-payments, "Tap & Charge" card), but it covers EVP's network only. EV Guide's
-opening is being the one map across all operators.
+**Market context — corrected by research, 2026-08-13.** Two figures written at
+charting were wrong and are struck here so they do not harden into the spec:
+
+- ~~EVP Charger shipped its own app in July 2026~~ — **EVP has no app.** The
+  New Times piece (8 June 2026) is *future tense*; EVP's own download buttons
+  are `href="#"` and there is no listing on either store. The only shipped
+  competitor is **Kabisa Charge** — 5+ downloads, no iOS build, charging flows
+  it labels "(simulated)". The competitive pressure assumed at charting does
+  not currently exist.
+- ~~~200 public stations in Kigali by Feb 2026~~ — that is a **government plan
+  target**, not a count. Primary sources give **17–19 sites** in mid-2024, and
+  Kabisa's live feed returns **77 charge points** nationally (verified
+  2026-08-13). Charge points are not stations; a site holds several.
+
+What holds: the market is genuinely multi-operator, and **larger than three
+operators** — Kabisa, EVP, **Numa** (15 charge points including four 240 kW
+sites, second-largest, zero web presence), Connex, PREV, MUJEBA, plus
+Volkswagen Mobility Solutions Rwanda with Siemens.
+
+**The fleet fact that most challenges this product's framing.** MININFRA/EU
+EVCI Master Plan Table 11, sourced to RRA: March 2024 Rwanda had **363
+battery-electric cars** against **4,823 electric motorcycles** — roughly
+**13:1**. The "7,000+ EVs" headlines count hybrids and motorcycles together.
+EV Guide is currently specced for the smaller side of that split; ticket 08
+carries the escalation.
 
 **Settled while charting** (not tickets, recorded here so they aren't reopened):
 
@@ -69,6 +87,9 @@ opening is being the one map across all operators.
 <!-- one line per closed ticket: gist + link. Zoom the link for detail. -->
 
 - [02 — Which connector standards actually matter in Rwanda?](issues/02-rwanda-connectors-and-fleet.md) — OCPI 2.3.0 spellings, open enum: `IEC_62196_T2`, `IEC_62196_T2_COMBO`, `GBT_AC`, `GBT_DC` in tier 1. **CHAdeMO is not a Rwandan standard** — the LHD-only import rule closes the used-JDM channel, so the regional Nissan Leaf intuition does not transfer. A regulation now governs this: **RURA No 011/ENERGY/RURA/2026**, in force 29 June 2026.
+- [03 — Who operates Rwanda's stations, and can any be read?](issues/03-operator-landscape-and-data-access.md) — **READ, narrowly.** Kabisa serves an unauthenticated public GeoJSON feed carrying **77 Rwandan charge points across 18 brands including EVP's**, with live per-gun availability for 10 and `pricePerKwh` for 12 (600 RWF/kWh). Verified independently. **67 of 77 report `{0,0}` = unknown, not full**, and availability disagrees with `onlineStatus`. RURA keeps **no licence register and requires no tariff filing** — a confirmed absence. Whether to build on that feed is ticket 26.
+- [06 — Which map provider?](issues/06-map-provider.md) — **MapLibre + self-hosted OSM vector tiles**, near-black custom style, deep-link out. Google's mobile loads are free and unlimited but its ToS **forbids tile caching**, and offline is the discriminator; all of Rwanda is 76 MB. Conditional on 16. Two founder calls left: Google's "directory service" clause, and the **"Google" wordmark the reference shows but no other provider can reproduce**.
+- [22 — Are the car platforms usable in Rwanda?](issues/22-car-platform-availability-rwanda.md) — **The vendors differ.** Apple treats country support as a prerequisite; Google's list is explicitly *marketing rights* and neither Google source says the software refuses to run. **Hardware is not the obstacle** — Toyota Rwanda ships CarPlay below the power-windows line. Undecidable from documentation; needs ticket 27's device test.
 - [04 — What do CarPlay and Android Auto actually require?](issues/04-carplay-android-auto-requirements.md) — `carplay-charging` confirmed; the harder entitlement is `carplay-maps` and directions hand-off needs none of it; Android's `CHARGING` category is **deprecated**, use `POI`. Fourteen data-model constraints enumerated. **Neither platform ships in Rwanda**, and Apple Maps cannot navigate here at all.
 
 ## Not yet specified
