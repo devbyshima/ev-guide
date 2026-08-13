@@ -69,6 +69,48 @@ name — ADR-0004, car constraint 13); any payment, plan, or billing entity
 (the structured Rate fields are the whole seam a future payment effort would
 build on); any Session entity (EV Guide never observes charging).
 
+## Amendments from ticket 18 (2026-08-13)
+
+Designing the car surfaces forced eight schema-level items, all now binding:
+
+1. **The derivation and the display grammar live in one shared spec** —
+   [docs/availability-display.md](availability-display.md) — executed by four
+   runtimes. It supersedes the sketch below wherever they differ.
+2. **`Report` carries `sourceOnline`**: a source declaring itself offline
+   yields `Unknown` immediately, regardless of recency.
+3. **The car cache holds raw per-Connector latest reports, never a
+   materialised aggregate.** A `CachedReport` projection strips `reporterId`
+   and `capturedLocation`; the sync payload carries the raw shape too.
+   Without this, the honesty guarantee does not hold on the car surface.
+4. **The car's non-directory field list is fixed and is a security decision**
+   (an amendment to car constraint 9): `isSignedIn`/`canWatch`,
+   `notificationsPermitted`, `armedWatches[]`, `pendingIntents[]`,
+   `vehicleConnectorTypes[]`, `savedStationIds[]`. Explicitly **not** a
+   credential, a user id, or a push token — the car layer never authenticates;
+   a drain process on the phone performs authenticated writes.
+5. **`Watch` gains `armedAt` and `confirmed`**, with the max-3 ceiling
+   evaluated on-device *before* the request, and a queued arm dropped past
+   `armedAt + 2h`.
+6. **`rateCoverage(station)` is denominated in plugs**, not bays, and carries
+   the session fee: `(confirmedPlugs, totalPlugs, distinctRates[],
+   oldestConfirmedAt, sessionFeeRwf?)`.
+7. **Authored length bounds are enforced in the admin**: `nameShort ≤ 18`,
+   `name ≤ 28`, `Owner.shortName ≤ 17`, `markerLabel` 1–3 chars `NOT NULL`
+   with a `CHECK`. `Owner.icon` must be a **vector** — CarPlay pin sizes are
+   runtime values.
+8. **Projections return structure, not formatted strings** — `(distanceMeters,
+   nameShort)`, not `"~2.4 km · SP Remera"` — because Android must hand the
+   host a `DistanceSpan` and may author no distance literal. Per-Connector
+   state must be reachable in the detail projection so a known-broken gun is
+   visible to a driver with no profile set.
+
+**Vehicle connector profile:** setting your own connector type is a
+**device-local preference**, ungated — it is a reading aid, and the read
+surface is anonymous (ADR-0003 as amended). Only *syncing* it across devices
+needs an account. Flagged for founder ratification, since ticket 12's question
+and its answer can be read either way, and gating it would make the unlensed
+aggregate the normal case for every driver and every store reviewer.
+
 ## Availability is derived, never stored
 
 The star constraint (ADR-0008): **no table carries an availability state.**

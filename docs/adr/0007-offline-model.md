@@ -42,6 +42,21 @@ Date: 2026-08-13 · Status: accepted · Ticket: 16
 - A queued report older than its decay window would be erased by decay on
   arrival — dropping it client-side is equivalent and cheaper.
 
+## Amendment (2026-08-13, ticket 18)
+
+- **The straight-line label is per-surface, and one surface cannot carry it.**
+  The phone shows Valhalla driving distance with no marker, which is what makes
+  a marker meaningful elsewhere; CarPlay marks the crow-flies figure with a `~`
+  prefix plus `straight line` at the head of the POI card's detail summary;
+  **Android Auto cannot label it at all** — a row title takes only a
+  `DistanceSpan`, and the pane's four rows are spent. Recorded as an
+  asymmetry rather than left as a compromise inside one design.
+- **There is no offline indicator on either car surface.** The quiet indicator
+  this ADR specifies is a phone affordance; the car templates have nowhere to
+  put it that is worth a row.
+- The car cache must carry **`sourceOnline`** per Connector, or the offline
+  override cannot be rendered honestly.
+
 ## Consequences
 
 - Ticket 17 designs the offline indicator, the straight-line label, and the

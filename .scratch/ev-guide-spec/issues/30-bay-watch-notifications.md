@@ -56,3 +56,19 @@ built in the **car effort's package** (23) — the phone app gains it then too.
 **Knock-ons routed:** domain model gains the Watch entity (user-scoped,
 one-shot); 18 — the arm/disarm affordance and armed row are template design
 inputs; 20 — the submission demo script includes arming a watch.
+
+## Amendment from 18 (2026-08-13) — three surfaces, one gate
+
+- `canWatch = isSignedIn && notificationsPermitted`. Notification
+  authorisation must be read live (`.authorized` only — provisional delivers
+  silently to Notification Center, which is exactly the alert a driver never
+  sees), never from a mirrored bool that can outlive a sign-out.
+- The **max-3 ceiling is evaluated on-device before the request**, with a
+  count-invariant refusal — otherwise a fourth arm reads "requested" for two
+  hours while the client already knew it would fail.
+- A watch carries `armedAt` and `confirmed`; an arm queued offline is dropped
+  past `armedAt + 2h` rather than firing late.
+- "Arm only when the watched set is not already Free" becomes a **refusal with
+  a reason in the row's text**, never a disappearing control: on Android a
+  changing row *count* is a new template, not a refresh, and would eventually
+  have the host close the app mid-drive.

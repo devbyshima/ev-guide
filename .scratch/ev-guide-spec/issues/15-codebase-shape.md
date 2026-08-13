@@ -74,3 +74,14 @@ Recorded as [ADR-0006](../../docs/adr/0006-codebase-shape.md).
 **Knock-ons routed:** 17 — design the cross-app affordance that replaces the
 mode-switch card, and `packages/ui` is where its design system lands; 19 —
 `packages/domain` is the concrete home of the model it synthesises.
+
+## Constraint routed from 18 (2026-08-13)
+
+The Android car service must not pay React Native's startup cost — declare
+`android:process=":car"` (with the `MainApplication` initialisation branch) or
+gate RN init on a non-car entry point, or a cold connect risks the `DR-2`
+10-second launch gate. Single-writer op files across the process boundary, no
+cross-process WAL. Note that the ADR-0008 derivation now exists in **four**
+runtimes; the shared fixture corpus in
+[docs/availability-display.md](../../../docs/availability-display.md) is what
+keeps them honest.

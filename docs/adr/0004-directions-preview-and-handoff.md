@@ -43,6 +43,28 @@ EV Guide **previews** the route and **hands off** the drive.
 - **Coordinates, not names**: station names are not in Google's places index;
   coordinates always resolve.
 
+## Amendment (2026-08-13, ticket 18)
+
+Designing the car screens showed that *"no custom fallback UI"* cannot be
+applied literally there: a universal link opens Safari, and Safari has no car
+screen.
+
+- **The CarPlay directions ladder terminates in Apple Maps**, then in an
+  in-app alert. Apple Maps cannot route in Rwanda, so this degrades to a
+  destination pin — a cost carried openly rather than hidden, and what it
+  actually renders for an unroutable Rwandan destination is a **blocking**
+  item for ticket 27.
+- **Apple Maps is deletable**, so the last rung is genuinely reachable; the
+  launch must be installation-checked rather than assumed.
+- **The Google Maps car-display rung ships behind a flag defaulting off**,
+  flipped only by ticket 27 evidence. Neither `canOpenURL` nor the open
+  completion handler can detect the failure that matters — a hand-off that
+  succeeds *on the phone* — so the flow must never claim a car-display launch
+  it cannot observe.
+- **ETA, duration, and any "minutes away" string are forbidden on a car
+  surface**, not merely unmodelled: on CarPlay they are a `carplay-maps`
+  entitlement trigger.
+
 ## Consequences
 
 - The backend (ticket 14) hosts Valhalla beside the tile server; both consume

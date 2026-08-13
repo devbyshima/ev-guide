@@ -38,3 +38,30 @@ experience (the phone hand-off is the spec'd guarantee either way):
 
 1. Android Auto: is Google Maps a guaranteed `ACTION_NAVIGATE` receiver?
 2. CarPlay: does `comgooglemaps://` launch Google Maps onto the car display?
+
+## Merged test list from 18 (2026-08-13) — in priority order
+
+Three of these are **blocking**: a shipped design path rests on each.
+
+1. **BLOCKING (Android)** — are a POI app's notifications surfaced on the
+   Android Auto screen at all (`CarAppExtender` + `CarNotificationManager`;
+   `IMPORTANCE_HIGH` heads-up has historically been reserved to messaging and
+   navigation)? Research 04 documents notifications for **CarPlay** EV apps by
+   name and says nothing about Android. If they are filtered, bay-watch does
+   not exist on the Android car screen and **ticket 23's three-function `PF-1`
+   answer reduces to two** — which must not be discovered at submission.
+2. **BLOCKING (CarPlay)** — what does Apple Maps render on the car display for
+   a Rwandan `daddr` it cannot route: a pin, an error sheet, or nothing? The
+   shipped directions path terminates here (ADR-0004 as amended).
+3. **BLOCKING (CarPlay)** — does `comgooglemaps://` via the scene `open` land
+   on the **car display or the phone**? Neither `canOpenURL` nor the open
+   completion handler can tell. This decides whether the
+   `googleMapsCarDisplayHandoff` flag is ever enabled or the rung is deleted.
+4. **(Android)** — does `ACTION_NAVIGATE` reach a nav app, is it Google Maps,
+   and does it appear on the car display? ADR-0004 forbids assuming any of the
+   three.
+
+Plus the runtime values that are vehicle-dependent by design and must be read
+rather than assumed: `ConstraintManager` limits, `CPPointOfInterest.pinImageSize`,
+`CPListTemplate.maximumItemCount`, `maximumSectionCount`,
+`CPAlertTemplate.maximumActionCount`, `CPTabBarTemplate.maximumTabCount`.

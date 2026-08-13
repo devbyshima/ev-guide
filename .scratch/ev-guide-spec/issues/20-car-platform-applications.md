@@ -32,3 +32,20 @@ Google's declaration answers PF-1 with the same three functions. Fallback
 ladder if rejected on this ground: resubmit with bay-watch live and a
 walkthrough; then ship phone-only and retry when the layer has real data.
 Session control/payment are never built to satisfy review.
+
+## Submission dependencies from 18 (2026-08-13) — hard, not niceties
+
+The three bar-clearing functions must be **visible to a reviewer working from
+outside Rwanda with no account**, or `PF-1` / "can't just be a list" is judged
+on a static map plus six rows plus one button:
+
+1. A **signed-in demo account** supplied in Play Console → App access and in
+   Apple's review notes, with a script that signs in **on the phone** before
+   connecting (so the car screen never shows a sign-in wall — the state is
+   simply already true).
+2. **Granting notification permission is its own numbered step** of that
+   script. On Android 13+ `POST_NOTIFICATIONS` is a separate runtime prompt the
+   car layer can neither request nor explain; a reviewer who dismisses it sees
+   the bay-alert function disappear.
+3. **Seeded reports on the demo path**, so the availability layer is populated
+   rather than uniformly `Unknown` when reviewed from a US mock GPS.
