@@ -2,9 +2,14 @@
 
 Type: task
 Status: open
-Blocked by: 04, 18
+Blocked by: 04, 18, 24
 
 ## Question
+
+**Do not file anything until 24 decides the car integrations stay in scope.**
+Ticket 04 found neither platform ships in Rwanda; filing an Apple entitlement
+request for a driving feature in a country without CarPlay is a decision, not
+a formality.
 
 Nothing to decide. This is the long-pole external dependency: approval latency
 is not under the studio's control, which is exactly why it starts during the

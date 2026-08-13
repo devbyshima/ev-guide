@@ -21,3 +21,17 @@ is a separate concept in the glossary or out of scope entirely; and what
 happens to a mixed site that serves both.
 
 Decide the term for this in `CONTEXT.md` — "Vehicle Class" is a placeholder.
+
+## Finding routed from 02 (2026-08-13)
+
+Fleet framing corrected: Rwanda's LHD-only import rule closes the used-JDM
+channel, so the CHAdeMO/Leaf assumption does not hold here. The car fleet is
+young — 1,555 BEVs in the nine months to March 2026 against 512 across
+2020–2024 — and overwhelmingly Chinese-branded, which points at GB/T alongside
+Type 2 and CCS2.
+
+This sharpens rather than settles the moto question: EVP's ~95 e-moto stations
+still dwarf the ~20 car sites, and RURA Regulation No 011/ENERGY/RURA/2026 is
+the place to check whether two- and three-wheelers and battery swapping are
+regulated as the same category as car charging. If the regulator treats them
+separately, that is a strong argument for EV Guide doing the same.

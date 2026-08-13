@@ -25,3 +25,16 @@ stations will be the normal case; and whether "broken" is a distinct state from
 
 Name the terms precisely in `CONTEXT.md`: Availability, Report, Confidence,
 Staleness are all deliberately undefined until this resolves.
+
+## Finding routed from 02 (2026-08-13)
+
+Per-connector availability is now **regulatorily forced**, not just a design
+preference. RURA Regulation No 011/ENERGY/RURA/2026 Annex I requires public
+infrastructure to support at least the two most prevalent technologies in the
+country, so multi-standard sites are the norm by law. A GB/T driver at a
+Type 2 + CCS2 site must see it as incompatible even with a bay free.
+
+Also from 02, constraining what "read from the operator" could ever mean:
+**Kabisa runs OCPP 1.6**, which carries connector *status* but has no
+connector-type field. Ticket 03 is establishing whether that backend is
+reachable at all.

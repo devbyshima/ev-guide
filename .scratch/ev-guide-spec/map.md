@@ -37,6 +37,13 @@ default; `/research` for the AFK tickets; `/prototype` for the UI tickets.
 - Expo, targeting the latest iOS and Android releases, on the New Architecture.
 - Plan, don't do. This map produces decisions; the build is a separate effort.
 
+**Primary sources found during research.** **RURA Regulation
+No 011/ENERGY/RURA/2026**, in force 29 June 2026, is Rwanda's first EV charging
+regulation and postdates almost all press coverage — check it before assuming
+anything about connectors, tariffs, licensing or registries. Apple's **CarPlay
+Developer Guide (June 2026 PDF)**, not the HTML docs, is the only place the
+category→template matrix and review criteria are published.
+
 **Market context found while charting.** Rwanda's charging market is genuinely
 multi-operator — EVP Charger (~95 e-moto + ~20 car stations), Kabisa (26 public
 points, 7 at SP fuel stations), Volkswagen Mobility Solutions Rwanda with
@@ -61,7 +68,8 @@ opening is being the one map across all operators.
 
 <!-- one line per closed ticket: gist + link. Zoom the link for detail. -->
 
-*None yet — charting session only.*
+- [02 — Which connector standards actually matter in Rwanda?](issues/02-rwanda-connectors-and-fleet.md) — OCPI 2.3.0 spellings, open enum: `IEC_62196_T2`, `IEC_62196_T2_COMBO`, `GBT_AC`, `GBT_DC` in tier 1. **CHAdeMO is not a Rwandan standard** — the LHD-only import rule closes the used-JDM channel, so the regional Nissan Leaf intuition does not transfer. A regulation now governs this: **RURA No 011/ENERGY/RURA/2026**, in force 29 June 2026.
+- [04 — What do CarPlay and Android Auto actually require?](issues/04-carplay-android-auto-requirements.md) — `carplay-charging` confirmed; the harder entitlement is `carplay-maps` and directions hand-off needs none of it; Android's `CHARGING` category is **deprecated**, use `POI`. Fourteen data-model constraints enumerated. **Neither platform ships in Rwanda**, and Apple Maps cannot navigate here at all.
 
 ## Not yet specified
 
@@ -79,8 +87,9 @@ In scope, but not yet sharp enough to ticket. Graduates as the frontier advances
   verified, and bound to their stations. Depends on 07 and 11.
 - **Localisation** — Kinyarwanda, French, English. Sharpens once the screen
   inventory (17) exists.
-- **Data seeding** — who physically enters the ~200 stations, from what source,
-  and how the entries are kept fresh.
+- **Data seeding** — how entries are kept fresh once entered. The *source*
+  question has graduated to ticket 25: MININFRA holds an unpublished
+  per-station dataset with coordinates, bay counts and connector types.
 - **Distribution** — App Store and Play Store listings, Rwanda availability,
   and what the car-integration approvals need in a public listing.
 - **Analytics** — what the studio measures, and how that squares with the

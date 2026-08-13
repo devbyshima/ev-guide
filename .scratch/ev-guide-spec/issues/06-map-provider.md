@@ -1,7 +1,7 @@
 # 06 — Which map provider?
 
 Type: research
-Status: open
+Status: claimed (research agent, 2026-08-13)
 Blocked by: —
 
 ## Question
@@ -20,3 +20,7 @@ attribution requirements (the reference shows a "Google" mark bottom-left).
 
 Note that the reference screenshots are themselves Google Maps — matching them
 1:1 may constrain this more than it first appears. Flag that tension explicitly.
+
+## Context pointer
+
+Findings in progress at `.scratch/ev-guide-spec/research/06-map-provider.md`.

@@ -20,3 +20,12 @@ what the app displays when the rate is unknown.
 A wrong rate is worse than no rate — a driver who drives across Kigali on a
 stale price has been actively misled. Decide what EV Guide owes the driver in
 accuracy, and what it promises.
+
+## Lead routed from 02 (2026-08-13)
+
+**RURA Regulation No 011/ENERGY/RURA/2026** (in force 29 June 2026) governs EV
+charging in Rwanda. Before this ticket is worked, establish whether it sets,
+caps, or requires approval of charging tariffs, and in what units — a filed
+tariff would be a rate source **independent of operator goodwill**, which
+matters because the working assumption is that EV Guide may get no operator
+cooperation at all. Ticket 03 has been asked to check this.

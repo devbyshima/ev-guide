@@ -1,7 +1,7 @@
 # 03 — Who operates Rwanda's stations, and can any of them be read programmatically?
 
 Type: research
-Status: open
+Status: claimed (research agent, 2026-08-13)
 Blocked by: —
 
 ## Question
@@ -23,3 +23,7 @@ REG or the government publish a station registry?
 
 This ticket is the difference between availability being *read* and availability
 being *reported*. Answer accordingly — it unblocks 07, 08 and 10.
+
+## Context pointer
+
+Findings in progress at `.scratch/ev-guide-spec/research/03-operator-landscape-and-data-access.md`.
