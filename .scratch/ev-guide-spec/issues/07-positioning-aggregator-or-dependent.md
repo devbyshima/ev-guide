@@ -1,7 +1,7 @@
 # 07 — Neutral aggregator, or dependent on operator cooperation?
 
 Type: grilling
-Status: open
+Status: resolved (2026-08-13)
 Blocked by: 03
 
 ## Question
@@ -50,3 +50,48 @@ but **operator adoption is still outside the studio's control**. The rule gives
 you the tooling, not the users of it. So this ticket still has to answer what
 the product does when no operator ever signs up, and what the operator app
 offers that makes adoption worth it — now with no fallback feed behind it.
+
+## Answer
+
+**EV Guide is fully self-sufficient. It works with zero operator cooperation,
+and every source it has is one it owns.**
+
+Forced by 26's no-external-runtime-dependency rule, which removed the third
+option this ticket had grown.
+
+**Two channels, both EV Guide's own surfaces:**
+
+1. **The operator app** — highest-confidence availability, but adoption is
+   outside the studio's control.
+2. **Driver reports** — always available, thin at low user counts.
+
+**What the product does when no operator ever signs up:** it remains a complete
+and accurate directory. Station identity, position, connectors, bay count and
+rate are all **admin-owned** and therefore always present. Availability is an
+**additive layer**, not a precondition — its absence degrades the product
+without breaking it.
+
+**What makes the operator app worth adopting**, given operators already have
+their own systems and owe EV Guide nothing:
+
+- Free, with no cost and no lock-in — the product has no monetisation anywhere.
+- Control over their own listing's accuracy: rate, hours, connectors, bay count.
+  Operators care more about being represented correctly than about being
+  represented at all, and today they have no way to correct a third party.
+- Their own stats, which they mostly cannot get from their existing hardware.
+- **Explicitly not a compliance surface.** See below — this is the single
+  biggest determinant of whether any operator adopts.
+
+**The regulatory trap, and the decision it forces.** RURA mandates 97% uptime,
+1-hour outage reporting, and fines unlicensed operation FRW 1,000,000. An app
+holding per-operator reliability history is a de facto compliance monitor for a
+regulated industry. **EV Guide does not publish per-operator uptime histories,
+reliability league tables, or outage records.** It shows current state only.
+Publishing that data would guarantee no operator ever touches the operator app,
+which would starve the highest-confidence channel to win an argument the product
+does not need to have.
+
+**Competitive position, corrected from charting:** there is effectively no
+incumbent. EVP has no app; Kabisa Charge has 5+ downloads, no iOS build, and
+labels its own charging flows "(simulated)". The pressure assumed at charting
+does not exist.

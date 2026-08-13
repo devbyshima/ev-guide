@@ -33,13 +33,31 @@ so the admin can mark mixed sites without inventing a concept mid-build.
 are out of scope, see [ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md). Browsing is the driver's
 primary act; whether a Driver needs an account is ticket 12.
 
+**Availability** — whether a Connector can be used right now. One of `Free`,
+`Occupied`, `OutOfService`, `Unknown`. A property of a **Connector**, never of a
+Station: a Station with a free Type 2 bay is unavailable to a GB/T driver. See
+[ADR-0002](docs/adr/0002-availability-model.md).
+
+**Unknown** — Availability that is absent or has decayed past its window. The
+**normal case**, not a failure: a Station whose Availability is Unknown is still
+a complete listing. Not to be rendered as an error or an absence.
+
+**Report** — a claim about a Connector's Availability, carrying its source and
+the moment it was made. Reports are proximity-gated: a Driver may only report a
+Station they are at.
+
+**Freshness** — how long ago a Report was made, carried as `lastConfirmedAt`
+alongside every Availability. An axis, never a state.
+
 **Admin** — FullTime Studio. Creates Stations manually and creates the station
 managers above them. Sits over both mobile apps and uses the web dashboard.
 
 ## Deliberately not yet defined
 
-*Availability / Occupancy* (ticket 09), *Operator* and *Owner* (ticket 11),
-*Session*, *Report*, *Confidence*, *Staleness*.
+*Operator* and *Owner* (ticket 11), *Session*.
+
+*Confidence* will not be defined: ADR-0002 expresses it as **source plus
+Freshness** rather than as a score, so there is no such term.
 
 **Never to be defined here:** *Battery Swap*, *Battery Stock*. Out of scope by
 [ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md) — a swap station holds

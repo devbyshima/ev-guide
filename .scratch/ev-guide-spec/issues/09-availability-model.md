@@ -1,7 +1,7 @@
 # 09 — How does EV Guide know a bay is free?
 
 Type: grilling
-Status: claimed (grilling session, 2026-08-13)
+Status: resolved (2026-08-13)
 Blocked by: 07, 08
 
 ## Question
@@ -62,3 +62,64 @@ outage reporting. EV Guide would hold data bearing on a licensed operator's
 compliance, and unlicensed operation carries a FRW 1,000,000 fine. Publishing
 uptime or reliability history about named operators is therefore not a neutral
 product decision — weigh it here rather than discovering it later.
+
+## Answer
+
+Recorded as [ADR-0002](../../../docs/adr/0002-availability-model.md).
+**Availability is a property of a connector, and `Unknown` is the normal case.**
+
+**Four states, per connector, never per station:** `Free`, `Occupied`,
+`OutOfService`, `Unknown`. `OutOfService` is distinct because a driver acts on
+it differently — occupied means wait, broken means leave. Per-connector is
+forced twice over: by RURA requiring two incompatible standards per site, and by
+the fact that a GB/T driver at a Type 2 + CCS2 site is blocked even with a bay
+standing empty.
+
+**Freshness is a separate axis, never a state.** Every reading carries
+`lastConfirmedAt` and its source. Folding age into the state collapses the
+moment you ask whether a three-hour-old `Free` is the same state as a live one.
+
+**Decay is a function of source *and* state, not one number.**
+
+| Source | State | Decays to `Unknown` after |
+| --- | --- | --- |
+| Driver report | `Free` / `Occupied` | **2 hours** |
+| Operator app | `Free` / `Occupied` | **6 hours** |
+| Operator app | `OutOfService` | **30 days** — a declaration, not an observation |
+
+A single decay constant was the obvious design and it is wrong: an operator
+marking a bay broken is asserting a durable fact, while anyone reporting a bay
+busy is describing a moment. The 30-day ceiling exists only to prevent zombie
+states outliving the repair.
+
+**Confidence is expressed as source plus age, not a numeric score.** A score is
+hard to explain in UI, easy to tune wrongly, and invites false precision from
+what will often be a single report. "An operator said so, 20 minutes ago" is
+both more honest and more useful to a driver than "78%".
+
+**The honesty rule.** Never render a state without its age unless the reading is
+live. Past its decay window a state becomes `Unknown` regardless of what it last
+said. **Any pedestal reporting itself offline is `Unknown` immediately**, however
+recent its last reading — the failure mode observed in real data, where an
+`OFFLINE` pedestal still published a full gun-status array with no marker saying
+it was stale.
+
+**Design for `Unknown` as the default, not the exception.** It will be the
+common case — 87% in the only real dataset available. A station with unknown
+availability must render as a **complete, confident listing** showing what *is*
+known: rate, connectors, bay count, directions. Availability appears as an
+additive badge when present and is simply absent when not. Treating `Unknown` as
+a failure state would make the entire map look broken, which is a UI decision
+disguised as a data decision.
+
+**Anti-abuse, sized for the actual user base.** Reports are **proximity-gated** —
+you may only report a station you are physically at — which is cheap, improves
+data quality, and is far harder to game than a reputation system. Plus
+rate-limiting per identity (12). **No reputation or trust scoring in v1**: with a
+few hundred possible reporters it would be elaborate machinery over a handful of
+rows. A later contradicting report supersedes an earlier one.
+
+**Not decided here — see ticket 28.** Whether v1 *promises* availability at all,
+or ships as an honest directory with the layer arriving once there is a user
+base to sustain it. That is a product-scope call, not a modelling one, and it
+belongs to the founder.
