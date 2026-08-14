@@ -175,13 +175,19 @@ laws are in that document. The two that catch implementers:
    `no recent report` — the offline override yields `Unknown` from a
    30-second-old report, which makes the second string false.
 
-**The forbidden-string list has exactly one home**
-([availability-display.md §2.2b](docs/availability-display.md), with the
-product-wide extension in the design record §11.2). `packages/domain` enforces
-it with a test that greps the emitted vocabulary. Adding a string is a change
-to `packages/domain` and needs a fixture.
+**The forbidden-string list has exactly one home**:
+[availability-display.md §2.2b](docs/availability-display.md), which since
+2026-08-14 genuinely holds the **union** of what the four competing copies
+carried. `packages/domain` enforces it with a test that greps the emitted
+vocabulary. Adding a string is a change to `packages/domain` and needs a
+fixture. *(Amended by ticket 32: this line used to cite a second home — "the
+product-wide extension in the design record §11.2" — which was not an extension
+but a smaller overlapping variant, missing four items §2.2b now absorbs and
+carrying three §2.2b lacked. There is one home and one citation.)*
 
-**One word for `Occupied`: `busy`.** `in use` is deleted product-wide.
+**One word for `Occupied`: `busy`.** `in use` is deleted product-wide — and so
+is the capitalised `In use`, which is the same ban. The mapping is enumerated in
+[availability-display.md §2.4](docs/availability-display.md).
 
 ---
 
@@ -231,12 +237,34 @@ images-rounder-than-buttons inversion is real and must not be "fixed".
 **Component sizes** (px) — CTA 138 h (sticky 131) · circular buttons
 80/90/98/139 · quickAction 150 · avatars 129 map / 316 profile / 76 owner ·
 thumbnail 300 · chip 105 h · floating card 1076 × 521 · handle 180 × 13 ·
-pin 120 × 147 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
+**pin 122 × 147** · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
+*(`pin` amended from 120 × 147 by ticket 32 — the design record's own quoted
+x-range always said 122, and 120 was the width at which px/3 lands on a round
+40.0 pt. The pin's left and right extremes are hard edges, so this is not an
+anti-aliasing question. Every other size on this line is under review — see the
+note below.)*
+
+> **⚠ The radius line above, and four sizes on this line, are under review.**
+> Ticket 32 found that the design record's corner-arc method is geometrically
+> false and **under-reads every radius in the system** (`button` measures 16.4
+> not 13; `floatingCard` 19.5 not 14; `card` 15.5 not 13; `nearPill` 38.4 not
+> 31.5), and that the record used **two different extent conventions** without
+> declaring either, which puts `ctaHeight`, `ctaHeightSticky`, `floatingCard`
+> and `pin` 1–2 px apart depending on the reading.
+> [Ticket 33](.scratch/ev-guide-spec/issues/33-radius-system-under-read.md) rules
+> on the radii,
+> [ticket 34](.scratch/ev-guide-spec/issues/34-extent-convention.md) on the
+> convention. **No radius here may be typed into `packages/ui` until 33
+> closes.** The values are left unchanged rather than half-corrected, so nothing
+> shifts silently. "The CTA is not a pill" survives at 16.4 — a pill needs 69.
 
 **Five findings that would each have shipped visibly wrong:**
 
-1. **The CTA is not a pill** — r ≈ 13 on a **899 × 138 px** button (a pill would
-   be r 69), and not full-width.
+1. **The CTA is not a pill** — r ≈ **16.4** on a **899 × 138 px** button (a pill
+   would be r 69), and not full-width. *The finding is the point and it holds
+   with room to spare; the number was 13 here until ticket 32 found the radius
+   method under-reads (ticket 33), and 899 × 138 is convention-dependent
+   (ticket 34).*
 2. **There is no grey text.**
 3. **The `03` container is a floating card**, not a bottom sheet — 14 px on all
    four corners, with **64 px of live map between its bottom edge and the CTA**
@@ -310,7 +338,13 @@ payouts` → **`Offline & map data`** (there is no payment concept to host);
 `Switch to hosting mode` → a **membership-gated cross-app affordance**; the
 reference's search/discovery framing → `stationsNear`; the crosshair → the
 content datum; and pin availability solved 1:1 by **re-tenanting the
-reference's own status dot** at (+53, −53) px, tangent to the pin rim.
+reference's own status dot** at **(+54, −54) px**, tangent to the pin rim.
+*(Amended from (+53, −53) by ticket 32. The pin head is a circle fitted to
+**r = 61.25 ± 0.15** at 0.12 px rms, so the tangency constraint is
+`d ≥ 61.25 + 14.5 = 75.75` and the smallest integer offset meeting it is 54.
+At 53 the dot's ring overlaps the rim by 0.80 px — the exact fusion the
+placement exists to prevent. The original derivation stated `d ≥ 75.5` and then
+divided 74.5 by √2, so it never admitted its own answer.)*
 
 **Attribution and the badge.** D-01's bottom-left mark slot carries
 `© OpenStreetMap contributors` in the reference's own type treatment, tapping
@@ -627,9 +661,12 @@ Each is a test, not a review item.
     `activeOpacity` and `android_ripple` deliver the forbidden opacity ramp and
     motion **by default**, so every call site goes through `PressableSurface`
     and a bare touchable fails the build (ticket 31 §12.2).
-12. **The forbidden list has exactly one home.** Three documents currently claim
-    it at three addresses with three different row counts; the design records
-    become citations of availability-display.md §2.2b, enforced by grep.
+12. **The forbidden list has exactly one home** — *satisfied 2026-08-14 by
+    ticket 32, and the grep is what keeps it satisfied.* The three claimed
+    addresses were reduced to citations of availability-display.md §2.2b, but
+    only after §2.2b absorbed the four items that lived nowhere else: the
+    copies were **not** subsets of it, so collapsing them in the obvious order
+    would have dropped live bans.
 
 ---
 

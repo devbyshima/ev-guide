@@ -185,14 +185,27 @@ Round 2 killed all five round-1 fatals and left three that the reviewer itself
 called mechanical, requiring no design decision. All three are now fixed:
 
 1. **The forbidden-string list had four claimed homes**, none a superset of the
-   others. It now lives once, as the union, in
+   others. ~~It now lives once, as the union, in
    [docs/availability-display.md §2.2b](../../../docs/availability-display.md),
-   cited by the others and copied by none.
+   cited by the others and copied by none.~~
+   **This was recorded as done and was not done — corrected 2026-08-14 by
+   ticket 32, which found all three clauses false.** §2.2b was *not* the union
+   (three literals and a catch-all clause lived only in the design record's copy,
+   so deleting that copy would have dropped live bans); the list was *not* cited
+   by the others (file 10 R3 claimed §11.2 as the sole home, file 11 §0.2 claimed
+   its own §13.1, file 12 §0.1 claimed file 11 §13); and it was *not* copied by
+   none — three restated copies were still in circulation, at four, three and
+   six rows. It is now genuinely the union and genuinely cited: the four unique
+   items were merged into §2.2b **first**, then the three copies were reduced to
+   pointers. The lesson is the one ticket 32 exists for — a correction recorded
+   as applied is not a correction applied.
 2. **File 11 declared its own measurements authoritative** over a file 10 that
    had not yet landed, and **file 10-v2 renumbered wholesale**, so every
    citation into it resolved to the wrong section. Both files now carry an
    authority note fixing file 10-v2 as the measurement authority (settling the
-   r16/r14 conflict at **r ≈ 14 px**) and a v1→v2 section map that resolves
+   r16/r14 conflict at **r ≈ 14 px** — *reopened 2026-08-14: ticket 33 measures
+   this corner at **19.5 px**, and neither 16 nor 14 was right; §6's arc method
+   under-read every radius in the system*) and a v1→v2 section map that resolves
    every stale citation deterministically.
 
 ### Routed

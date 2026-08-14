@@ -30,8 +30,10 @@ shown to one decimal and **is not rounded to a nicer number**.
 - **[?]** — could not be measured reliably; the reason is given.
 - **[RAISE]** — a place the reference cannot be reproduced 1:1, or contradicts
   itself, or contradicts an EV Guide decision. Per the standing rule these are
-  raised, not quietly resolved. **Twelve of them are listed in §12 — the nine
-  from v1, carried forward unchanged, plus three new ones.**
+  raised, not quietly resolved. **Fifteen of them are listed in §12 — the nine
+  from v1, carried forward unchanged, the three new in v2, and three added by
+  ticket 32 (RAISE-13 the radius method, RAISE-14 the extent convention,
+  RAISE-15 the price string's two weights).**
 
 **Sub-pixel technique.** Stroke widths are integrated coverage, not thresholded
 pixel counts: for a cut across a stem, `Σ (v − bg)/(fg − bg)`. This resolves a
@@ -43,6 +45,34 @@ figure in this file is integrated, so several of them differ from v1 by design.
 icon strokes) a horizontal cut over-reads by `1/cos θ`. Line widths in §2 are
 `min(horizontal run, vertical run)` taken at every pixel of the exact colour and
 then moded, which bounds the error to `[w, 1.41w]` and in practice recovers `w`.
+
+**Extent convention — NOT YET DECLARED. [RAISE-14], ticket 34.** Ticket 32
+asked this file to declare one and it cannot, because every candidate breaks
+values locked in `SPEC.md`. A component's size can be read three ways, and
+**this file has used two of them without saying so**: the `01`/`03` primary CTA
+is published at its **AA-inclusive** extent (899 × 138) and the `03` floating
+card at its **core** extent (1076 × 521). Measured [m, ticket 32]:
+
+| Element | core | integrated (true) | AA-inclusive | published |
+| --- | --- | --- | --- | --- |
+| Primary CTA | 897 × 136 | **898.00 × 137.25** | 899 × 138 | AA-inclusive |
+| Floating card | 1076 × 521 | **1077.60 × 521.53** | 1078 × 522 | core |
+| Sticky CTA | 513 × 131 | **513.00 × 131.25** | 513 × 132 | core |
+| Map pin | 122 × 147 | **122.3 × 147.25** | 124 × 148 | *neither* — see §7.3 |
+
+Neither reading is a property of the component: an element whose edges land on
+whole pixels reads the same all three ways (the sticky CTA's 513 px width, whose
+left, right and top edges are **hard**), and one whose edges land mid-pixel reads
+2 px apart. The rasteriser quantises coverage to quarter-levels (2×2
+supersampling), so every fractional figure here is good to ±0.25 px.
+
+**Until ticket 34 rules, no size in §7 may be copied into files 11 or 12**, and
+the three readings are given wherever they differ. The cost of each candidate,
+counted in locked `SPEC.md` values it breaks: **core 2** (`size.ctaHeight`
+138 → 136 and the §5 "899 × 138" sentence), **AA-inclusive 3**
+(`size.floatingCard`, `size.ctaHeightSticky`, `size.pin`), **integrated 4** (all
+of the above plus `size.ctaHeight` → 137.25). `size.pin` moves under all three,
+so it is not a bargaining chip — it is corrected in §7.3 on its own merits.
 
 **Fill vs anti-alias test.** A colour is a *real fill* if a meaningful fraction
 of its pixels have all four neighbours of the identical value; an anti-alias
@@ -80,8 +110,12 @@ classes, no shadows/blurs/gradients anywhere, and the nine original raises.
 - **R2** — availability never appears in the accent badge, on any surface. §7.7.
 - **R3** — `unreported` is forbidden product-wide, with every string that
   asserts report history. Permitted: `no confirmed status`, `no confirmed rate`.
-  **The forbidden list lives in §11.2 of this file and nowhere else**; files 11
-  and 12 cite it and must not restate it.
+  **The forbidden list lives in `docs/availability-display.md` §2.2b and nowhere
+  else** — this file, file 11 and file 12 all cite it and none may restate it.
+  *Corrected by ticket 32:* R3 previously claimed the list for §11.2 of this
+  file, which made **four** documents claim to be the one home. §11.2's three
+  unique literals and its catch-all clause were merged into §2.2b first, so the
+  withdrawal loses nothing.
 - **R4** — the short rate projection is defined once in `packages/domain`. §11.3.
 - **R5** — colour tokens are what the pixels say. Applied in §1 and §8.
 
@@ -687,9 +721,53 @@ values verbatim; **[RAISE-3]** puts normalise-or-reproduce to the founder.
 
 ## 6. Radii
 
-All measured by corner-arc profiling: for a rounded rect the topmost scanline's
+> **⚠ EVERY VALUE IN THIS TABLE IS UNDER REVIEW — [RAISE-13], ticket 33.**
+> The method sentence below is **geometrically false**, and it under-reads every
+> radius here. The values are left in place, unchanged, until ticket 33 rules,
+> because correcting them moves `radius.*` in `packages/ui` **and** the locked
+> radius table in `SPEC.md` §5. **Do not copy a radius out of this table into
+> files 11 or 12 in the meantime** (ticket 32 holds them for this reason).
+
+~~All measured by corner-arc profiling: for a rounded rect the topmost scanline's
 fill begins `r` px in from the left edge, and the leftmost column's fill begins
-`r` px down from the top. Both checked on every row below.
+`r` px down from the top. Both checked on every row below.~~
+
+**The identity above is wrong.** For a corner of radius `r` whose true edge lies
+at offset `d` above a given scanline, that scanline's fill begins
+**`r − √(2rd − d²)`** px in from the edge — *not* `r`. At the first scanline
+(`d ≈ 1`) that is roughly **`r − √r`**, so the table under-reads by about `√r`,
+by an amount that varies with each element's sub-pixel phase. `r` is where the
+**straight edge** begins, not where the first scanline's fill does.
+
+The file's own evidence already contradicted the values it derived. §7.4 records
+that the floating card's row 1797 first carries card colour at **x79**, i.e.
+14.5 px in from the true edge at x64.5 — but a 14 px radius predicts an inset of
+**8.8 px** there. The observation was read *as* `r`.
+
+Re-measured under ticket 32 by three independent estimators — a rasteriser-matched
+model fit, a least-squares circle through sub-pixel boundary points, and a
+**threshold-free** corner-missing-area check (`area = r²(1 − π/4)`, which needs no
+arc-extent or threshold decision at all):
+
+| Element | published | re-measured | SSE at published vs optimum |
+| --- | --- | --- | --- |
+| Primary CTA | 13 ±2 | **16.4** (band 16.3–16.6) | 60.7 vs 1.3 — 46× worse |
+| Sticky CTA | ~14 | **16.2** (band 16.0–16.6) | 37.6 vs 2.2 — 17× worse |
+| Floating card | 14 | **19.5** (band 19.3–19.8) | 133.3 vs 2.7 — 50× worse |
+| Hosting card | 13 | **15.5** (band 15.2–15.8) | 37.0 vs 2.0 |
+| Category chip | 31.5 | **38.4** | — |
+
+Every one under-reads, and the error tracks `√r` as the wrong model predicts.
+The **six rows not listed** — hero badge, hero image, card thumbnail, tile,
+feature chip, handle — were never re-fitted and carry the same bias, which is
+why the *signature* finding below ("images are rounder than containers") cannot
+be confirmed or overturned until they are. **That is ticket 33's job, not this
+table's.**
+
+One consequence is already visible and matters for `radius.button`: at 16.4
+(primary) against 16.2 (sticky) the two CTAs **do not differ** — a single value
+fits all eight corners with zero penalty, so radius is *not* a fourth [RAISE-4]
+difference, and no `radius.buttonSticky` token should be created.
 
 | Element | radius px | radius pt | Arc measured |
 | --- | --- | --- | --- |
@@ -772,7 +850,7 @@ only one with an accent ring.
 
 | Property | Value |
 | --- | --- |
-| Outer bbox | 120 × 147 px = **40.0 × 49.0 pt** (w:h ≈ 1 : 1.22) [m] — verified on the isolated pin at x961–1082, y752–898 |
+| Outer bbox | **122 × 147 px = 40.7 × 49.0 pt** (w:h ≈ 1 : 1.20) [m] — core bbox (fully-covered fill), verified on the isolated pin at x961–1082, y752–898. AA-inclusive is 124 × 148. **Corrected from 120 × 147, ticket 32** — the row's own x-range always said 122; `120` was the width at which px/3 lands on a round `40.0 pt`, which is the rounding §0.1 forbids. The left and right extremes are **hard edges** (x960 pure map → x961 pure `#C7FC2F`; x1082 pure lime → x1083 pure map), so this was never a core/AA question. The widest rows are y808–817; a cut outside that band reads 120 |
 | Shape | teardrop, point down |
 | Body fill | `#FFFFFF` (3 560 px in the pin's box) |
 | Inner disc | `#F3F3F3` (6 292 px), ⌀ ≈97 px = 32.3 pt, inset ≈8 px from the body |
@@ -782,6 +860,15 @@ only one with an accent ring.
 
 That the pin body is white but carries a slightly darker inner disc is real, not
 compression — both sample cleanly across many rows.
+
+**All nine pins are one asset, and the count was wrong too [m, ticket 32].**
+Template-matching the isolated pin's 588-pixel exact-`#C7FC2F` footprint across
+all four screens finds **9 complete instances — 4 on `01`, 5 on `03`, none on
+`02` or `04`** — each at an integer offset with a byte-identical footprint. §8.1
+said ×8. Note that only **two per screen are separable by flood fill**: the rest
+touch or overlap other lime elements and merge into larger components, which is
+why a connected-component count reads 2 and a template count reads 4 and 5. Any
+future re-count must template-match, not flood-fill.
 
 **For EV Guide:** the pin has exactly one accent-bearing surface (the 2 px
 outline) and one glyph slot. Availability is four-state with `Unknown` the
@@ -877,11 +964,17 @@ carrying into whatever the inventory decides about detents.
 | Border | `#C7FC2F`, 2.5 px ≈ 0.8 pt | **none** |
 | Label | cap 27 px, Regular, `#C7FC2F` | cap 32 px, **ExtraLight**, `#FFFFFF` |
 | Icon | none | 43 × 48 px stroke icon, **4.2 px perpendicular stroke** |
-| Padding | left 88 px / right 29 px — **not symmetric** | left 30 px, icon→label 18 px, right 26 px |
+| Padding | **left 86 px / right 30 px — not symmetric** | left 30 px, icon→label 18 px, right 26 px |
 | Gaps | — | 27 px horizontal, 26 px vertical |
 
-The category chip's label is **not centred** — 88 px of dead space on the left
-against 29 px on the right. See **[RAISE-5]**.
+The category chip's label is **not centred** — **86 px** of dead space on the
+left against **30 px** on the right. See **[RAISE-5]**. **Corrected from 88/29,
+ticket 32:** the label ink is x566–703 = 138 px (isolated from the 2.5 px lime
+border ring by connected-component labelling), and the chip's own lime extent is
+x480–733 = 254 px, so `86 + 138 + 30 = 254` closes exactly at the same edge the
+254 is quoted at. `88 + 138 + 29 = 255` reconciles with nothing. The asymmetry
+— the point [RAISE-5a] makes — is unaffected, and survives at the core edge too
+(83 / 27 against the `#393939` fill run x483–730).
 
 ### 7.6 Settings rows (`02`) [held]
 
@@ -996,12 +1089,24 @@ Owner's bundled icon fills this slot.
 | Frame | x39 → 1166, y1448 → 1781 = **1128 × 334 px = 376.0 × 111.3 pt** |
 | Radius | 13 px = 4.3 pt |
 | Fill | `#393939` |
-| Padding | **39 px = 13 pt**, all four sides |
+| Padding | **39 px = 13.0 pt top and left; 38 px = 12.7 pt bottom** [m, ticket 32] — *not* uniform. Top `1487 − 1448 = 39`, bottom `1781 − 1743 = 38`, left `78 − 39 = 39`. The card's height closes as **`39 + 257 + 38 = 334`**, not `39 + 257 + 39 = 335` |
 | Icon tile | 256 × 257 px = **85.3 × 85.7 pt**, `#3E3E3E` (x78–333, y1487–1743), radius ≈15 px |
 | Tile glyph | lime car-with-arrow, **`#C7FC2F`**, **9.8 px integrated stroke = 3.3 pt** — the heaviest stroke in the system |
 | Tile → text | 67 px = 22.3 pt |
-| Title | cap 37 px Bold, baseline 1558 |
+| Title | cap 37 px Bold, baseline 1558 — **but see the caveat below; 37 is probably a round-cap over-read** |
 | Body | cap 28 px ExtraLight, 3 lines, 45 px line pitch |
+
+**Caveat on the title's cap 37 [m, ticket 32].** §4.1 row 4 measures this run
+(`Switch to hosting mode`) at cap 37, and §3.3 separately names *"`S` in
+`Switch to hosting mode`"* as one of the **round-cap over-reads** that read 1–2 px
+tall. Both are in this file, and they contradict each other. The glyph runs
+measure `S` 37 · `w` 27 · `i` 37 · `t` 35 · `c` 27 · `h` 37: **the string's only
+capital is that round `S`**, and every other 37 px glyph is a lowercase
+*ascender*. So no flat capital exists in this run and **cap 37 cannot have been
+measured from one** — the true cap is probably 35–36, as §7.6's `Settings`
+heading turned out to be. Not corrected here, because it is a type-scale
+measurement rather than a component one and it should be settled with the six
+un-refitted rows of §6. **Owed to ticket 33.**
 
 ### 7.11 The crosshair rule (`01`, `03`) [held]
 
@@ -1033,7 +1138,7 @@ also ink, so anti-alias cannot contaminate it.
 | 1 | Map-avatar person | 01, 03 | ~60 × 55 | **`#121212`** | stroke | ~6 |
 | 2 | Avatar status dot | 01, 03 | ⌀ 20–21 | **`#C7FC2F`** | fill (shape) | — |
 | 3 | Pin vehicle glyph ×8 | 01, 03 | ~100 wide | **`#393939`** | stroke | 5–6 |
-| 4 | Pin outline ×8 | 01, 03 | 120 × 147 | **`#C7FC2F`** | stroke | **2.0** |
+| 4 | Pin outline **×9** | 01 ×4, 03 ×5 | **122 × 147** | **`#C7FC2F`** | stroke | **2.0** |
 | 5 | **Locate arrow** | 01, 03 | ≈41 × 45 | **`#000000`** | **FILL** | — |
 | 6 | Location puck | 01, 03 | ⌀ 82 | `#4285F4` + `#FFFFFF` | fill | — |
 | 7 | Back `←` | 02 | 46 × 34 | **`#FFFFFF`** | stroke | **5.0** |
@@ -1289,7 +1394,7 @@ dashboard must not "fix".
 | `size.chipHeight` | 105 | 35.0 |
 | **`size.floatingCard`** | **1076 × 521** | **358.7 × 173.7** |
 | **`size.handle`** | **180 × 13** | **60.0 × 4.3** |
-| `size.pin` | 120 × 147 | 40 × 49 |
+| `size.pin` | **122 × 147** | **40.7 × 49.0** |
 | `size.statusDot` | 20 | 7.0 |
 | `size.accentRing` | 3 | 1.0 |
 | `size.puck` | 40 disc / 82 halo | 13.3 / 27.3 |
@@ -1300,58 +1405,79 @@ Native only — the admin dashboard inherits none of §10.5.
 
 ## 11. Copy tokens — the single normative list (R1, R3, R4)
 
-Per **R3** this list exists in exactly one place. **Files 11 and 12 cite
-`10-design-system-v2.md §11` and must not restate it.** The words themselves are
+Per **R3** this list exists in exactly one place, and **that place is
+`docs/availability-display.md`** — §2.2b for the forbidden strings, §2.4 for the
+closed vocabulary. This section cites it and does not hold it; so do files 11
+and 12. *Corrected by ticket 32, which found this preamble claiming ownership
+for §11 while three other documents claimed it too.* The words themselves are
 **data in `packages/domain`** (availability-display.md §2.4), not string literals
 in a Swift file and a Kotlin file; this section is the normative statement of
 what that data may and may not contain, and `packages/domain` enforces it with a
 test that greps the emitted vocabulary.
 
-### 11.1 The one word for `Occupied` (R1)
+### 11.1 The one word for `Occupied` (R1) — cited, not held
 
-| Context | String |
-| --- | --- |
-| Driver-facing, every surface | **`busy`** |
-| Operator-facing, every surface | **`busy`** |
-| The operator write-surface control label | **`Busy`** |
+The three-row mapping (driver-facing `busy` · operator-facing `busy` · the
+operator write-surface control label `Busy`) now lives in
+`docs/availability-display.md` **§2.4**, with the rest of the closed vocabulary.
+Ticket 32 moved it there: this section was the only place it was enumerated, and
+it sat under a preamble that forbade exactly that.
 
-`busy` quantifies `o` and nothing else (grammar law 3). **`in use` is deleted
-product-wide** — it was only ever an example string in availability-display.md
-§2.1 and it must not appear in any file, fixture or component.
+`busy` quantifies `o` and nothing else (§2.2 law 3). **`in use` is deleted
+product-wide** and must not appear in any file, fixture or component — note the
+capitalised **`In use`** is the same ban and is still in circulation in files 11
+and 12.
 
-### 11.2 Forbidden strings — product-wide
+### 11.2 Forbidden strings — cited, not held
 
-| Forbidden | Why | Permitted instead |
-| --- | --- | --- |
-| **`unreported`** | asserts report history (grammar law 8) | **`no confirmed status`** |
-| **`in use`** | second word for `Occupied` (R1) | **`busy`** |
-| `no recent report`, `not reported`, `last reported`, `awaiting a report`, `no reports yet`, or any phrasing that asserts a report exists, does not exist, or is old | grammar law 8 — the offline override yields `Unknown` from a 30-second-old report, which makes every one of these false | **`no confirmed status`** |
-| `unknown rate`, `rate unavailable`, `no rate reported` | same, for Rate | **`no confirmed rate`** |
-| `0 of N free` at any N | grammar law 1 | omit the clause; use the Regime-1 capacity form |
-| any string placing an availability word on the hero badge | **R2** | peak power, or no badge |
+**The list lives in `docs/availability-display.md` §2.2b and nowhere else.**
 
-Adding a string to this list is a change to `packages/domain`, and every
-addition needs a fixture in the shared corpus (availability-display.md §3).
+This section previously held a six-row copy. Ticket 32 found that the copy was
+**not** a subset of §2.2b — it uniquely carried `last reported`,
+`awaiting a report`, `no reports yet` and the catch-all clause *"or any phrasing
+that asserts a report exists, does not exist, or is old"* — so the four
+competing copies in circulation could not simply be deleted down to one without
+dropping live bans. Those four items were merged into §2.2b on 2026-08-14, and
+this table was then replaced by this pointer.
+
+Adding a string is a change to `packages/domain`, and every addition needs a
+fixture in the shared corpus (availability-display.md §3).
 
 ### 11.3 The short rate projection (R4)
 
 Defined **once**, in `packages/domain`, for the card / floating-card / sticky
 slots. The long Grammar-R ladder stays on the detail screen only.
 
-| Input | Short projection |
-| --- | --- |
-| exactly one Connector rate confirmed | **`600 RWF/kWh`** |
-| more than one distinct confirmed rate | **`From 400 RWF/kWh`** |
-| no confirmed rate | **`No confirmed rate`** |
+| Input | `rateShort` returns | Rendered |
+| --- | --- | --- |
+| exactly one Connector rate confirmed | `{kind: 'single', rwfPerKwh}` | **`600 RWF/kWh`** |
+| more than one distinct confirmed rate | `{kind: 'from', floorRwfPerKwh}` | **`From 400 RWF/kWh`** |
+| no confirmed rate | `{kind: 'none'}` | **`No confirmed rate`** |
+
+**The projection returns structure, never a formatted string** —
+`docs/domain-model.md` amendment 8, which is binding and which the previous
+version of this table violated by presenting the rendered strings *as* the
+projection. The closed vocabulary (availability-display.md §2.4) supplies the
+words; the structural signature is file 11 §13.2. *Corrected by ticket 32.*
 
 Rate is a **Connector** property (grammar law 7): a dual-gun pedestal can carry
 two rates, and the short slot must never assert a station-level rate. The
 `From …` form is what makes the projection honest at station scope.
 
 **Where each slot renders it, measured:** the `03` card's price slot is cap 27 px
-Bold `#FFFFFF`, right-aligned, ink right edge x1075 (65 px inside the card); the
-`04` sticky slot is cap 36 px Bold, left-aligned, baseline 2446. Both are single
-lines with no room for the long ladder, which is the layout reason R4 exists.
+`#FFFFFF`, right-aligned, ink right edge x1075 (65 px inside the card); the `04`
+sticky slot is cap 36 px, left-aligned, baseline 2446. Both are single lines with
+no room for the long ladder, which is the layout reason R4 exists.
+
+**Neither slot is one weight — [RAISE-15], and this sentence used to say Bold.**
+The amount is Bold and **the unit tail is lighter**, by a different amount in
+each slot [m, ticket 32, integrated stem coverage]: `04` sticky at cap 36, `F` of
+`RWF` 6.92 px (stem/cap 0.192, Bold) against `d`/`a`/`y` 4.36 / 4.21 / 4.37 px
+(0.121, **Regular**); `03` card at cap 27, `1` 5.19 px and `F` 5.22 px (0.192,
+Bold) against `d`/`a` 1.65 px (0.061, **ExtraLight**). §4.1 row 15 and §7.8 carry
+the same single-weight error and are **not** corrected here — the weight
+assignment per slot is RAISE-15's to settle, and a build must not type either
+version until it does.
 
 ---
 
@@ -1387,8 +1513,9 @@ bottom offsets (34.3 pt vs 42.7 pt). Either the reference has two CTA sizes on
 purpose or this is drift; 1:1 means shipping both unless told otherwise.
 
 **[RAISE-5] Four alignment defects in the reference.**
-(a) The `Hybride` category chip's label is not centred — 88 px left padding
-against 29 px right. (b) `Basics and features` starts at x79 while `Description`
+(a) The `Hybride` category chip's label is not centred — **86 px** left padding
+against **30 px** right (corrected from 88/29, ticket 32; §7.5).
+(b) `Basics and features` starts at x79 while `Description`
 starts at x68 — an 11 px (3.7 pt) mismatch between two peer sub-heads on the same
 screen. (c) The crosshair's cross arms are inset 29 px from the left end and
 34 px from the right. (d) The three profile quick actions are **not evenly
@@ -1443,6 +1570,40 @@ own style JSON, which converts a reproduction into an authored accessibility
 decision. Reproducing it 1:1 is defensible (it is a basemap label, not product
 copy, and every one of those names is duplicated in the station data); lifting it
 is a deliberate deviation. Needs a ruling.
+
+**[RAISE-13 — NEW, ticket 32 → ticket 33] Every radius in §6 is under-read,
+because §6's method sentence states a false geometric identity.** The topmost
+scanline's fill does not begin `r` px in from the edge; it begins
+`r − √(2rd − d²)`, i.e. roughly `r − √r`. Five rows re-measured by three
+independent estimators (including a threshold-free area check) come back
+**16.4 / 16.2 / 19.5 / 15.5 / 38.4** against published **13 / 14 / 14 / 13 /
+31.5** — every one low, with the error tracking `√r`. §7.4's own quoted corner
+evidence (row 1797 first carries card colour at x79, 14.5 px in) is incompatible
+with the 14 px it was used to justify, which predicts 8.8 px. **Six rows have not
+been re-fitted**, so the system's signature finding — *images are rounder than
+containers* — can be neither confirmed nor overturned yet: at the re-measured
+values the floating card (19.5) overtakes the buttons (16.4) and approaches the
+images (30), and if the image rows are equally under-read the inversion may
+narrow, hold, or invert. Correcting the values moves `radius.*` in `packages/ui`
+and the **locked** radius table in `SPEC.md` §5, so it is a founder call and not
+a sweep correction. The values stand unchanged until it is made.
+
+**[RAISE-14 — NEW, ticket 32 → ticket 34] The extent convention is undeclared,
+and this file uses two.** See §0.1. The primary CTA is published AA-inclusive,
+the floating card core; each candidate convention breaks 2, 3 or 4 values locked
+in `SPEC.md`. Ticket 32 asked for a declaration and correctly could not make one
+unilaterally.
+
+**[RAISE-15 — NEW, ticket 32] The price string is two weights, and this file
+calls it one.** §4.1 row 15, §7.8 and §11.3 all describe `135 000 RWF/day` as a
+single Bold run. It is not: the **unit tail is lighter than the amount**, and the
+two slots use *different* lighter weights. Integrated stem measurement [m,
+ticket 32] — `04` sticky, cap 36: `F` of `RWF` 6.92 px (stem/cap 0.192, Bold),
+`d`/`a`/`y` 4.36 / 4.21 / 4.37 px (0.121, **Regular**); `03` card, cap 27: `1`
+5.19 px and `F` 5.22 px (0.192, Bold), `d`/`a` 1.65 px (0.061, **ExtraLight**).
+File 11 §13.2 is right that two weights exist but assigns Regular to all four
+consuming slots. This lands in §11.3 — a section ticket 32 was about to
+propagate into files 11 and 12 — so it is raised before it spreads.
 
 **Already raised by the ticket, restated because it lands in this file:** the
 `Google` wordmark on the map screens cannot be reproduced under MapLibre (ticket

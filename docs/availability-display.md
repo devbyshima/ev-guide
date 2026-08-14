@@ -97,7 +97,7 @@ Three regimes partition the space, and they are the whole grammar:
 |---|---|---|---|
 | 1 | `f = o = x = 0` (all Unknown) | capacity clause only — never a state word | `4 bays · no confirmed status` |
 | 2 | `u = 0` (nothing unknown) | totals permitted | `2 of 4 bays free` |
-| 3 | otherwise (mixed) | counts **without** a total | `1 free · 1 in use · 1 out of service · 1 unreported` |
+| 3 | otherwise (mixed) | counts **without** a total | `1 free · 1 busy · 1 out of service · 1 unknown` |
 
 Under a lens, all three regimes apply to the lensed subset, and the remainder
 is named **once, uncounted**, on one side of the partition: `2 other bays`.
@@ -118,9 +118,11 @@ is named **once, uncounted**, on one side of the partition: `2 other bays`.
 6. **Singular forms**: no `1 of 1`, no `All 1`.
 7. **Rate is denominated in plugs, never bays** — it is a Connector property,
    and a dual-gun pedestal can carry two different rates.
-8. **No string asserts report history.** `No confirmed bay status`, never `no
+8. **No string asserts report history.** `no confirmed status`, never `no
    recent report` — because the offline override yields `Unknown` from a
-   30-second-old report, which would make the second string false.
+   30-second-old report, which would make the second string false. *(The
+   permitted form read `No confirmed bay status` here until ticket 32; §2.2b
+   says `no confirmed status`, and one home means one string.)*
 
 ### 2.2b The forbidden strings — the one and only home
 
@@ -128,10 +130,20 @@ Every surface cites this list. **No other document may hold a copy**, because
 three of them tried during ticket 17 and produced four lists that were not the
 same list.
 
+**This table is the union, as of ticket 32 (2026-08-14).** It had *not* been the
+union before: the design record's own copy held three literals and a catch-all
+clause this table lacked (`last reported`, `awaiting a report`, `no reports yet`,
+and "any phrasing that asserts a report exists, does not exist, or is old"),
+while this table held five the design record lacked. Neither was a superset of
+the other, so the four copies were not merely redundant — **deleting the wrong
+one would have dropped live bans.** They are merged into row 1 and row 2 above,
+and the copies are now pointers. Adding a string here is a change to
+`packages/domain` and needs a fixture in the shared corpus (§3).
+
 | Forbidden | Why | Say instead |
 | --- | --- | --- |
-| `unreported`, `not reported`, `no recent report`, `no report yet` | Asserts report history. The offline override yields `Unknown` from a 30-second-old report, so these are false. | `no confirmed status` |
-| `unknown rate`, `rate unavailable`, `no rate reported`, `no published rate` | Same, for rates. | `no confirmed rate` |
+| `unreported`, `not reported`, `no recent report`, `no report yet`, `no reports yet`, `last reported`, `awaiting a report`, **or any phrasing that asserts a report exists, does not exist, or is old** | Asserts report history. The offline override yields `Unknown` from a 30-second-old report, so these are false. | `no confirmed status` |
+| `unknown rate`, `rate unavailable`, `no rate reported`, `no published rate` | Same, for rates. `no published rate` carries a second harm: it asserts a licensee is out of compliance with **RURA Art. 27(2)**. | `no confirmed rate` |
 | `real-time`, `live` (as a promise) | Ticket 28: availability is claimed as a bonus, never a promise. Banned in the UI, the store listing and onboarding alike. | say nothing; show freshness |
 | `0 of N free` | Grammar law 1 — a denominator may only appear when `u = 0`. | Regime 3 counts, no total |
 | `busy` applied to any bay that is `Unknown` or `OutOfService` | Law 3. | the state's own word |
@@ -162,6 +174,20 @@ hardcoding `operator report`).
 Connector type-words are one projection: `IEC_62196_T2` → `Type 2`,
 `IEC_62196_T2_COMBO` → `CCS2`, `GBT_AC` → `GB/T AC`, `GBT_DC` → `GB/T DC`,
 `OTHER`/`UNKNOWN` → `Other plug`.
+
+**The one word for `Occupied` (R1).** Moved here from the design record by
+ticket 32, where it was the only enumeration of the mapping and sat in a section
+whose own preamble forbade holding copies:
+
+| Context | String |
+| --- | --- |
+| Driver-facing, every surface | **`busy`** |
+| Operator-facing, every surface | **`busy`** |
+| The operator write-surface control label | **`Busy`** |
+
+`busy` quantifies `o` and nothing else (§2.2 law 3). **`in use` is deleted
+product-wide** — including the capitalised `In use`, which is in circulation in
+four places and is the same ban. It was only ever an example string in §2.1.
 
 ## 3. The shared fixture corpus
 
