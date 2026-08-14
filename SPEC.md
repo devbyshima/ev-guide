@@ -68,7 +68,7 @@ absence, not a gap in the research.
 | 1 | Cars only. Moto and battery swap out of scope, not deferred. `Station` carries a nullable vehicle-class tag nothing branches on. | [ADR-0001](docs/adr/0001-cars-only-swap-out-of-scope.md) |
 | 2 | Availability is per **Connector**, four states (`Free`/`Occupied`/`OutOfService`/`Unknown`), freshness a separate axis, decay by source **and** state. `Unknown` is the normal case, designed for, never rendered as failure. | [ADR-0002](docs/adr/0002-availability-model.md) |
 | 3 | Availability is **derived, never stored**. No table carries an availability column. Occupancy propagates across a Bay; brokenness does not. | [ADR-0008](docs/adr/0008-availability-derived-bay-propagation.md) |
-| 4 | Read anonymously; **save, report and profile-sync** require an account. Google + Apple + email magic link, **no SMS**. **Directions are ungated everywhere.** | [ADR-0003](docs/adr/0003-driver-identity-and-gating.md), as amended by ticket 23 |
+| 4 | Read anonymously; the gated acts are exactly three — **save, report, profile sync**. Google + Apple + email magic link, **no SMS**. **Directions are ungated everywhere, and so is `My plug`** (a device-local reading aid; only syncing it needs an account). | [ADR-0003](docs/adr/0003-driver-identity-and-gating.md), as amended by ticket 23 and 2026-08-14 |
 | 5 | Route **preview** in-app on self-hosted Valhalla; the **drive hands off to Google Maps**, deep-linked by `lat,lng`. No in-app turn-by-turn, therefore no CarPlay navigation entitlement. | [ADR-0004](docs/adr/0004-directions-preview-and-handoff.md) |
 | 6 | **MapLibre + self-hosted OSM vector tiles**, custom near-black style authored by EV Guide. Not Google: its ToS forbids the tile caching offline demands. | ticket 06 |
 | 7 | **Offline is first-class.** Kigali basemap (5.6 MB) + a directory snapshot ship in the binary; all-Rwanda pack (76 MB) opt-in; the decay derivation runs on device, so a stale green is structurally impossible. | [ADR-0007](docs/adr/0007-offline-model.md) |
@@ -86,6 +86,9 @@ absence, not a gap in the research.
 | 19 | **Bay-watch** is one-shot: only a **report-driven** transition into `Free` fires it, decay never does; 2 h expiry, max 3 armed. The design is the spam control — no rate limiter, no digest. Transport is raw APNs + FCM from BWEZE. | ticket 30 |
 | 20 | **Journey planning with charging stops is out of scope** — including the corridor filter and the remaining-charge isochrone. A future effort, not this map widened. | ticket 29 |
 | 21 | **Outbound acquisition of every kind happens only after the product is built.** The MININFRA annex request and the Kabisa disclosure are drafted and held. Manual entry stands. | founder rule 2026-08-13; tickets 25, 26 |
+| 22 | **Exactly two knowing 1:1 deviations exist**: the `Google` wordmark slot carries `© OpenStreetMap contributors`, and the location puck is redrawn off Google's `#4285F4` into `#FFFFFF` + `#C7FC2F`. Everywhere else the reference wins. | [ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md) |
+| 23 | **Two fidelity costs are carried rather than deviated around**: the hero badge is reproduced at 1.21:1 under a redundancy invariant, and the operator app ships **dark-only**, revisited only on launch-week evidence. | [ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md) |
+| 24 | **The typeface ships as an acceptance band, not a name**, and is chosen **free-first** — a retail licence only if no free face meets the band. Old-style figures are non-negotiable. | [ADR-0010](docs/adr/0010-typeface-acceptance-band.md) |
 
 ---
 
@@ -205,7 +208,11 @@ ExtraLight anti-aliasing. `color.iconMuted` is not a text token.
 body), body line-height 15 pt, tracking 0 at every size, weights 200/400/500/700.
 **Old-style figures (`onum`) are a required feature, not a preference.** One
 link style exists: accent, underlined, 0.67 pt, 1 pt below baseline,
-`skipInk: false`. **The typeface is not identified** — see §12.
+`skipInk: false`. **The typeface is not identified and ships as an acceptance
+band** — nine measured metrics and a 60-second overlay check, tested free-first
+([ADR-0010](docs/adr/0010-typeface-acceptance-band.md)). `packages/ui` must not
+pick a family from the design record. Every pt size below inherits ±3% from an
+assumed cap-height/em; **the cap heights themselves are exact.**
 
 **Spacing** (px @3x) — pageMargin 64 · cardMargin 38 · cardPadding 39 ·
 floatingCardPadding 64 · floatingCardBottomGap 64 · stickyBarPadding 90 ·
@@ -234,7 +241,8 @@ pin 120 × 147 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
 5. **The basemap palette across ~85% of the front door was never in the
    record.** Under MapLibre that style is EV Guide's to author (§2.6 of the
    design record is style-JSON ready), and the location puck is redrawn in
-   `#FFFFFF` + `#C7FC2F` — Google's `#4285F4` is not ours.
+   `#FFFFFF` + `#C7FC2F` — Google's `#4285F4` is not ours
+   ([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md)).
 
 **The governing finding about the reference: it is a read design.** It contains
 **no form control of any kind** — no text field, switch, picker, checkbox,
@@ -277,6 +285,14 @@ payouts` → **`Offline & map data`** (there is no payment concept to host);
 reference's search/discovery framing → `stationsNear`; the crosshair → the
 content datum; and pin availability solved 1:1 by **re-tenanting the
 reference's own status dot** at (+53, −53) px, tangent to the pin rim.
+
+**Attribution and the badge.** D-01's bottom-left mark slot carries
+`© OpenStreetMap contributors` in the reference's own type treatment, tapping
+through to D-10 — the first of the product's two knowing deviations
+([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md)). D-03's
+hero badge is reproduced at its measured 1.21:1 contrast under the **redundancy
+invariant**: any value on the badge is restated in readable form below it, and
+it carries peak power or nothing.
 
 **What the pin deliberately does not say.** One additive channel, spent on the
 only actionable fact: a free-bay dot or nothing. It does not distinguish
@@ -327,6 +343,14 @@ observation; `capturedAt`/`capturedLocation` are stamped per tap; the derived
 bay line is rendered unlensed through availability-display §1.1; and the three
 writable states are labelled **`Free` · `Busy` · `Out of service`** from the
 closed vocabulary. Offline, writes queue and the count is shown.
+
+**7.1a It ships dark-only, and that is a known cost.** O4 is used standing at a
+charger in equatorial daylight, and the measured palette has no light theme to
+switch to. No light theme, contrast mode or brightness override ships in v1;
+the one mitigation the palette permits — Regular rather than ExtraLight on every
+derived data line — is already applied. Revisited **only** on launch-week
+evidence, when studio staff are using O4 in real sunlight
+([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md)).
 
 **7.2 Owner stats: four metrics and three absences.** Views, direction taps,
 reports received, own uptime. There is no kWh, no revenue and no session count
@@ -473,24 +497,35 @@ record's raise lists. **None of these is settled by this document.**
 
 - Tickets **27 → 24 → 20**, then **§9** (see there).
 
-**Founder calls owed**
+**Founder calls — all five ratified 2026-08-14, and now decisions 4, 22, 23
+and 24.** The typeface acceptance band and its free-first selection
+([ADR-0010](docs/adr/0010-typeface-acceptance-band.md)); the two knowing
+deviations and the two fidelity costs
+([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md)); and
+`My plug` staying ungated ([ADR-0003](docs/adr/0003-driver-identity-and-gating.md)
+amendment). They are listed here only so a reader who remembers them as open
+finds where they went.
 
-- **The typeface is not identified.** Old-style figures rule out every
-  geometric candidate; Raleway fell from 65% to 15% on re-derived metrics. What
-  ships is an **acceptance band**, not a name — and if the chosen face has no
-  old-style set, a substantial part of the reference's character cannot be
-  reproduced. Every fit check in the screen record is conditional on this.
-- **Two knowing 1:1 deviations**, both recommended and neither ratified: the
-  reference's **`Google` wordmark** is unreproducible under MapLibre and is
-  replaced by `© OpenStreetMap contributors` in the same slot; and the location
-  puck is redrawn off Google's `#4285F4`.
-- **`My plug` stays ungated** (a device-local reading aid; only *syncing* it
-  needs an account) — flagged for ratification because ticket 12's question can
-  be read either way.
-- **The hero badge's `#FFFFFF` label measures 1.21:1** and is reproduced 1:1
-  with a redundancy invariant; `color.onAccent` is named as the alternative.
-- **The operator app is a dark-only design used outdoors**, standing at a
-  charger in daylight. No light theme exists in the reference.
+**Conditions that would reopen a ratified call**
+
+- **No free face carries an old-style figure set** at the acceptance band. Then
+  the choice is a retail licence or losing the reference's figure character —
+  a fresh founder call, not a detail to drop (ADR-0010).
+- **Launch-week operators cannot read O4 in sunlight.** A light theme is then a
+  commissioned design pass with its own premise, not a token swap (ADR-0009).
+- **`Rebero` and `Remera` do not exist in OSM as places** and must be added
+  upstream before the basemap can reproduce the reference's own label set — a
+  consequence of the attribution decision, and unowned work.
+
+**Still owed by the design record, unratified**
+
+- **No pressed, disabled, focused, loading, error, empty or confirmation state
+  exists anywhere in the reference** — unmeasurable from four stills. A read
+  design survives that; every write screen in the operator app and admin needs
+  at least three of them. This is the largest remaining gap, and it is a design
+  pass to commission, not a value to derive.
+- **No text or numeric input exists**, and `packages/ui` must build one from the
+  feature-chip surface for O5a and every admin form.
 
 **Model gaps with no entity behind them**
 
@@ -542,6 +577,10 @@ Each is a test, not a review item.
 7. **`packages/domain` imports no platform module**, and both data
    implementations satisfy the protocols.
 8. **The word `real-time` appears nowhere** — app, store listing, or onboarding.
+9. **The chosen typeface passes the nine-metric acceptance band**, re-run
+   whenever the face changes (ADR-0010).
+10. **The redundancy invariant holds**: no value appears on the hero badge
+    without being restated in readable form below it (ADR-0009).
 
 ---
 

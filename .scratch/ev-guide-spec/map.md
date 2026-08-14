@@ -30,7 +30,13 @@ default; `/research` for the AFK tickets; `/prototype` for the UI tickets.
 - **Reference designs are implemented 1:1**, no deliberate deviations. The four
   screenshots in `refs/` are the UI source of truth; see
   `refs/design-observations.md`. Raise impossibilities *before* building
-  alternatives.
+  alternatives. **Exactly two deviations exist, both founder-ratified
+  2026-08-14** — the `Google` wordmark slot carries the OSM attribution, and the
+  location puck is redrawn off Google's blue. Two further calls chose fidelity
+  *over* readability (the 1.21:1 hero badge, the dark-only operator app). All
+  four in [ADR-0009](../../docs/adr/0009-reference-fidelity-deviations-and-costs.md);
+  the typeface ships as an acceptance band, not a name
+  ([ADR-0010](../../docs/adr/0010-typeface-acceptance-band.md)).
 - **EV Guide is free, with no monetisation anywhere** — no driver payments, no
   operator subscription, no paid listings. No billing infrastructure, no plan
   tiers, anywhere in the architecture.

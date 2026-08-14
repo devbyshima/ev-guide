@@ -2,7 +2,7 @@
 
 Date: 2026-08-13
 Status: Accepted — **amended 2026-08-13 by ticket 23: directions are no
-longer gated** (see Amendment below)
+longer gated**, and **2026-08-14: `My plug` is ungated** (see Amendments below)
 
 ## Context
 
@@ -67,6 +67,24 @@ the total addressable user base is a few thousand people.
 
 **Phone/OTP.** Rejected on recurring cost against no revenue, with no offsetting
 benefit for this demographic.
+
+## Amendment (2026-08-14, founder ratification)
+
+**`My plug` — the driver's own connector type — is ungated.** Setting it is a
+**device-local preference**, not an act: it is a reading aid over a read surface
+that is already anonymous. **Syncing it across devices still requires an
+account**, which is where the account genuinely earns its keep.
+
+Ticket 12's question and its answer could be read either way, which is why
+ticket 19 flagged it rather than deciding it. It resolves this way because the
+lens is what makes the map answer **"free *for me*"** (ADR-0002) — the product's
+differentiating promise. Gating it would make the unlensed aggregate the normal
+case for every anonymous driver, and for **every store reviewer**, who will
+never sign in and would therefore never see the feature the review is being
+asked to judge.
+
+The gated acts remain exactly three: **save, report, profile sync.** All three
+are inherently account-based, which is what Guideline 5.1.1(v) permits.
 
 ## Amendment (2026-08-13, ticket 23)
 

@@ -47,7 +47,29 @@ Two staleness fixes made in passing: `README.md`'s status block (it still said
 the codebase shape was undecided; ADR-0006 settled it), and its claim that the
 effort had no spec.
 
-**Not done, and not this ticket's to do:** the founder calls in SPEC.md §12 —
-the typeface acceptance band, the two knowing 1:1 deviations, `My plug`'s
-gating, the hero badge's contrast, and the operator app's dark-only palette
-used outdoors.
+## Founder calls closed (2026-08-14)
+
+All five items SPEC.md §12 carried as owed were ruled the same day, each as
+recommended, and are now decisions 4, 22, 23 and 24:
+
+- **Typeface** — ships as the §3.5 **acceptance band, not a name**, selected
+  **free-first** with a retail licence only if no free face meets the band.
+  Old-style figures stay non-negotiable.
+  [ADR-0010](../../../docs/adr/0010-typeface-acceptance-band.md).
+- **The two knowing deviations ratified** — `© OpenStreetMap contributors` in
+  the wordmark slot; the puck redrawn `#FFFFFF` + `#C7FC2F`.
+- **Two fidelity costs carried rather than deviated around** — the hero badge
+  reproduced at 1.21:1 under a redundancy invariant, and the operator app
+  shipping dark-only, revisited only on launch-week evidence.
+  [ADR-0009](../../../docs/adr/0009-reference-fidelity-deviations-and-costs.md)
+  holds all four, because a future reader who notices any one of them asks the
+  same question.
+- **`My plug` stays ungated** — ADR-0003 amended. The gated acts are exactly
+  three: save, report, profile sync.
+
+§12 keeps what those rulings leave behind: the three conditions that would
+reopen a ratified call (no free face with old-style figures; O4 unreadable in
+sunlight; `Rebero`/`Remera` missing from OSM), and the two design gaps still
+unratified — **no pressed/disabled/error/empty/confirmation state exists in the
+reference**, and **no text input exists**. Both are design passes to commission,
+not values to derive.
