@@ -76,4 +76,85 @@ reject, then synthesised into one record.
 
 ## Answer
 
-*(pending)*
+**Delivered 2026-08-14.** Two design streams, each adversarially reviewed and
+revised against its verdict; both v1s were **rejected** (3 fatal + 15 major, and
+3 fatal + 8 major). ~6,500 lines across six documents:
+
+| | v1 | verdict | v2 |
+| --- | --- | --- | --- |
+| Interaction states | [14](../design/14-interaction-states-v1.md) | [16](../design/16-interaction-states-verdict-v1.md) | **[18](../design/18-interaction-states-v2.md)** |
+| Form controls | [15](../design/15-form-controls-v1.md) | [17](../design/17-form-controls-verdict-v1.md) | **[19](../design/19-form-controls-v2.md)** |
+
+Plus [20 — the staleness sweep](../design/20-staleness-sweep.md), which the
+review round forced into existence and which became ticket 32.
+
+### The two results that govern everything else
+
+**1. State is carried by the accent or by copy, never by a surface swap alone.**
+The four surface greys span **1.75 : 1** end to end; `surface`→`surfaceRaised`
+is **1.08 : 1**. No grey-to-grey swap reaches the 3 : 1 a non-text signal needs.
+Every instinct a designer brings to this problem — dim on press, grey out when
+disabled, a paler placeholder — is inventing a channel the measured palette does
+not have. This one line of arithmetic decided both documents.
+
+**2. EV Guide has no disabled state and no disabled token**, proved against 23
+places. A control is **absent**, or it **refuses in words**, or it is
+**transiently inert** — split by *who can satisfy the precondition, and when*.
+This is already the product's grammar (the hosting card is absent without a
+membership; O9 offers no action because no self-serve path exists), and it is
+derived from the reference rather than invented: a settings row has no trailing
+affordance, so a dead row is still a true statement, while a 46 pt accent slab
+is not.
+
+### What the pass produced
+
+- **Seven states as five components**, not seven: `StateLine` (one body line
+  doing five jobs, in three measured slots), `Placeholder`, `PressableSurface`,
+  the confirmation surface, and the empty-state composition.
+- **Ten controls**, each justified by a named screen — text field, numeric field,
+  trailing check, CTA-geometry control, native and admin selects, A9's
+  admin-native availability buttons, file upload, ordered grid, caret/selection
+  — and **eight controls refused**: placeholder, radio, date, stepper, slider,
+  search, segmented, toast. A control no screen needs is not designed.
+- **`packages/ui` prohibitions as build failures**, the sharpest being that React
+  Native ships the forbidden opacity ramp and motion **by default**: a bare
+  touchable must fail the build.
+- **Five OS-drawn surfaces declared**, up from the three the corpus believed.
+
+### Corrections this pass owes the corpus
+
+- **`saving` should not exist** in the operator app — the write is local, and a
+  spinner for an operator in a basement never resolves. **A3/A5 keep it**: all
+  three grounds are false for a web SPA.
+- **`[RAISE-D21] points at the wrong surface.** The field is the
+  secondary-control box, not the 35 pt feature chip. Four documents needed
+  amending, **including ratified SPEC.md §12** — until fixed, a build reading
+  the spec ships a 35 pt tap target. **Fixed in SPEC.md the same day.**
+- **60 stale values** across files 11 and 12 → **ticket 32**.
+- **Three documents each claim to own the forbidden list**, at three addresses,
+  with three different row counts.
+
+### Two holes found that no screen had
+
+- **O2's cold start is pixel-identical to O9** — a slow link tells a brand-new
+  owner that they hold no stations. The free half of the fix ships regardless:
+  O9 may not paint until the membership query has returned zero.
+- **A server-rejected queued write has no surface**, and the obvious home fails
+  for exactly the case that produces it — the membership was revoked, so the
+  station is gone.
+
+### Still open
+
+**19 founder calls**, listed in [18 §13](../design/18-interaction-states-v2.md)
+(11) and [19 §11](../design/19-form-controls-v2.md) (8), and summarised in
+SPEC.md §12. The load-bearing ones: pressed rendering nothing; O4's 1 px divider
+at 1.75 : 1, where a wrong-row tap files a false report about the wrong bay and
+no mitigation exists inside the palette; the server-rejection surface; the
+selection highlight as the product's first accent tint; and accepting the
+platform dialog's red into a product that has none.
+
+**One live contradiction between the streams**, deliberately not resolved by
+either: O4's zero-touch `Save`. [19 F11] proposes replacing the dead button with
+a refusal line; [18 §5.3] declines, because the sticky bar would reflow under
+the operator's aim on the first tap and the label is their readout of the size
+of the claim. Recorded as **S-6** — a founder call, not a merge conflict.

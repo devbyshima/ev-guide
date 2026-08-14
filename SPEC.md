@@ -255,11 +255,30 @@ pin 120 × 147 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
 **no form control of any kind** — no text field, switch, picker, checkbox,
 segmented control, empty state, error state, pressed/disabled state, menu,
 table, or any persistent chrome. Every write surface in the operator app and
-admin composes from what exists: the settings row, the CTA geometry, the chip
-surface, and one trailing accent check at 24 pt / 2 pt stroke. **The absence of
-a tab bar is a positive finding** and fixes navigation everywhere: full-screen
-surfaces reached by a push (back `←`) or a presentation (close `×`), plus one
-floating avatar.
+admin composes from what exists: the settings row, the CTA geometry, and one
+trailing accent check at 24 pt / 2 pt stroke. **The field is the secondary-control
+box** — `color.surface` at `size.ctaHeight` 138 px, `radius.button` 13 px,
+`space.chipPaddingH` 30 px inset — **and never the feature chip**, which is
+35 pt and which the driver record rules out for controls product-wide. **The
+absence of a tab bar is a positive finding** and fixes navigation everywhere:
+full-screen surfaces reached by a push (back `←`) or a presentation (close `×`),
+plus one floating avatar.
+
+**The states are designed** (ticket 31, two adversarial rounds:
+[states](.scratch/ev-guide-spec/design/18-interaction-states-v2.md) ·
+[controls](.scratch/ev-guide-spec/design/19-form-controls-v2.md)). Two results
+govern everything built on this system:
+
+- **State is carried by the accent or by copy, never by a surface swap alone.**
+  The four greys span **1.75:1 end to end** and surface→raised is **1.08:1**, so
+  no grey-to-grey swap reaches the 3:1 a non-text signal needs. A press that
+  dims, a placeholder that greys, a disabled control that fades — each is
+  inventing a channel the measured palette does not have.
+- **EV Guide has no disabled state and no disabled token**, tested against 23
+  places. A control is **absent**, or it **refuses in words**, or it is
+  **transiently inert** — split by who can satisfy the precondition and when.
+  This is already the product's grammar: the hosting card is absent without a
+  membership, and O9 offers no action because no self-serve path exists.
 
 ---
 
@@ -524,15 +543,31 @@ finds where they went.
   upstream before the basemap can reproduce the reference's own label set — a
   consequence of the attribution decision, and unowned work.
 
-**Still owed by the design record, unratified**
+**The states design pass is done, and it left founder calls**
 
-- **No pressed, disabled, focused, loading, error, empty or confirmation state
-  exists anywhere in the reference** — unmeasurable from four stills. A read
-  design survives that; every write screen in the operator app and admin needs
-  at least three of them. This is the largest remaining gap, and it is a design
-  pass to commission, not a value to derive.
-- **No text or numeric input exists**, and `packages/ui` must build one from the
-  feature-chip surface for O5a and every admin form.
+Ticket 31 closed the largest gap: the seven interaction states and the form
+controls are specified, each stream adversarially reviewed and revised. What
+it could not settle inside the measured palette is a set of **19 founder
+calls**, consolidated in the ticket's answer. The ones that change what ships:
+
+- **Pressed has no channel that reaches 3:1.** The recommendation is that
+  pressed renders nothing and the result is the feedback — which makes latency
+  a specification rather than an implementation detail.
+- **O4's 1 px divider is the serious one.** It is the only separator between
+  connector rows inside a bay, it sits at 1.75:1, and a wrong-row tap files a
+  false report about the wrong bay. No mitigation exists inside the palette.
+- **A server-rejected queued write has no surface**, and three of four candidate
+  homes fail structurally while the fourth fails for the very case that produces
+  it — the membership was revoked, so the station is gone.
+- **The selection highlight would be the product's first accent tint**, which
+  §10.1 says does not exist.
+- **The platform's confirmation dialog brings Apple's and Google's red** into a
+  product with no red.
+
+**Corrections owed, and they are not cosmetic** — see ticket 32: the sweep found
+**60 stale values** in the two screen inventories, all cited as measured. Fifteen
+of sixteen fit calculations survive at corrected values, so nothing designed has
+to be redesigned; the sixteenth is an asserted impossibility that is not one.
 
 **Model gaps with no entity behind them**
 
@@ -588,6 +623,13 @@ Each is a test, not a review item.
    whenever the face changes (ADR-0010).
 10. **The redundancy invariant holds**: no value appears on the hero badge
     without being restated in readable form below it (ADR-0009).
+11. **No disabled token exists**, and no bare touchable ships. React Native's
+    `activeOpacity` and `android_ripple` deliver the forbidden opacity ramp and
+    motion **by default**, so every call site goes through `PressableSurface`
+    and a bare touchable fails the build (ticket 31 §12.2).
+12. **The forbidden list has exactly one home.** Three documents currently claim
+    it at three addresses with three different row counts; the design records
+    become citations of availability-display.md §2.2b, enforced by grep.
 
 ---
 
