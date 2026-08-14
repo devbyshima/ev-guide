@@ -19,13 +19,21 @@ owner → operator hierarchy.
 
 ## Status
 
-**Charting.** This effort is currently a `/wayfinder` map, not a build. The
+**Charting, nearly done.** This effort is a `/wayfinder` map, not a build. The
 destination is a locked `SPEC.md` plus ADR set that an implementation effort
 can execute from without relitigating decisions.
 
+- **The spec: [`SPEC.md`](SPEC.md)** — locked for the phone and web surfaces.
+  Its car-integration section is deliberately unwritten, pending the device
+  test (ticket 27), the scoping call (24) and the platform filings (20).
+- The decisions: [`docs/adr/`](docs/adr/) · the model:
+  [`docs/domain-model.md`](docs/domain-model.md) · the availability grammar:
+  [`docs/availability-display.md`](docs/availability-display.md)
 - The map: [`.scratch/ev-guide-spec/map.md`](.scratch/ev-guide-spec/map.md)
 - The tickets: [`.scratch/ev-guide-spec/issues/`](.scratch/ev-guide-spec/issues/)
 
-No Expo app has been initialised yet — the codebase shape (one app or two,
-monorepo layout, admin web stack) is ticket 15, and running `create-expo-app`
-now would bake in an answer that ticket hasn't made.
+No Expo app has been initialised yet, on purpose. The codebase shape is settled
+([ADR-0006](docs/adr/0006-codebase-shape.md) — two Expo apps, one pnpm
+monorepo, a Vite admin), but `create-expo-app` pins an SDK, and the platform
+floor is a rule: the latest stable SDK at **build** start. That is a separate
+effort.
