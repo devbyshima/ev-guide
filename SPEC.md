@@ -233,7 +233,8 @@ pin 120 × 147 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
 
 **Five findings that would each have shipped visibly wrong:**
 
-1. **The CTA is not a pill** — r ≈ 13 on a 137 px button, and not full-width.
+1. **The CTA is not a pill** — r ≈ 13 on a **899 × 138 px** button (a pill would
+   be r 69), and not full-width.
 2. **There is no grey text.**
 3. **The `03` container is a floating card**, not a bottom sheet — 14 px on all
    four corners, 64 px above the screen bottom.
