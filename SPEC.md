@@ -198,7 +198,9 @@ only — no React Native components**, and the 1:1 rule does not govern it.
 `#3E3E3E` raised/divider · `#C7FC2F` accent (**exactly one value, no tints, no
 gradients**) · `#121212` on accent · `#FFFFFF` **the only text colour** ·
 `#262626` handle · `#717171` `iconMuted` (the `03` heart and only that) ·
-pin `#FFFFFF`/`#F3F3F3`/`#393939`.
+pin `#FFFFFF`/`#F3F3F3`/`#393939` · `#121212` `iconOnLight` (the map avatar's
+person glyph) · `#000000` `iconOnLightBlack` (**the locate arrow only** — two
+blacks on the accent is an open raise, not a licence to use either freely).
 
 Deliberately absent: any secondary/muted text token, opacity ramp, elevation
 colour or accent tint. **There is no grey text tier** — what looked like one is
@@ -237,7 +239,11 @@ pin 120 × 147 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
    be r 69), and not full-width.
 2. **There is no grey text.**
 3. **The `03` container is a floating card**, not a bottom sheet — 14 px on all
-   four corners, 64 px above the screen bottom.
+   four corners, with **64 px of live map between its bottom edge and the CTA**
+   (`space.floatingCardBottomGap`), and 305 px between it and the screen bottom.
+   It is never anchored to the screen edge: `packages/ui` names it `StationCard`
+   and must not build it on a sheet primitive, whose whole contract is bottom
+   anchoring.
 4. **The handle is 180 px**, and `#262626`.
 5. **The basemap palette across ~85% of the front door was never in the
    record.** Under MapLibre that style is EV Guide's to author (§2.6 of the
