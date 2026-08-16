@@ -3,3 +3,6 @@ node_modules/
 *.log
 .expo/
 dist/
+
+# Unsent outbound correspondence — kept local, never committed (see ticket 26)
+.scratch/ev-guide-spec/correspondence/
