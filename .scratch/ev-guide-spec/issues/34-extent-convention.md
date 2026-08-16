@@ -1,7 +1,8 @@
 # 34 — Declare the extent convention, and pay for it in SPEC.md
 
 Type: decision
-Status: open — raised 2026-08-14 by ticket 32
+Status: **resolved 2026-08-16** — integrated declared, SPEC.md amended;
+remaining sizes swept under ticket 36
 Blocked by: — (the measurement is done; this is a cost decision)
 
 ## Question
@@ -95,4 +96,76 @@ convention-dependent and move if this ticket rules for core or integrated.
 
 ## Answer
 
-*(pending)*
+**Ruled 2026-08-16 by the founder: the convention is INTEGRATED, and `SPEC.md`
+is amended to match.** Both halves of question 2 went the truthful way rather
+than the cheap way.
+
+### 1. The declaration
+
+> **A component's published size is its *integrated* extent** — the sum of
+> coverage across a cut, i.e. where the element's edges truly lie, independent of
+> the sub-pixel phase the rasteriser happened to catch them at. This is the
+> convention `§0.1` already mandates for strokes; it now governs every size in
+> the record. **Core and AA-inclusive readings are diagnostic only** and are
+> given alongside where they differ, never published alone.
+
+The argument that carried it is the one the ticket already made: integrated is
+the only reading that measures the *element* rather than its accidental phase,
+and the only one that reproduces the reference when typed into a build. Its two
+costs are accepted — it breaks the most locked values (4), and it is the only
+candidate that yields fractional tokens.
+
+### 2. Rounding — question 3
+
+**Tokens carry the fraction. Nothing is rounded.** `size.ctaHeight` is
+**137.25 px = 45.75 pt**, written as measured. A rounding rule is exactly the
+undocumented tiebreak that produced commit `6a5a922`, and the cheapest way to
+guarantee this defect never regenerates is to have no tiebreak to get wrong.
+Fractional px at @3x are not an implementation problem: 137.25 px is 45.75 pt,
+which React Native lays out exactly.
+
+Where px/3 is not exact the pt value is given to **two** decimals (v2's §0.1 said
+one, which cannot represent 45.75); the px figure remains authoritative.
+
+### 3. The converted values
+
+| Element | published was | **integrated (published now)** | pt |
+| --- | --- | --- | --- |
+| Primary CTA (`01`, `03`) | 899 × 138 (AA-inclusive) | **898.00 × 137.25** | 299.33 × 45.75 |
+| Floating card (`03`) | 1076 × 521 (core) | **1077.60 × 521.53** | 359.20 × 173.84 |
+| Sticky CTA (`04`) | 513 × 131 (core) | **513.00 × 131.25** | 171.00 × 43.75 |
+| Map pin (`01`) | 122 × 147 (neither) | **122.30 × 147.25** | 40.77 × 49.08 |
+| Drag handle (`03`) | 180 × 13 | **180.00 × 12.75** | 60.00 × 4.25 |
+| Feature chip height (`04`) | 105 | **105.49** | 35.16 |
+| Category chip (`03`) | 254 × 76 | **254.75 × 76.75** | 84.92 × 25.58 |
+
+The handle and the two chips were **not** among the four the ticket named; they
+came out of ticket 33's re-fit, which had to establish each element's true box
+before it could fit a radius to it. The handle's height matters beyond bookkeeping
+— **½ of 12.75 is 6.4, which is the handle's radius**, so the convention and the
+radius are the same measurement.
+
+### 4. What this costs, paid
+
+Four locked `SPEC.md` values move, as counted: `size.ctaHeight`,
+`size.ctaHeightSticky`, `size.floatingCard`, `size.pin`. `SPEC.md` §5 is amended
+under this ticket together with ticket 33's radii, and §12's form-control
+sentence — *"the field is the secondary-control box — `color.surface` at
+`size.ctaHeight` 138 px"* — is amended with it. **Commit `6a5a922` is reverted
+in substance**: the CTA height returns past 137 to **137.25**, which is what it
+always measured.
+
+### 5. What is NOT converted, and why that is a ticket
+
+`SPEC.md`'s component-size line carries ~15 further values — circular buttons
+80/90/98/139, quickAction 150, the three avatars, thumbnail 300, statusDot 20,
+accentRing 3, puck 40/82 — **all measured before a convention existed**. Several
+almost certainly read the same under all three (the sticky CTA's 513 px width is
+the worked example of an element whose edges are hard), but *which* ones has not
+been checked, and the thumbnail already looks like it is not 300.00 on a single
+cut. Converting them by assumption would be the same move that produced
+`6a5a922`.
+
+**Raised as [ticket 36](36-size-line-convention-sweep.md)**: sweep the remaining
+sizes to the declared convention. Until it closes, those values are marked in
+`SPEC.md` as pre-convention.

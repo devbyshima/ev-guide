@@ -20,23 +20,24 @@
 > is **file 10's**, a plain one (§4.4, §8) is **this file's**, anything else is
 > named.
 >
-> **2. No radius in this file may be read by a build until ticket 33 rules —
+> **2. Every radius in this file was frozen pending ticket 33, and is now released —
 > file 10 [RAISE-13].** File 10 §6's measurement method was found to state a
 > false geometric identity (it read the first scanline's inset as `r`; the true
 > inset is `r − √(2rd − d²)`, roughly `r − √r`), so **every** published radius is
 > under-read — primary CTA 16.4 against 13, sticky CTA 16.2 against ~14, floating
 > card 19.5 against 14, hosting card 15.5 against 13, category chip 38.4 against
-> 31.5 — and six further rows have never been re-fitted. Correcting them moves
+> 31.5 — and six further rows had not been re-fitted. Correcting them moves
 > `radius.*` in `packages/ui` **and** the locked radius table in `SPEC.md` §5, so
-> it is a founder call routed to ticket 33. Every radius occurrence below is
-> therefore left at the number it already carried and marked
-> **`[radius frozen: RAISE-13/ticket 33]`** — **nine values at eight locations**
-> (`radius.button` 4.5 pt ×4 at §3/O1 twice, §4.3 and §7; `radius.card` 4.3 pt
-> at §3/O2 and 13 px at §5.1; `radius.image` 10 pt at §3/O2 and §7; the hosting
-> card's icon-tile ≈15 px at §5.1).
-> Neither this file's numbers nor file 10's published ones may be typed into
-> `packages/ui` until ticket 33 rules, and §7's *images-are-rounder-than-
-> containers* signature is one of the things ticket 33 may overturn.
+> it was a founder call routed to ticket 33.
+>
+> **RELEASED 2026-08-16 — ticket 33 closed.** All nine frozen values carry their
+> corrected numbers: `radius.button` **5.5 pt**, `radius.card` **5.2 pt**
+> (**15.6 px**), `radius.image` **10.6 pt**, the hosting card's icon tile
+> **15.2 px**. §7's *images-are-rounder-than-containers* signature **survives**
+> — images 10.6 pt against containers 4.5–6.5 pt, narrowed from 2.1× to 1.6× but
+> nowhere near inverting — though two riders on it were struck: buttons are not
+> the least-rounded thing (the feature chip is), and the floating card is not in
+> the buttons' bracket.
 >
 > **3. Two sizes used below are extent-convention-dependent — file 10
 > [RAISE-14], ticket 34.** File 10 §0.1 records that a component's size reads
@@ -400,8 +401,7 @@ supplied it.
 `type.display` 26 pt Bold, accent link at `type.link` — `type.body` Regular
 `#C7FC2F` **underlined**, 0.67 pt thick, 1 pt below the baseline,
 `skipInk: false`; file 10 §4.4's M3 correction, which this file had not carried)
-+ `§7.1` primary CTA (`size.ctaHeight` 46.0 pt, `radius.button` 4.5 pt
-*[radius frozen: RAISE-13/ticket 33]*) × 3.
++ `§7.1` primary CTA (`size.ctaHeight` 46.0 pt, `radius.button` **5.5 pt** [ticket 33]) × 3.
 
 Same providers as the driver app, unchanged by ADR-0003's amendment: Google,
 Sign in with Apple, email magic link. **No SMS.** Sign in with Apple is
@@ -414,7 +414,7 @@ needs one) both apply to this screen unchanged; they are not re-raised here.
 against a reference that spends the accent on **one** CTA per screen (~3.9% of
 map-screen pixels, `refs/design-observations.md`). One provider takes the
 accent CTA (platform-primary: Apple on iOS, Google on Android); the other two
-take the same 46.0 pt / 4.5 pt *[radius frozen: RAISE-13/ticket 33]* geometry
+take the same 46.0 pt / **5.5 pt** [ticket 33] geometry
 with `color.surface` `#393939` fill and
 `color.text` label — a fill the reference uses for every other tappable thing
 (`§7.2`). No new value is introduced.
@@ -431,10 +431,9 @@ a guard test that has to special-case its own document is a guard test nobody
 keeps.)
 
 **Assembled from:** `§7.10` hosting card as the row *container* (`#393939`,
-`radius.card` 4.3 pt *[radius frozen: RAISE-13/ticket 33]*, `space.cardPadding`
+`radius.card` **5.2 pt** [ticket 33], `space.cardPadding`
 13 pt, `space.cardMargin` 12.7 pt) + `§7.4` **floating-card**-body composition
-as its *contents* (leading 100 pt media at `radius.image` 10 pt *[radius frozen:
-RAISE-13/ticket 33]*; `type.heading` 17 pt Bold title; `type.body` 13 pt
+as its *contents* (leading 100 pt media at `radius.image` **10.6 pt** [ticket 33]; `type.heading` 17 pt Bold title; `type.body` 13 pt
 Regular subtitle; a bottom-right value slot where the card puts its price).
 *(`§7.4`'s M2 correction renamed this component: it is a **floating card**, not
 a bottom sheet — `packages/ui` must name it `StationCard` and must not build it
@@ -832,7 +831,7 @@ Bay B
 
 **Assembled from:** `§7.1` primary CTA **geometry** (`size.ctaHeight` **46.0 pt**
 — 138 px, the AA-inclusive reading file 10 publishes; see the revision note's
-[RAISE-14], and `radius.button` 4.5 pt *[radius frozen: RAISE-13/ticket 33]*)
+[RAISE-14], and `radius.button` **5.5 pt** [ticket 33])
 carrying the **`§7.8` sticky CTA's label size** (cap 32
 Medium), with the two fills the reference already distinguishes —
 `color.surface` `#393939` + `color.text` label when unselected, `color.accent`
@@ -1037,7 +1036,7 @@ itself the defect: it converts one file's error into two files' agreement.)*
 | --- | --- |
 | Frame | **x 39 → 1166, y 1448 → 1781 = 1128 × 334 px = 376.0 × 111.3 pt** [m, file 10 `§7.10`] — *was `x 38 → 1167, y 1448 → 1782 = 1130 × 335`, which is the **AA** extent read as the core; `§7.6` records the same 1 px AA columns on the settings dividers of the same card family* |
 | Padding | **39 px = 13.0 pt top and left; 38 px = 12.7 pt bottom — not uniform** [m, file 10 `§7.10`, corrected under ticket 32] — *was "39 px all four sides"*. Top `1487 − 1448 = 39`, left `78 − 39 = 39`, bottom `1781 − 1743 = 38`. `space.cardPadding` is 39 and the bottom edge is 1 px tighter than the token |
-| Icon tile | **256 × 257 px = 85.3 × 85.7 pt** `#3E3E3E` (x78–333, y1487–1743), radius ≈15 px *[radius frozen: RAISE-13/ticket 33]* — *was `257 × 257`; **it is not square**, and never quote one pt figure for both axes* |
+| Icon tile | **256 × 257 px = 85.3 × 85.7 pt** `#3E3E3E` (x78–333, y1487–1743), radius **15.2 px** [ticket 33] — *was `257 × 257`; **it is not square**, and never quote one pt figure for both axes* |
 | Title ink | y 1522 → 1570, baseline 1558, **cap 37 Bold** [m] — file 10 `§7.10` measures this title at **cap 37**, and that is correct here: the run is `Switch to hosting mode`, whose round `S` reads 1–2 px tall (`§4.1`'s asterisk). It is **not** the primary CTA's cap 36 and must not be "corrected" to it |
 | Body ink | y 1592–1620 · 1637–1673 · 1682–1718 — **3 lines, 45 px pitch**, cap 28 ExtraLight [m, file 10 `§7.10` + `§4.3`] |
 | Content box | **y1487 → y1743 = 257 px** [m] = `334 − 39 − 38` [d] |
@@ -1075,7 +1074,7 @@ line would run to 1763 and **overrun by 20 px** [d]. Therefore:
 > needed a new *derivation*, not a new *value*.
 
 Everything else about the card is reproduced from file 10 `§7.10` unchanged:
-fill `#393939`, `radius.card` 13 px *[radius frozen: RAISE-13/ticket 33]*,
+fill `#393939`, `radius.card` **15.6 px** [ticket 33],
 tile→text 67 px, and a **lime glyph at a 9.8 px integrated stroke = 3.3 pt**
 (the reference's car-with-arrow → a charger-with-arrow, drawn to the `§8` rule).
 **[RE-DERIVED, ticket 32]:** the stroke was quoted as *"≈9 px"*. File 10
@@ -1173,8 +1172,7 @@ and **no React Native components**. *(These were cited as `§8.1`–`§8.4` and
 see the revision note.)* Two inherited constraints that a web dashboard will
 want to break and must not: the accent is **exactly one value, no tints**
 (`§10.1`), and images stay **rounder than containers** (`§10.4` —
-`radius.image` 10 pt over `radius.button` 4.5 pt *[radius frozen:
-RAISE-13/ticket 33, both values]*; the inversion is the system's signature).
+`radius.image` **10.6 pt** over `radius.button` **5.5 pt** [ticket 33]; the inversion is the system's signature).
 
 > **The signature itself is under review — file 10 [RAISE-13], ticket 33.** The
 > inversion is asserted from `§6`'s radius table, and `§6`'s measurement method

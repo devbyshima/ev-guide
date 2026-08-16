@@ -229,50 +229,58 @@ titleToSubtitle 20 · blockGap 39 · sectionGap 62 · sectionGapLarge 87 ·
 settingsRow 176 · iconGrid 72 · iconGridChip 48 · iconStroke 6 · hairline 2.
 Named after where they were measured: **there is no grid.**
 
-**Radii** (px) — chip 10 · card 13 · **button 13** · floatingCard 14 (all four
-corners) · handle 6.5 · image 30 · nearPill 31.5 · circle 9999. **There is no
-`radius.pill` token and no `radius.sheet` token, deliberately.** The
-images-rounder-than-buttons inversion is real and must not be "fixed".
+**Radii** (px) — chip 13.4 · card 15.6 · tile 15.2 · **button 16.5** (both CTAs,
+one token) · floatingCard 19.5 (all four corners) · image 31.8 · **pill 9999** ·
+circle 9999. **There is no `radius.sheet` token and no `radius.buttonSticky`
+token, deliberately** — a single radius fits all eight corners of both CTAs with
+zero penalty. The **category chip, the hero badge and the drag handle are pills**
+(½ integrated height = 38.4 / 35.4 / 6.4), so `radius.nearPill` does not exist.
+The images-rounder-than-containers inversion is real — images 10.6 pt against
+containers 4.5–6.5 pt — and must not be "fixed".
 
-**Component sizes** (px) — CTA 138 h (sticky 131) · circular buttons
-80/90/98/139 · quickAction 150 · avatars 129 map / 316 profile / 76 owner ·
-thumbnail 300 · chip 105 h · floating card 1076 × 521 · handle 180 × 13 ·
-**pin 122 × 147** · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
-*(`pin` amended from 120 × 147 by ticket 32 — the design record's own quoted
-x-range always said 122, and 120 was the width at which px/3 lands on a round
-40.0 pt. The pin's left and right extremes are hard edges, so this is not an
-anti-aliasing question. Every other size on this line is under review — see the
-note below.)*
+**Component sizes** (px) — **published at their integrated extent** (ticket 34;
+see the note below). CTA **898.00 × 137.25 h** (sticky **513.00 × 131.25**) ·
+floating card **1077.60 × 521.53** · **pin 122.30 × 147.25** · handle
+**180.00 × 12.75** · feature chip **105.49 h** · category chip
+**254.75 × 76.75**.
+*Pre-convention, pending [ticket 36](.scratch/ev-guide-spec/issues/36-size-line-convention-sweep.md):*
+circular buttons 80/90/98/139 · quickAction 150 · avatars 129 map / 316 profile /
+76 owner · thumbnail 300 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
 
-> **⚠ The radius line above, and four sizes on this line, are under review.**
-> Ticket 32 found that the design record's corner-arc method is geometrically
-> false and **under-reads every radius in the system** (`button` measures 16.4
-> not 13; `floatingCard` 19.5 not 14; `card` 15.5 not 13; `nearPill` 38.4 not
-> 31.5), and that the record used **two different extent conventions** without
-> declaring either, which puts `ctaHeight`, `ctaHeightSticky`, `floatingCard`
-> and `pin` 1–2 px apart depending on the reading.
-> [Ticket 33](.scratch/ev-guide-spec/issues/33-radius-system-under-read.md) rules
-> on the radii,
-> [ticket 34](.scratch/ev-guide-spec/issues/34-extent-convention.md) on the
-> convention. **No radius here may be typed into `packages/ui` until 33
-> closes.** The values are left unchanged rather than half-corrected, so nothing
-> shifts silently. "The CTA is not a pill" survives at 16.4 — a pill needs 69.
+> **On the two conventions, now one.** A component's size reads three ways —
+> core, integrated, AA-inclusive — and until 2026-08-16 the design record used
+> two of them **without declaring either**, which is how commit `6a5a922` came to
+> "correct" the CTA's height *away* from the reference by matching a token. The
+> convention is now **integrated**: the element's true extent, independent of the
+> sub-pixel phase the capture caught it at
+> ([ticket 34](.scratch/ev-guide-spec/issues/34-extent-convention.md)). **Tokens
+> carry the fraction and nothing is rounded** — 137.25 px is 45.75 pt, which lays
+> out exactly at @3x, and a rounding rule is precisely the undocumented tiebreak
+> this closes. The radii above are likewise re-measured: the record's corner-arc
+> method stated a false geometric identity and **under-read every radius in the
+> system**, by about `√r`
+> ([ticket 33](.scratch/ev-guide-spec/issues/33-radius-system-under-read.md), all
+> twelve rows re-fitted, harness re-validated against four independent knowns).
+> The sizes still marked *pre-convention* were measured before the rule existed
+> and are swept under
+> [ticket 36](.scratch/ev-guide-spec/issues/36-size-line-convention-sweep.md).
 
 **Five findings that would each have shipped visibly wrong:**
 
-1. **The CTA is not a pill** — r ≈ **16.4** on a **899 × 138 px** button (a pill
-   would be r 69), and not full-width. *The finding is the point and it holds
-   with room to spare; the number was 13 here until ticket 32 found the radius
-   method under-reads (ticket 33), and 899 × 138 is convention-dependent
-   (ticket 34).*
+1. **The CTA is not a pill** — r **16.5** on an **898.00 × 137.25 px** button (a
+   pill would be r 69), and not full-width. *The finding is the point and it
+   holds with room to spare. The number read 13 until ticket 32 found the radius
+   method under-reads, and the size read 899 × 138 until ticket 34 declared the
+   convention; both are settled and neither moved the finding.*
 2. **There is no grey text.**
-3. **The `03` container is a floating card**, not a bottom sheet — 14 px on all
+3. **The `03` container is a floating card**, not a bottom sheet — 19.5 px on all
    four corners, with **64 px of live map between its bottom edge and the CTA**
    (`space.floatingCardBottomGap`), and 305 px between it and the screen bottom.
    It is never anchored to the screen edge: `packages/ui` names it `StationCard`
    and must not build it on a sheet primitive, whose whole contract is bottom
    anchoring.
-4. **The handle is 180 px**, and `#262626`.
+4. **The handle is 180 px**, and `#262626`. It is a pill: ½ of its integrated
+   height (12.75) is r **6.4**.
 5. **The basemap palette across ~85% of the front door was never in the
    record.** Under MapLibre that style is EV Guide's to author (§2.6 of the
    design record is style-JSON ready), and the location puck is redrawn in
@@ -285,8 +293,8 @@ segmented control, empty state, error state, pressed/disabled state, menu,
 table, or any persistent chrome. Every write surface in the operator app and
 admin composes from what exists: the settings row, the CTA geometry, and one
 trailing accent check at 24 pt / 2 pt stroke. **The field is the secondary-control
-box** — `color.surface` at `size.ctaHeight` 138 px, `radius.button` 13 px,
-`space.chipPaddingH` 30 px inset — **and never the feature chip**, which is
+box** — `color.surface` at `size.ctaHeight` **137.25 px**, `radius.button`
+**16.5 px**, `space.chipPaddingH` 30 px inset — **and never the feature chip**, which is
 35 pt and which the driver record rules out for controls product-wide. **The
 absence of a tab bar is a positive finding** and fixes navigation everywhere:
 full-screen surfaces reached by a push (back `←`) or a presentation (close `×`),

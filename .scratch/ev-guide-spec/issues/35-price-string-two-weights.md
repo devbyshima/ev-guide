@@ -1,7 +1,7 @@
 # 35 — The price string is two weights, and the record calls it one
 
 Type: decision
-Status: open — raised 2026-08-14 by ticket 32, found in passing
+Status: **resolved 2026-08-16** — ship both; the split is structure in `rateShort`
 Blocked by: —
 
 ## Question
@@ -71,4 +71,74 @@ description.
 
 ## Answer
 
-*(pending)*
+**Ruled 2026-08-16 by the founder: ship both, exactly as measured.**
+
+### 1. Deliberate or drift — the question the reference cannot arbitrate
+
+Resolved the way its two precedents were: **1:1 means shipping it**. [RAISE-4]
+(the two CTAs differing in three properties) and [RAISE-11] (the heart at two
+colours and two sizes) both closed as *ship both*, and nothing distinguishes
+this case except that it is a weight rather than a colour or a size. The
+"deliberate" reading — a preview tail that recedes, a commitment tail that stays
+legible — is available but is not *needed*: the standing rule does not require a
+rationale before reproducing what the reference does. No deviation, no
+[ADR-0009] entry.
+
+**The assignment, made once, here:**
+
+| Slot | Amount + currency | Unit tail | stem/cap |
+| --- | --- | --- | --- |
+| `04` sticky bar, cap 36 | `135 000 RWF` **Bold** | `/day` **Regular** | 0.192 → 0.121 |
+| `03` card, cap 27 | `135 000 RWF` **Bold** | `/day` **ExtraLight** | 0.192 → 0.061 |
+
+### 2. Where the split lives — and it is not a new field
+
+Ticket 35 framed this as *"the amount/tail split has to be in that structure — a
+slot cannot recover it from a rendered string"*. **That is true of a rendered
+string, and `rateShort` does not return one.** Under `domain-model.md`
+amendment 8, re-derived at file 11 §13.2, it returns
+
+```
+{kind: 'single', rwfPerKwh} | {kind: 'from', floorRwfPerKwh} | {kind: 'none'}
+```
+
+— numbers and a discriminant. **The boundary is therefore already recoverable**,
+because the slot composes the string itself from a number and a unit; there is
+nothing to parse and no field to add. `packages/domain` stays free of type
+decisions, which is the point of amendment 8.
+
+What was actually owed is a **composition rule**, and it belongs in file 11
+§13.2 beside the projection that feeds it:
+
+> A price slot renders three runs: the **amount** (the projection's number,
+> grouped), the **currency**, and the **unit tail**. Amount and currency are
+> **Bold in every slot**. The tail's weight is the **slot's** property:
+> **Regular** on `04`'s sticky bar, **ExtraLight** on the `03` card.
+
+Recorded because the failure mode is real in the other direction: had file 10's
+three single-weight statements propagated, a build would have rendered one Bold
+run and the split would have been unrecoverable *in the UI layer* — not because
+the projection lost it, but because nobody knew it was there.
+
+### 3. The ExtraLight legibility call
+
+**Shipped as measured.** A 1.65 px stem at cap 27 on `#121212` is thin, and the
+founder was offered the lift to Regular explicitly and declined it: the tail is
+`/day`, a unit that repeats on every card in the list, and the *price* — the
+part a driver reads one-handed in a dim car park — is the **Bold** run. [RAISE-2]
+is unaffected: it concerns ExtraLight carrying meaning alone, and here the
+meaning is carried by the Bold amount beside it.
+
+Recorded so this is not relitigated as an accessibility defect during the build:
+it is a **known-thin, deliberately-shipped 1:1 reproduction**, and the string it
+appears in never carries information not also present in a heavier weight.
+
+### 4. What was corrected
+
+- **File 10 §4.1** gains rows **7b** (`04` tail, Regular, stem 4.31) and **15b**
+  (`03` tail, ExtraLight, stem 1.65); row 15's label is narrowed to the Bold run.
+- **File 10 §7.8** states both weights instead of "cap 36 px Bold".
+- **File 10 §11.3**'s trailer already stated both measurements and asserted
+  neither assignment; it now points here.
+- **File 11 §13.2**'s blanket Regular is wrong for the `03` card slot and is
+  corrected with the rest of the `[weight unsettled: RAISE-15]` marks.

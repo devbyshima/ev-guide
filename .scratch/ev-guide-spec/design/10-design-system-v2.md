@@ -517,6 +517,7 @@ stroke width; `stem/cap` is the weight discriminator.
 | 5 | Primary CTA label `Let's find a car` | 01, 03 | **36** | 27 | 5.45 | 0.147 | **Medium** | `#121212` |
 | 6 | Sheet/card title `Forthing T5` | 03 | **36** | 27 | 6.68 | 0.186 | Bold | `#FFFFFF` |
 | 7 | Detail price `135 000 RWF` | 04 | **36** | 27 | 6.83 | 0.190 | Bold | `#FFFFFF` |
+| 7b | Detail price tail `/day` | 04 | 36 | 27 | **4.31** | **0.121** | **Regular** | `#FFFFFF` |
 | 8 | Owner name `CTO Motors Group Rentals` | 04 | **32** | 24 | 6.10 | 0.191 | Bold | `#FFFFFF` |
 | 9 | Sub-head `Basics and features` | 04 | **32** | 24 | — | — | Bold | `#FFFFFF` |
 | 10 | Sub-head `Description` | 04 | **32** | 24 | 5.85 | 0.183 | Bold | `#FFFFFF` |
@@ -524,7 +525,8 @@ stroke width; `stem/cap` is the weight discriminator.
 | 12 | Settings row label | 02 | **32** | 24 | 3.78 | 0.118 | Regular | `#FFFFFF` |
 | 13 | Feature chip label | 04 | **32** | 24 | 2.12 | 0.066 | **ExtraLight** | `#FFFFFF` |
 | 14 | Quick-action label `Trips` | 02 | **27** | 20 | 4.94 | 0.183 | Bold | `#FFFFFF` |
-| 15 | Card price `135 000 RWF/day` | 03 | **27** | 20 | 5.05 | 0.187 | Bold | `#FFFFFF` |
+| 15 | Card price `135 000 RWF` | 03 | **27** | 20 | 5.05 | 0.187 | Bold | `#FFFFFF` |
+| 15b | Card price tail `/day` | 03 | 27 | 20 | **1.65** | **0.061** | **ExtraLight** | `#FFFFFF` |
 | 16 | Subtitle `Hybride - Black - 2024` | 03, 04 | **27** | 20 | 3.25 | 0.120 | Regular | `#FFFFFF` |
 | 17 | Link `Show and edit my profile` | 02 | **27** | 20 | 3.05 | 0.113 | Regular | **`#C7FC2F`, underlined** |
 | 18 | Category chip label `Hybride` | 03 | **27** | 20 | 3.13 | 0.116 | Regular | `#C7FC2F` |
@@ -1074,7 +1076,7 @@ power** (`60 kW`) or is **absent**. Nothing a driver must read goes on it.
 | Top border | **none** |
 | Shadow | **none** |
 | Horizontal padding | **≈89–90 px = ≈30 pt** — *not* the 64 px content margin. See **[RAISE-6]** |
-| Price | `135 000 RWF/day`, cap 36 px Bold, left, baseline 2446 |
+| Price | `135 000 RWF/day`, cap 36 px, left, baseline 2446 — **two weights [ticket 35]**: `135 000 RWF` **Bold**, the `/day` tail **Regular** (stem 4.31 px, stem/cap 0.121). The `03` card renders the same string with an **ExtraLight** tail; both ship |
 | CTA | x603 → 1115, y2363 → 2493 = **513 × 131 px = 171.0 × 43.7 pt**, radius ≈14 px = 4.7 pt (**not** a pill), `#C7FC2F`, label cap 32 px Medium `#121212` |
 | Bottom offset | 128 px = 42.7 pt (vs 34.3 pt on the `01`/`03` CTA) |
 
@@ -1635,6 +1637,15 @@ ticket 32] — `04` sticky, cap 36: `F` of `RWF` 6.92 px (stem/cap 0.192, Bold),
 File 11 §13.2 is right that two weights exist but assigns Regular to all four
 consuming slots. This lands in §11.3 — a section ticket 32 was about to
 propagate into files 11 and 12 — so it is raised before it spreads.
+
+**CLOSED 2026-08-16 by ticket 35: ship both, as measured.** The founder ruled it
+the same way as [RAISE-4] and [RAISE-11] — 1:1 means shipping the reference's own
+inconsistency, not tidying it. §4.1 gains rows **7b** and **15b**, and §7.8 states
+both weights. **No projection change is owed**: `rateShort` already returns
+numbers, not a formatted string (`domain-model.md` amendment 8), so the slot
+composes the three runs itself — amount and currency Bold everywhere, and the
+tail's weight a property of the **slot**. The composition rule lands in file 11
+§13.2.
 
 **Already raised by the ticket, restated because it lands in this file:** the
 `Google` wordmark on the map screens cannot be reproduced under MapLibre (ticket
