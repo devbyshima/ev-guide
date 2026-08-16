@@ -9,3 +9,9 @@ dist/
 
 # Operator research withheld from the public repo (ticket 26) — kept local only
 .scratch/ev-guide-spec/research/03-operator-landscape-and-data-access.md
+
+# build effort
+node_modules/
+dist/
+.turbo/
+*.tsbuildinfo

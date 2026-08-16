@@ -1,0 +1,10 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+allowBuilds:
+  esbuild: true
+
+# pnpm 11 reads build-script approvals here, not from package.json.
+onlyBuiltDependencies:
+  - esbuild
