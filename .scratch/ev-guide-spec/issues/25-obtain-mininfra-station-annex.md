@@ -45,7 +45,8 @@ and all 224 sites are entered by hand from scratch.
 
 ## Progress (2026-08-13) — drafted, NOT sent
 
-Drafts and contacts: [correspondence/2026-08-13-mininfra-annex-request-DRAFT.md](../correspondence/2026-08-13-mininfra-annex-request-DRAFT.md).
+Drafts and contacts: **held locally, not published** — the letter is unsent and
+outbound correspondence stays out of this repository.
 **Nothing has been sent.** Two things are owed by the founder before anything
 goes out — the 26 scope confirmation below, and a contact email/phone for the
 letters.
@@ -88,7 +89,7 @@ graduate; it stays fog, to be revisited by the post-build effort that sends
 these letters.
 
 Everything needed to act later is preserved in
-[the drafts](../correspondence/2026-08-13-mininfra-annex-request-DRAFT.md):
+the drafts (held locally, unsent):
 three verified routes (MININFRA Energy Directorate · NTCS GreenBee, the
 authors · EU Delegation as escalation), the named DG, the address formats,
 and the reasoning behind each letter's framing.

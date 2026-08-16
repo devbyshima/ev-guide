@@ -75,7 +75,7 @@ points across 18 brands, live per-gun availability for 10 of them, and
   studio's own platform over Supabase. Routed there rather than decided here.
 
 **Q2 answered 2026-08-13: yes, disclose.** Draft at
-[`correspondence/2026-08-13-kabisa-disclosure-DRAFT.md`](../correspondence/2026-08-13-kabisa-disclosure-DRAFT.md)
+the disclosure draft (**held locally, unsent**)
 — **not sent**; the founder sends it. Pure disclosure with no ask attached,
 since this ticket removed any reason to ask. Claims are held to what is
 verifiable, and the specifics are withheld from this repository until the
