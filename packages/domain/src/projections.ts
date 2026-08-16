@@ -9,9 +9,9 @@
  * projection that pre-formatted its distance would make the Android surface
  * unimplementable.
  */
-import { bayStateUnder, countBays, effective, type LatestReports } from './availability.js';
-import { RATE_WINDOW } from './decay.js';
-import { grammar, type Verbosity } from './grammar.js';
+import { bayStateUnder, countBays, effective, type LatestReports } from './availability';
+import { RATE_WINDOW } from './decay';
+import { grammar, type Verbosity } from './grammar';
 import type {
   AvailabilityState,
   Connector,
@@ -19,7 +19,7 @@ import type {
   Lens,
   Millis,
   Station,
-} from './types.js';
+} from './types';
 
 const EARTH_RADIUS_M = 6_371_000;
 

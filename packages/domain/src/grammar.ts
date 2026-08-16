@@ -7,8 +7,8 @@
  * Every law in section 2.2 is enforced here and asserted in test/grammar.test.ts.
  * The laws are not comments: a law without a test is a suggestion.
  */
-import type { StateCounts } from './availability.js';
-import { WORDS } from './vocabulary.js';
+import type { StateCounts } from './availability';
+import { WORDS } from './vocabulary';
 
 export type Verbosity = 'full' | 'short' | 'minimal';
 

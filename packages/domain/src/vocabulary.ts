@@ -3,7 +3,7 @@
  * words are **data in packages/domain**, not string literals in a Swift file
  * and a Kotlin file. Neither transcription may invent a word.
  */
-import type { ConnectorType } from './types.js';
+import type { ConnectorType } from './types';
 
 export const WORDS = {
   free: 'free',

@@ -28,8 +28,8 @@ import type {
   SavedStationRepository,
   StationRepository,
   VehicleProfileRepository,
-} from './protocols.js';
-import { REPORTS, STATIONS } from './seed.js';
+} from './protocols';
+import { REPORTS, STATIONS } from './seed';
 
 /**
  * The proximity gate for driver reports (ticket 09).

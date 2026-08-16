@@ -8,13 +8,21 @@ The build effort has started, so [ADR-0006](0006-codebase-shape.md)'s rule
 resolves to a number:
 
 - **Expo SDK 57** (`expo@57.0.13`, the `latest` dist-tag on 2026-08-16).
-- **React Native 0.87**.
+- **React Native 0.86.2**, **React 19.2.3** - the versions SDK 57's template
+  pins, not the newest published.
 - **New Architecture on.**
 - **SDK-default minimum OS versions**, with no hand-raised floors.
 
 Checked live rather than assumed: SDK 58 exists only as a canary
 (`58.0.0-canary-20260812`), and canaries are not stable, so 57 is the latest
 stable and is what gets pinned.
+
+**One correction worth keeping.** This ADR first recorded React Native
+**0.87**, taken from `npm view react-native version`. That is the newest RN
+release, which is *not* the same question as which RN the SDK pins: scaffolding
+against SDK 57 produced **0.86.2**. The SDK chooses the RN version, and reading
+the RN registry answers a question nobody asked. Take the version from the
+scaffold, never from the dependency's own `latest`.
 
 ## Why a number now, and only now
 

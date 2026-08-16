@@ -5,7 +5,7 @@
  * ADR-0002: decay is a function of source AND state. Driver Free/Occupied
  * decays in 2h, operator Free/Occupied in 6h, OutOfService in 30d.
  */
-import type { ReportSource, ReportedState, Millis } from './types.js';
+import type { ReportSource, ReportedState, Millis } from './types';
 
 export const MINUTE = 60_000;
 export const HOUR = 60 * MINUTE;

@@ -1,3 +1,3 @@
-export * from './protocols.js';
-export * from './mock.js';
-export * from './seed.js';
+export * from './protocols';
+export * from './mock';
+export * from './seed';

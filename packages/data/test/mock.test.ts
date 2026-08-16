@@ -6,8 +6,8 @@
  */
 import { describe, expect, it } from 'vitest';
 import { HOUR, MINUTE, distanceMeters } from '@ev-guide/domain';
-import { NEAR_LIMIT_MAX, REPORT_PROXIMITY_METERS, createMockRepositories } from '../src/mock.js';
-import { REPORTS, SEED_NOW, STATIONS } from '../src/seed.js';
+import { NEAR_LIMIT_MAX, REPORT_PROXIMITY_METERS, createMockRepositories } from '../src/mock';
+import { REPORTS, SEED_NOW, STATIONS } from '../src/seed';
 
 const KIGALI = { lat: -1.9441, lng: 30.0619 };
 

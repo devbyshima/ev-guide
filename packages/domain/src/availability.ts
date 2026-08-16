@@ -6,7 +6,7 @@
  * The rule in words: **occupancy crosses the type boundary, brokenness does
  * not, and a free sibling never vouches for an unreported gun.**
  */
-import { decayWindow } from './decay.js';
+import { decayWindow } from './decay';
 import type {
   AvailabilityState,
   Bay,
@@ -15,7 +15,7 @@ import type {
   Lens,
   Millis,
   Report,
-} from './types.js';
+} from './types';
 
 /** What a derivation carries besides the state: freshness is an axis. */
 export interface EffectiveState {

@@ -7,7 +7,7 @@
  * ticket, so each gets an assertion that names the ticket.
  */
 import { describe, expect, it } from 'vitest';
-import { PILL, color, pt, radius, size, space, type, typeMeta } from '../src/tokens.js';
+import { PILL, color, pt, radius, size, space, type, typeMeta } from '../src/tokens';
 
 describe('the palette is closed', () => {
   it('has no grey text tier: what looked like one is ExtraLight anti-aliasing', () => {

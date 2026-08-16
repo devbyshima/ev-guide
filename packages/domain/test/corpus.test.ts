@@ -3,11 +3,11 @@
  * block each, numbered as the spec numbers them.
  */
 import { describe, expect, it } from 'vitest';
-import { bayStateUnder, countBays, effective } from '../src/availability.js';
-import { DAY, HOUR, MINUTE } from '../src/decay.js';
-import { grammar } from '../src/grammar.js';
-import { nextDecayDeadline } from '../src/freshness.js';
-import { CCS2, GBT_DC, NOW, T2, bay, connector, latest, report } from './fixtures.js';
+import { bayStateUnder, countBays, effective } from '../src/availability';
+import { DAY, HOUR, MINUTE } from '../src/decay';
+import { grammar } from '../src/grammar';
+import { nextDecayDeadline } from '../src/freshness';
+import { CCS2, GBT_DC, NOW, T2, bay, connector, latest, report } from './fixtures';
 
 describe('1. dual-gun bay, Occupied + OutOfService, under both lenses', () => {
   const t2 = connector(T2);

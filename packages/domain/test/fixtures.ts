@@ -6,8 +6,8 @@
  * fixture exists because a review round found a defect the *other* fixtures
  * hid, so none of them may be deleted for being redundant.
  */
-import { HOUR, MINUTE } from '../src/decay.js';
-import type { Bay, Connector, Report, ReportSource, ReportedState } from '../src/types.js';
+import { HOUR, MINUTE } from '../src/decay';
+import type { Bay, Connector, Report, ReportSource, ReportedState } from '../src/types';
 
 export const NOW = 1_760_000_000_000;
 

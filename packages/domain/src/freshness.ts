@@ -2,9 +2,9 @@
  * Freshness returns structure, not a word (section 2.3), and the decay clock
  * (section 1.3).
  */
-import { effective, type LatestReports } from './availability.js';
-import { decayWindow, MINUTE } from './decay.js';
-import type { AvailabilityState, Bay, ConnectorType, Lens, Millis, ReportSource } from './types.js';
+import { effective, type LatestReports } from './availability';
+import { decayWindow, MINUTE } from './decay';
+import type { AvailabilityState, Bay, ConnectorType, Lens, Millis, ReportSource } from './types';
 
 export interface Freshness {
   readonly contributingSources: readonly ReportSource[];

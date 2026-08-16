@@ -6,8 +6,8 @@
  * than by example, because "for any input" is what the law says.
  */
 import { describe, expect, it } from 'vitest';
-import { grammar, regimeOf, type GrammarInput, type Verbosity } from '../src/grammar.js';
-import { FORBIDDEN_SUBSTRINGS, WORDS } from '../src/vocabulary.js';
+import { grammar, regimeOf, type GrammarInput, type Verbosity } from '../src/grammar';
+import { FORBIDDEN_SUBSTRINGS, WORDS } from '../src/vocabulary';
 
 /** Every partition of n bays into the four states, for n up to 5. */
 function* allCounts(maxN = 5): Generator<GrammarInput> {
