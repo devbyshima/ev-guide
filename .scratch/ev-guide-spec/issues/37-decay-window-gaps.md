@@ -1,4 +1,4 @@
-# 37 - Two decay windows are assumptions, not decisions
+# 37 - Three policy constants are assumptions, not decisions
 
 Type: decision
 Status: open - raised 2026-08-16 while implementing `packages/domain`
@@ -49,6 +49,24 @@ boundaries. Defensible, but unstated, and admin is the one source that could
 justify "does not decay at all" if an admin write is treated as ground truth
 rather than an observation.
 
+## Gap 3: the proximity radius
+
+Ticket 09 gates driver reports by proximity and **never says how near**.
+`packages/data/src/mock.ts` implements **150 m**, on the reasoning that it
+covers a forecourt and a parking deck with consumer GPS error while not being
+satisfiable from the road outside.
+
+It is the same class of gap as the two above: a policy constant that the
+implementation forced and the record does not state. It is also the one a
+reviewer will probe, because a gate that is too tight makes reporting feel
+broken at exactly the stations with the worst GPS (underground and covered
+bays), and one too loose makes the gate decorative.
+
+Note that the gate is evaluated against the **captured** location, never the
+current one - an offline report drains hours later from somewhere else
+entirely, and gating on where the phone is at drain time would reject every
+queued report. That part *is* settled (ADR-0007) and is implemented and tested.
+
 ## Why this cannot wait for the build to finish
 
 It is not a tuning constant. It changes what the map shows on a station whose
@@ -64,8 +82,9 @@ driver's own visit and to suppress a broken gun through a day, short enough
 that a single wrong report does not cost a month. Admin follows operator, with
 `OutOfService` at 30d.
 
-Both numbers live in one table in `packages/domain/src/decay.ts`, so whichever
-way this goes it is a one-line change plus a fixture.
+The decay numbers live in one table in `packages/domain/src/decay.ts` and the
+radius in one constant in `packages/data/src/mock.ts`, so whichever way each
+goes it is a one-line change plus a fixture.
 
 ## Answer
 

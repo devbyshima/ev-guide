@@ -4,3 +4,4 @@ export * from './availability.js';
 export * from './vocabulary.js';
 export * from './grammar.js';
 export * from './freshness.js';
+export * from './projections.js';
