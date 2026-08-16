@@ -10,3 +10,60 @@ compose availability strings: those come from `@ev-guide/domain`'s grammar,
 which is the one place the display laws are enforced.
 
 `packages/ui` currently exports tokens only; components land next.
+
+## Building and installing on a physical device (Serein)
+
+Established 2026-08-16. Three studio projects had independently retyped this
+sequence and none had it written down.
+
+**`ios/` is GENERATED and gitignored (ADR-0006, managed CNG).** There is no
+copy anywhere: `expo prebuild --clean` deletes it with no confirmation. Native
+changes go in a **config plugin**, never in the folder. The Xcode scheme is
+`EVGuide`, from `sanitizedName("EV Guide")`.
+
+```bash
+export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8   # CocoaPods needs it; both are empty by default here
+pnpm exec expo prebuild --platform ios --no-install
+pnpm install && (cd ios && pod install)
+pnpm exec expo run:ios --device "Serein"     # first install only: writes signing into the pbxproj
+```
+
+Thereafter, **split build from install** so a dropped connection costs a retry
+of the install rather than the whole build:
+
+```bash
+xcrun devicectl device install app --device E41E8007-FB0A-516E-8A80-DA36110DFFDF \
+  ~/Library/Developer/Xcode/DerivedData/EVGuide-*/Build/Products/Release-iphoneos/EVGuide.app
+xcrun devicectl device process launch --device E41E8007-FB0A-516E-8A80-DA36110DFFDF \
+  com.fulltimestudio.evguide.driver
+```
+
+### The five things that actually go wrong
+
+1. **Never pass a bare `--device`.** `@expo/cli` opens an interactive picker
+   (`resolveDevice.js:131`) and hangs forever in a non-interactive shell.
+   Always `--device "Serein"`.
+2. **`- Connecting to: Serein` stalls** on the wireless (localNetwork)
+   transport. Expo's own installer is what hangs; `devicectl` direct works.
+   A USB-C **data** cable is the real fix.
+3. **The free team caps the device at THREE sideloaded apps.** The install
+   fails with `IXUserPresentableErrorDomain error 14` and Apple names the
+   three holding the slots. Uninstalling one is irreversible and destroys its
+   data, so it is the founder's call, never the agent's.
+4. **Free-team profiles live 7 days.** Anything installed stops launching about
+   a week later with "Unable to Verify App" and no build error. Rebuild rather
+   than debug. A paid membership removes both this and the 3-app cap.
+5. **`exit code 0` immediately after launch is not a crash.** iOS terminates a
+   launched app when the device is **locked**. Unlock Serein and relaunch.
+
+### Debug vs Release
+
+A **Debug** build needs Metro reachable from the phone, which is the flaky part
+over wireless. A **Release** build embeds `main.jsbundle` and runs standalone:
+
+```bash
+pnpm exec expo run:ios --device "Serein" --configuration Release
+```
+
+Use Release to *show* the app on a device, Debug with `expo start --dev-client`
+to *work* on it.

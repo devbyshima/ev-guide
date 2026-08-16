@@ -18,14 +18,12 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.fulltimestudio.evguide.driver",
-      "edgeToEdgeEnabled": true
+      "package": "com.fulltimestudio.evguide.driver"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "evguide",
-    "newArchEnabled": true,
     "backgroundColor": "#121212"
   }
 }
