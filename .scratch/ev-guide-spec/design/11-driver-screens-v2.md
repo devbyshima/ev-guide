@@ -52,16 +52,14 @@
 > chip and hero badge are pills**, where file 10 had said they "measurably fall
 > short" of one — `borderRadius: 9999`, the reverse of the old instruction.
 >
-> **3. Component sizes here are convention-dependent — [RAISE-14], ticket 34.**
-> File 10 §0.1 now records that an element's size reads three ways (core /
-> integrated / AA-inclusive) and that file 10 itself publishes the primary CTA
-> **AA-inclusive** (899 × 138; core 897 × 136, integrated 898.00 × 137.25) and
-> the floating card at its **core** (1076 × 521; AA-inclusive 1078 × 522,
-> integrated 1077.60 × 521.53). Declaring one convention breaks two, three or
-> four values locked in `SPEC.md`, so it is raised, not settled. **This file
-> re-derives against what file 10 publishes**, which is the only reading a build
-> can act on today: primary CTA **899 × 138**, floating card **1076 × 521**,
-> sticky CTA **513 × 131**, map pin **122 × 147**. If ticket 34 declares core or
+> **3. The extent convention is settled — [RAISE-14], ticket 34, CLOSED
+> 2026-08-16.** An element's size reads three ways (core / integrated /
+> AA-inclusive), and file 10 was publishing the primary CTA **AA-inclusive**
+> (899 × 138) and the floating card **core** (1076 × 521) with nothing declaring
+> either. **The convention is now `integrated`** — the element's true extent —
+> and **tokens carry the fraction rather than round**. Every size in this file was
+> converted under ticket 36: primary CTA **898.00 × 137.25**, floating card **1077.60 × 521.53**,
+> sticky CTA **513.00 × 131.25**, map pin **122.30 × 147.25**. If ticket 34 declares core or
 > integrated, those four figures and everything derived from them move.
 >
 > **4. The forbidden-string list is NOT held here.** Its one home is
@@ -157,11 +155,11 @@ file's own corner evidence for the card frame). That was a regression and is und
 
 | # | Part 1 (v1) said | Measured [m·11] | Method [m·11] | Adjudication against 10-v2 |
 | --- | --- | --- | --- | --- |
-| 1 | Drag handle **12 × 13 px** core, `#262626` | **180 × 13 px**, `#262626`, x 513→692, y 1822→1834 on `03`, fully rounded (r = 6.5 px), centred on the card's own centre x 602.5 | run-length scan of every row 1815–1845 | **Accepted.** 10-v2 §7.4 / `size.handle` = **180 × 13 px = 60.0 × 4.3 pt**, and §5.2 puts the handle's ink top **25 px = 8.3 pt** below the card top — *not* the 26 px this file carried into D-02, S-01 and S-02. Corrected there. |
-| 2 | Sheet "bottom corners square (sheet runs under the CTA)" | **False.** It is a **floating card**, rounded on **all four** corners at **19.5 px** [ticket 33] | corner-arc profiling both ends; top row y 1797 spans x 79→1126, bottom row y 2317 spans x 82→1123 — symmetric | **Accepted as to identity, corrected as to frame.** 10-v2 §7.4 measures the frame **x65 → 1140, y1797 → 2317** (AA columns at x64 / x1141, AA row at y1796) and the size **1076 × 521 px = 358.7 × 173.7 pt**; **64 px** of `#212121` map sits below it (rows 2318–2381 inclusive), and the CTA's accent begins at **y2382**. This file's `x 64→1141, y 1796→2317`, `1078 × 522`, `65 px of map` and `CTA at y 2383` were each one step out and are corrected throughout. Radius: **frozen, [RAISE-13]/ticket 33** — see the authority note. |
-| 3 | Category chip **256 × 77 px** (v1 of this file said 253 × 75) | **254 × 76 px**, x 480→733, y 2030→2105 | lime-ink bbox | **Accepted.** 10-v2 §7.4 / §7.5 carry 254 × 76 px = 84.7 × 25.3 pt at x480–733, y2030–2105. |
+| 1 | Drag handle **12 × 13 px** core, `#262626` | **180.00 × 12.75 px**, `#262626`, x 513→692, y 1822→1834 on `03`, fully rounded (r = 6.5 px), centred on the card's own centre x 602.5 | run-length scan of every row 1815–1845 | **Accepted.** 10-v2 §7.4 / `size.handle` = **180.00 × 12.75 px = 60.00 × 4.25 pt**, and §5.2 puts the handle's ink top **25 px = 8.3 pt** below the card top — *not* the 26 px this file carried into D-02, S-01 and S-02. Corrected there. |
+| 2 | Sheet "bottom corners square (sheet runs under the CTA)" | **False.** It is a **floating card**, rounded on **all four** corners at **19.5 px** [ticket 33] | corner-arc profiling both ends; top row y 1797 spans x 79→1126, bottom row y 2317 spans x 82→1123 — symmetric | **Accepted as to identity, corrected as to frame.** 10-v2 §7.4 measures the frame **x65 → 1140, y1797 → 2317** (AA columns at x64 / x1141, AA row at y1796) and the size **1077.60 × 521.53 px = 359.20 × 173.84 pt**; **64 px** of `#212121` map sits below it (rows 2318–2381 inclusive), and the CTA's accent begins at **y2382**. This file's `x 64→1141, y 1796→2317`, `1078 × 522`, `65 px of map` and `CTA at y 2383` were each one step out and are corrected throughout. Radius: **frozen, [RAISE-13]/ticket 33** — see the authority note. |
+| 3 | Category chip **256 × 77 px** (v1 of this file said 253 × 75) | **254.75 × 76.75 px**, x 480→733, y 2030→2105 | lime-ink bbox | **Accepted.** 10-v2 §7.4 / §7.5 carry 254.75 × 76.75 px = 84.92 × 25.58 pt at x480–733, y2030–2105. |
 | 4 | Icon colour is `#FFFFFF` except the pin glyph and the hosting tile | **False.** The `03` card heart is **`#717171`** — 517 px of solid core, no white pixel anywhere in its ink box (x 1025→1074, y 1881→1926, 50 × 46 px). The `04` heart and share (**67 × 67 px**, 10-v2 §8.1 row 22) glyphs *are* `#FFFFFF` | colour histogram over the ink box; sub-pixel stroke integration across three perpendicular cuts | **Accepted, with the stroke claim withdrawn.** 10-v2 §1.1 and §10.1 add `color.iconMuted` = `#717171`. But the stroke is **not** "6.0 px, i.e. the 2 pt stroke unchanged": §8.1 row 17 integrates the card heart at **4.8–6.0 px** and §8.2 files it in the **Light** band at **4.8 px = 1.6 pt**, against a nominal 6 px = 2 pt. The `04` heart is **66 × 62 px** (§8.1 row 21), not 68 × 62. Both corrected here and at §15/F4. |
-| 5 | Primary CTA **899 × 138 px** | **897 px** of lime core, x 65→961; the locate button occupies x 1003→1139 | run-length scan at y 2450 | **Rejected — part 1 was right and this row was wrong.** 10-v2 §7.1 [m]: frame **x64 → 962**, size **899 × 138 px = 299.7 × 46.0 pt**; §7.2 / `size.circleButton.xl`: locate **139 px = 46.3 pt**; §7.1: **40 px = 13.3 pt** gap. This file's 897 was a mixture — the *core* width against the *AA-inclusive* height (10-v2 §0.1: core 897 × 136, integrated 898.00 × 137.25, AA-inclusive 899 × 138) — and is wrong under every one of the three conventions. **The residual identity is the proof:** `897 + 41 + 137 = 1075`, three short of the 1078 px content column, so this file asserted an *exact* identity from three numbers that do not add up. At 10-v2's figures **`899 + 40 + 139 = 1078` closes exactly.** See the re-derivation below. |
+| 5 | Primary CTA **898.00 × 137.25 px** | **897 px** of lime core, x 65→961; the locate button occupies x 1003→1139 | run-length scan at y 2450 | **Rejected — part 1 was right and this row was wrong.** 10-v2 §7.1 [m]: frame **x64 → 962**, size **898.00 × 137.25 px = 299.33 × 45.75 pt**; §7.2 / `size.circleButton.xl`: locate **137.7 px = 45.90 pt** [ticket 36]; §7.1: **40 px = 13.3 pt** gap. This file's 897 was a mixture — the *core* width against the *AA-inclusive* height (10-v2 §0.1: core 897 × 136, **integrated 898.00 × 137.25**, AA-inclusive 899 × 138) — and is wrong under every one of the three conventions. **Ticket 34 declared `integrated`**, so the published figure is now 898.00 × 137.25. **The residual identity was offered as the proof:** `897 + 41 + 137 = 1075`, three short of the 1078 px content column, against 10-v2's **`899 + 40 + 139 = 1078`, which closes exactly.** **[WITHDRAWN, ticket 36]** — it closes only because all three terms are AA-inclusive over-reads that happen to sum to the AA-inclusive card width. Measured integrated on `01` at y2450: CTA left **64.25**, right **962.25** (width **898.00**); gap **40.16**; locate left **1002.41**, right **1140.01** (⌀ **137.61**). The span is **1075.76** against a content column of **1077.60** — **1.83 px short**. The CTA row is **left-aligned with the floating card (64.25 against 64.20) and NOT right-aligned (1140.01 against 1141.80)**, so there is no residual identity to assert in either direction. The row's *verdict* is unaffected — part 1 was right and this row's 897 was still a mixture — but the arithmetic that was used to prove it is not available. |
 | 6 | — (no advance model) | **Mean ink advance is string-dependent**, so every fit check below states its constant. Measured: cap 27 Regular k = 0.667 (`Hybride - Black - 2024`, 22 ch, 397 px) … 0.730 (`Hybride`, 7 ch, 138 px). cap 32 Medium k = 0.650 (`Check Availability`, 18 ch, 374 px). **cap 36 Medium k = 0.590** (`Let's find a car`, 16 ch, 340 px). **Bold k = 0.80** — two runs agreeing to 0.01 (`135 000 RWF/day` at cap 36, 433 px; at cap 27, 321 px) | ink bbox ÷ (chars × cap px) | **Accepted, with two arithmetic corrections.** (a) The CTA label's cap is **36, not 37** — 10-v2 §4.1 row 5 measures `Let's find a car` at cap 36 Medium, and §4.1's own note says rows measured from a **flat** cap (`L`) *"are exact"*. §4.2 collapses 36/37 into one **step**, which is a statement about the type scale, not a licence to divide by 37. Re-derived: `340 ÷ (16 × 36)` = **0.590**, where this row read 0.574. (b) The **Bold k = 0.80** constant is measured on `135 000 RWF/day`, which 10-v2 §11.3 has since shown is **not one weight** — **[weight settled: ticket 35]**, see the note below. |
 
 **[RE-DERIVED, ticket 32] The residual-width identity, recomputed.** The claim
@@ -274,8 +272,8 @@ changes only its content.
 | 1 | car pin (`01`, `03`) | **charger pin** | Yes — 10-v2 §7.3 geometry, colours and stroke identical; only the glyph drawing changes (line-art vehicle → line-art charge point), same `#393939`, same 5–6 px stroke, same ink width inside the inner disc |
 | 2 | rental card (the `03` card composition) | **station card** | Yes — 10-v2 §7.4 slots reassigned in §8/D-02; no geometry moves |
 | 3 | `135 000 RWF` Bold + `/day` **lighter tail** | **the R4 short rate projection** (§13.2) | Yes — the reference's composition is *amount-and-currency Bold + a lighter slash-unit tail*, and `rateShort` takes it verbatim. cap 27 on the card, cap 36 on the sticky bar. **[weight settled: ticket 35]** — the amount is Bold in both slots (stem/cap 0.192), but the tail measures **Regular** on `04`'s sticky bar (4.36 px stem, 0.121) and **ExtraLight** on the `03` card (1.65 px, 0.061). This row previously said *"Regular"* for both. **Never a per-Connector rate rendered as the station's** — see §13.2 |
-| 4 | `Check Availability` (sticky CTA, `04`) | **`Directions`** | Yes — 10-v2 §7.8, **513 × 131 px = 171.0 × 43.7 pt** [m, §7.8; core, and §0.1 records this one reads the same under all three extent conventions], radius **16.5 px** [ticket 33], `#C7FC2F`, label cap 32 **Medium** `#121212`. 10 chars at k = 0.65 → 208 px in a 513 px button ✓ |
-| 5 | `Let's find a car` (primary CTA, `01`/`03`) | **`Let's find a charger`** | Yes — 10-v2 §7.1, **899 × 138 px = 299.7 × 46.0 pt** (frame x64 → 962; published AA-inclusive, [RAISE-14]), radius **16.5 px** [ticket 33], label **cap 36** Medium `#121212`. **[RE-DERIVED, ticket 32]** — 20 chars at k = 0.65 → `20 × 0.65 × 36` = **468 px** inside 899 px ✓ (this row read *481 px inside 897 px*, computing the ink at the stale cap 37 against the stale core width; the verdict is unchanged and the margin is wider, not tighter). The reference's own 16-char label measures 340 px [m·11] |
+| 4 | `Check Availability` (sticky CTA, `04`) | **`Directions`** | Yes — 10-v2 §7.8, **513.00 × 131.25 px = 171.00 × 43.75 pt** [m, §7.8; core, and §0.1 records this one reads the same under all three extent conventions], radius **16.5 px** [ticket 33], `#C7FC2F`, label cap 32 **Medium** `#121212`. 10 chars at k = 0.65 → 208 px in a 513 px button ✓ |
+| 5 | `Let's find a car` (primary CTA, `01`/`03`) | **`Let's find a charger`** | Yes — 10-v2 §7.1, **898.00 × 137.25 px = 299.33 × 45.75 pt** (frame x64 → 962; published AA-inclusive, [RAISE-14]), radius **16.5 px** [ticket 33], label **cap 36** Medium `#121212`. **[RE-DERIVED, ticket 32]** — 20 chars at k = 0.65 → `20 × 0.65 × 36` = **468 px** inside 899 px ✓ (this row read *481 px inside 897 px*, computing the ink at the stale cap 37 against the stale core width; the verdict is unchanged and the margin is wider, not tighter). The reference's own 16-char label measures 340 px [m·11] |
 
 Substitution 4 is the ticket's named mapping and it is worth stating why it is
 exactly right rather than merely available: `Check Availability` in the
@@ -368,14 +366,14 @@ the mark** (verdict **M13**).
 
 **Measured pin geometry** [m·11], from the isolated pin at x 967–1088,
 y 991–1137 on `01`. **10-v2 §7.3 and `size.pin` now agree with this file at
-122 × 147** — the correction ran the other way, and file 10 was brought into
+122.30 × 147.25** — the correction ran the other way, and file 10 was brought into
 line under ticket 32 (its own x-range x961–1082 always spanned 122; the `120`
 was the width at which px/3 lands on a round `40.0 pt`, which §0.1 forbids).
 **Do not "correct" 122 back to 120.**
 
 | Property | Value |
 | --- | --- |
-| Outer bbox | **122 × 147 px = 40.7 × 49.0 pt**, w : h ≈ **1 : 1.20** [m·11, and 10-v2 §7.3 / `size.pin`]. AA-inclusive is 124 × 148 ([RAISE-14]); the left and right extremes are **hard edges**, so this was never a core/AA question |
+| Outer bbox | **122.30 × 147.25 px = 40.77 × 49.08 pt**, w : h ≈ **1 : 1.20** [m·11, and 10-v2 §7.3 / `size.pin`]. AA-inclusive is 124 × 148 ([RAISE-14]); the left and right extremes are **hard edges**, so this was never a core/AA question |
 | Head | a circle of **⌀122 px** at its widest, centre (1027.5, 1052) — the widest row is y 1052, 61 px below the top. **Its outer radius is 61 only across the widest band; a cut outside that band reads 120, i.e. radius 60** [m, 10-v2 §7.3: *"The widest rows are y808–817; a cut outside that band reads 120"*] |
 | Lime rim | `#C7FC2F`, **2 px = 0.67 pt** (the system's one hairline, 10-v2 §4.4), riding the body's edge — outer extent **61** at the widest rows, **60** elsewhere |
 | White body ring | `#FFFFFF`, radius ≈**48.5 → 60** [d] — the annulus between the inner disc and the rim |
@@ -517,9 +515,9 @@ carried by the station card and the detail's owner row. This is a **third**
 per-surface pin treatment and it is declared, not discovered later.
 
 **[RAISE-D4] There is no selected-pin treatment, and no cluster mark.**
-Verified: all seven lime outlines in `03` measure **122 × 147 px** *while a card
+Verified: all seven lime outlines in `03` measure **122.30 × 147.25 px** *while a card
 is open* — the reference genuinely does not highlight the selected pin. (10-v2
-§7.3, `size.pin` and §8.1 row 4 all now carry 122 × 147; this is the third of
+§7.3, `size.pin` and §8.1 row 4 all now carry 122.30 × 147.25; this is the third of
 this file's three statements of the pin's bbox and all three were already
 right.)
 Recommendation for selection: none — the card is the feedback, which is 1:1.
@@ -834,7 +832,7 @@ of the heaviest measured stroke.
 
 ### 7.2 The distance and duration go in the category-chip slot — re-solved
 
-The `03` chip measures **254 × 76 px = 84.7 × 25.3 pt** [m·11, and 10-v2 §7.5],
+The `03` chip measures **254.75 × 76.75 px = 84.92 × 25.58 pt** [m·11, and 10-v2 §7.5],
 x 480–733, y 2030–2105, **a pill** — ½ integrated height 38.4 px [ticket 33],
 `#393939` fill, `#C7FC2F` 2.5 px border, label cap 27 Regular `#C7FC2F`. Its
 label ink is x 566–703 = 138 px for `Hybride`, giving **86 px of left padding
@@ -992,16 +990,16 @@ no connection.
  │                                                          │
  │  © OpenStreetMap contributors                            │  attribution §11
  │  ┌──────────────────────────────────┐   ╭──╮             │
- │  │      Let's find a charger        │   │ ➤│             │  CTA 899×138 x64→962
+ │  │      Let's find a charger        │   │ ➤│             │  CTA 898×137.25 x64→962
  │  └──────────────────────────────────┘   ╰──╯             │  r 16.5 [t33]
  └──────────────────────────────────────────────────────────┘  locate ⌀139, gap 40
 ```
 
 **Components:** map canvas `#212121` · crosshair rule (part 1 §7.11) · map
 avatar (§7.9, ⌀129 px `#FFFFFF`, x 64, y 362, **no status dot** — §4) · charger
-pins (§7.3 + §2.2/§2.4) · primary CTA (§7.1, **899 × 138 px**, frame x 64 → 962)
+pins (§7.3 + §2.2/§2.4) · primary CTA (§7.1, **898.00 × 137.25 px**, frame x 64 → 962)
 · locate button (§7.2, ⌀139 px `#FFFFFF` with a 4 px lime ring and the system's
-**only filled glyph**, `size.circleButton.xl` = 139 = 46.3 pt, 40 px from the
+**only filled glyph**, `size.circleButton.xl` = **137.7 = 45.90 pt** [ticket 36], 40.16 px from the
 CTA) · attribution mark (§11) · offline chip (§9.1).
 
 **Behaviour**
@@ -1041,19 +1039,19 @@ about a pin: what is it, can I charge there, how far, what does it cost.
 
 **The card is a floating card, not an edge-anchored bottom sheet** — verdict
 **M2**, measured in §0.3 row 2. Frame **x 65 → 1140, y 1797 → 2317**
-(**1076 × 521 px = 358.7 × 173.7 pt**, `size.floatingCard`; AA columns at x 64 /
+(**1077.60 × 521.53 px = 359.20 × 173.84 pt**, `size.floatingCard`; AA columns at x 64 /
 x 1141 and an AA row at y 1796), **all four corners at 19.5 px** [ticket 33], fill `#121212` — *the page background*,
 on a `#212121` map — no shadow, no scrim, no dimming, **64 px internal padding**
 (`space.floatingCardPadding`) on left, right and bottom, and **64 px of visible
 map between its bottom edge and the CTA** (`space.floatingCardBottomGap`; rows
 2318–2381 inclusive are map, and the CTA's accent begins at **y 2382**). Drag
-handle **180 × 13 px = 60.0 × 4.3 pt** `#262626`, fully rounded, centred on the
+handle **180.00 × 12.75 px = 60.00 × 4.25 pt** `#262626`, fully rounded, centred on the
 card's centre x 602.5, **25 px = 8.3 pt below the card's top**.
 
 **[RE-DERIVED, ticket 32]** — five figures in that paragraph moved, all by one
 step, and all from the same root: this file read the card's **AA extent** as its
 frame. Frame `x 64 → 1141, y 1796 → 2317` → **x 65 → 1140, y 1797 → 2317**; size
-`1078 × 522 = 359.3 × 174.0 pt` → **1076 × 521 = 358.7 × 173.7 pt** (10-v2
+`1078 × 522 = 359.3 × 174.0 pt` → **1077.60 × 521.53 = 358.7 × 173.7 pt** (10-v2
 publishes the floating card at its **core** extent — [RAISE-14], and the
 AA-inclusive reading is exactly the 1078 × 522 this file carried, which is why
 the two never looked wrong beside each other); `65 px of map` → **64 px**; the
@@ -1070,10 +1068,10 @@ padding are all unchanged.
  │              ◉        ◉●        ═══════╗                 │  lime route line, 12 px
  │                    ◉             (§7.1) ║                │
  │                        ◉════════════════╝                │
- │  ╭────────────────────────────────────────────────────╮  │  floating card, 1076×521
+ │  ╭────────────────────────────────────────────────────╮  │  floating card, 1077.6×521.5
  │  │                   ▭▭▭▭▭▭▭▭▭                        │  │  x65→1140, y1797→2317
  │  │  ┌────────┐  SP Remera                        ♡     │ │  r 19.5 all [t33]
- │  │  │ photo  │  4 bays · no confirmed status           │ │  handle 180×13 #262626
+ │  │  │ photo  │  4 bays · no confirmed status           │ │  handle 180×12.75 #262626
  │  │  │100×100 │  ╭───────────────╮                      │ │  title cap 36 Bold x483
  │  │  │  pt    │  │ 8 min · 2.9 km│                      │ │  subtitle cap 27 Regular
  │  │  └────────┘  ╰───────────────╯                      │ │  heart #717171 [m·11]
@@ -1091,11 +1089,11 @@ the inner box is **x 129 → 1076 = 948 px = 316.0 pt** [d]):
 
 | Reference slot | Measured | EV Guide content |
 | --- | --- | --- |
-| Drag handle | **180 × 13 px = 60.0 × 4.3 pt** `#262626`, **a pill** — ½ integrated height **6.4** [ticket 33] (a pill; ticket 33 re-fitted it and found it **never carried the bias** — 6.5 came from the constraint, not the false arc), centred on x 602.5, **25 px** below the card top [m, 10-v2 §7.4 / §5.2] | unchanged |
-| Thumbnail | 300 × 300 px = 100 × 100 pt, radius **31.8 px** [ticket 33], x 128, y 1873 | `Photo[0]` |
+| Drag handle | **180.00 × 12.75 px = 60.00 × 4.25 pt** `#262626`, **a pill** — ½ integrated height **6.4** [ticket 33] (a pill; ticket 33 re-fitted it and found it **never carried the bias** — 6.5 came from the constraint, not the false arc), centred on x 602.5, **25 px** below the card top [m, 10-v2 §7.4 / §5.2] | unchanged |
+| Thumbnail | ≈297.5 × 297.5 px ≈ 99.2 × 99.2 pt [band ±1.5 — photo-limited, ticket 36], radius **31.8 px** [ticket 33], x 128, y 1873 | `Photo[0]` |
 | Title | cap 36 Bold, x 483, baseline 1921 | **`nameShort`** — `SP Remera` |
 | Subtitle | cap 27 Regular, x 483, 19 px below title | **the availability clause** |
-| Category chip | 254 × 76 px = 84.7 × 25.3 pt [m·11, and 10-v2 §7.5], x 480, y 2030, **a pill** — ½ integrated height 38.4 [ticket 33], lime 2.5 px border, **content-sized** [RAISE-D27] | **the route preview** (§7.2) |
+| Category chip | 254.75 × 76.75 px = 84.92 × 25.58 pt [m·11, and 10-v2 §7.5], x 480, y 2030, **a pill** — ½ integrated height 38.4 [ticket 33], lime 2.5 px border, **content-sized** [RAISE-D27] | **the route preview** (§7.2) |
 | Price | cap 27, right-aligned, ink right edge **x 1075** (65 px inside the card's right edge) | **`rateShort`** (§13.2) — **[weight settled: ticket 35]**: amount Bold (stem/cap 0.192), unit tail **ExtraLight** in this slot (1.65 px stem, 0.061), Regular in `04`'s sticky slot |
 | Heart | ink 50 × 46 px = 16.7 × 15.3 pt, x 1025–1074, y 1881–1926, **`#717171`**, stroke **4.8–6.0 px** (10-v2 §8.2 files it in the **Light** band at 4.8 px = 1.6 pt) [m·11 + 10-v2 §7.4 / §8.1 row 17] | `SavedStation` toggle |
 
@@ -1171,7 +1169,8 @@ function of size, not weight, so applying it to a two-line cap-27 Regular run is
 a **derivation**; the card's measured **521 px** height is then the one-line case
 and a second line adds exactly 45 px, giving 566 px. Needs a yes, because it
 makes the card content-sized. **[RE-DERIVED, ticket 32]** — the height read
-522 px (the AA-inclusive extent); `size.floatingCard` is **1076 × 521**. The
+522 px (the AA-inclusive extent) against a **core** 521; integrated,
+`size.floatingCard` is **1077.60 × 521.53**. The
 raise is unaffected — what needs a yes is *that the card grows*, not by how much
 from what. Regime 3's worst string cannot fit one line at any rung of the
 ladder — the alternative is breaking the ladder's law, which is worse.
@@ -1317,7 +1316,7 @@ to a driver with no plug profile set (domain-model amendment 8).
  ├──────────────────────────────────────────────────────────┤
  │  600 RWF/kWh              ┌────────────────────────┐     │  sticky bar §7.8
  │  = rateShort              │      Directions        │     │  opaque #121212
- └───────────────────────────└────────────────────────┘─────┘  513×131, r 16.5 [t33]
+ └───────────────────────────└────────────────────────┘─────┘  513×131.25, r 16.5 [t33]
 ```
 
 **Slot map**
@@ -1328,7 +1327,7 @@ to a driver with no plug profile set (domain-model amendment 8).
 | Overflow `⋯` | **⌀98 px = 32.7 pt** (x 1043–1140, y 221–318), 3 white dots **⌀7.6 px**, right edge on the content margin, **same centre y** | S-03 |
 | Hero | **1078 × 612 px = 359.3 × 204.0 pt (1.762 : 1)**, frame x 64 → 1141, y 354 → 965, radius **31.8 px** [ticket 33] | `Photo[i]`, paginated |
 | Page indicator | active **95 × 16 px = 31.7 × 5.3 pt** lime (x 512–606, y 924–939), inactive 3 × ⌀15–16 px `#3E3E3E`, gap 13–15 px, group centred on the hero's centre x 602.5, **26 px (8.7 pt) above the hero's bottom** | `Photo` count |
-| Hero badge | **248 × 70 px = 82.7 × 23.3 pt** (frame x 850 → 1097, y 866 → 935; 250 × 72 with AA), **a pill** — ½ integrated height 35.4 px [ticket 33], `#C7FC2F`, **stroked lightning at ≈4.2 px** (ink 34 × 37 px) + cap 27 Regular `#FFFFFF`, 44 px inside the hero's right edge and 30 px above its bottom | **peak power** — `60 kW`, per **R2**. Absent when no Connector carries `powerKw`. **[RAISE-D28]** |
+| Hero badge | **249.27 × 70.75 px = 83.09 × 23.58 pt** (frame x 850 → 1097, y 866 → 935; 250 × 72 with AA), **a pill** — ½ integrated height 35.4 px [ticket 33], `#C7FC2F`, **stroked lightning at ≈4.2 px** (ink 34 × 37 px) + cap 27 Regular `#FFFFFF`, 44 px inside the hero's right edge and 30 px above its bottom | **peak power** — `60 kW`, per **R2**. Absent when no Connector carries `powerKw`. **[RAISE-D28]** |
 | Title | cap 47 Bold | **`Station.name`** — `Kabisa – SP Remera` |
 | Heart + share | ink **66 × 62** / ~67 × 67 px, 31 px apart, both **`#FFFFFF`** [m, 10-v2 §8.1 rows 21–22] | save · share |
 | Subtitle | cap 27 Regular, 20 px below title | `4 bays · GB/T DC · Type 2` |
@@ -1341,9 +1340,14 @@ to a driver with no plug profile set (domain-model amendment 8).
 **[RE-DERIVED, ticket 32] — eleven values in that slot map moved, and one is a
 drawing instruction, not a dimension.** Grouped by root:
 
-- **The circular buttons were read AA-inclusive.** Close `×` ⌀81 → **⌀80**
-  (`size.circleButton.sm` = 80 = 26.7 pt); overflow `⋯` ⌀100 → **⌀98**
-  (`size.circleButton.lg` = 98 = 32.7 pt); the overflow dots ⌀6 → **⌀7.6 px**;
+- **The circular buttons were read AA-inclusive** — ~~and corrected down to the
+  core reading~~. **[REVERSED, ticket 36]** Ticket 32 moved close `×` ⌀81 → ⌀80
+  and overflow `⋯` ⌀100 → ⌀98, which was the *same* defect ticket 34 exists to
+  close: with no convention declared it corrected toward core, exactly as commit
+  `6a5a922` did to the CTA's height. Measured integrated, they are **⌀81.4** and
+  **⌀99.5** — so ⌀81 and ⌀100 were the *closer* of the two readings and the
+  correction moved away from the reference. The overflow dots ⌀6 → **⌀7.6 px**
+  stand (a stroke, integrated, not an extent question);
   and the close glyph's *"6 px white stroke"* → **≈3.8 px** — 10-v2 §8.2 files it
   in the **Light** band, and §0.1 explains the 6: v1 counted pixels touched,
   which over-reads a stroke by 1–2 px, where v2 integrates coverage. Nothing on
@@ -1356,7 +1360,7 @@ drawing instruction, not a dimension.** Grouped by root:
   largest single mis-placement this file carried. The active indicator is
   **95 × 16**, not 96 × 16.
 - **The hero badge is neither figure this file had.** `249 × 71` is neither the
-  core (**248 × 70**) nor the AA extent (250 × 72); it was read at a mixed
+  core (**249.27 × 70.75**) nor the AA extent (250 × 72); it was read at a mixed
   threshold. Corrected to the core, with the AA extent named.
 - **The bolt is stroked, not filled.** This is the one entry that would have
   changed the *drawing*: 10-v2 §0.2 m4, §7.7 and §8.3 show the bolt's interior
@@ -1518,7 +1522,7 @@ adopting it.
 the amount (stem/cap 0.192) and **Regular** in the unit tail (4.36 px stem,
 0.121), against **ExtraLight** in the `03` card's slot; 10-v2 §4.1 row 15 and
 §7.8 still call the whole run Bold and are not corrected. `Directions` CTA
-right, **513 × 131 px = 171.0 × 43.7 pt** (frame x 603 → 1115, y 2363 → 2493;
+right, **513.00 × 131.25 px = 171.00 × 43.75 pt** (frame x 603 → 1115, y 2363 → 2493;
 `size.ctaHeightSticky` 131 = 43.7 pt, and §0.1 records that this element's
 edges are hard, so it reads the same under all three extent conventions),
 radius **16.5 px** [ticket 33], label cap 32 Medium
@@ -1605,9 +1609,12 @@ cross-app affordance, and the settings list.
 
 **[RE-DERIVED, ticket 32] — three annotations in that drawing moved.**
 
-- **Back `←` is ⌀90 px = 30.0 pt**, not ⌀91: 10-v2 §7.2 measures it at
-  x 39–128, y 225–314, and `size.circleButton.md` = 90. ⌀91 was the AA-inclusive
-  read, the same defect as the `04` close and overflow buttons. Its left edge is
+- **Back `←` is ⌀90.8 px = 30.27 pt. [REVISED, ticket 36]** Ticket 32 moved this
+  ⌀91 → ⌀90, calling ⌀91 "the AA-inclusive read, the same defect as the `04`
+  close and overflow buttons". It was the same defect — but the defect was the
+  *correction*, not the ⌀91: integrated, the button measures **90.8**, so the
+  original annotation was nearer the truth. 10-v2 §7.2 places it at x 39–128,
+  y 225–314. Its left edge is
   the **38–39 px card margin** (10-v2 §5.1), which the old annotation had right.
 - **The `Settings` heading is cap 36 Bold**, not cap 37. 10-v2 §7.6 measures the
   section heading at **cap 36 px Bold, x 40**. §4.1 row 3 does carry 37, but with
@@ -1987,10 +1994,10 @@ routes the reconciliation to ticket 30 — it must not be settled three times.
 
 ### S-01 · Auth sheet — [ext]
 
-**Assembled from:** the **floating card** (§0.3 row 2: **1076 px wide at x 65**,
+**Assembled from:** the **floating card** (§0.3 row 2: **1077.60 px wide at x 65**,
 all four corners **19.5 px** [ticket 33], `#121212`, 64 px
-padding, drag handle **180 × 13 px** `#262626` **25 px** below the top) ·
-primary CTA geometry (**138 px tall**, r **16.5 px** [ticket 33]) · hosting-card fill (`#393939`) for the
+padding, drag handle **180.00 × 12.75 px** `#262626` **25 px** below the top) ·
+primary CTA geometry (**137.25 px tall**, r **16.5 px** [ticket 33]) · hosting-card fill (`#393939`) for the
 secondary buttons · body copy.
 
 **Purpose.** ADR-0003 as amended (ticket 23): the gate fires on **save and
@@ -1999,7 +2006,7 @@ report**, never on directions. It overlays the screen the driver is on and
 
 ```
  ╭─────────────────────────────────────────────────────╮  r 19.5 all [t33]
- │                   ▭▭▭▭▭▭▭▭▭                         │  handle 180×13, 25 px down
+ │                   ▭▭▭▭▭▭▭▭▭                         │  handle 180×12.75, 25 px down
  │  Sign in to save stations                           │  cap 36 Bold
  │  Reading EV Guide never needs an account.           │  cap 28 ExtraLight
  │                                                      │
@@ -2110,7 +2117,7 @@ recommendation ticket 33 will move; the recommendation does not depend on it.)*
 caret, no placeholder, no keyboard-adjacent chrome. The email path and D-05's
 edits both need one. Recommendation: build it from the measured feature-chip
 surface (`#393939`, radius **13.4 px** [ticket 33], height
-105 px = 35.0 pt, `size.chipHeight`) with a cap-32 Regular `#FFFFFF` value — the
+105.49 px = 35.16 pt, `size.chipHeight`) with a cap-32 Regular `#FFFFFF` value — the
 closest measured container — and name it as an addition to `packages/ui`.
 
 **Strings:** `Sign in to save stations` · `Sign in to report status` ·
@@ -2123,7 +2130,7 @@ closest measured container — and name it as an addition to `packages/ui`.
 
 ### S-02 · Report sheet — [ext]
 
-**Assembled from:** the floating card (§0.3 row 2, handle 180 × 13 px) ·
+**Assembled from:** the floating card (§0.3 row 2, handle 180.00 × 12.75 px) ·
 **primary CTA geometry for the three controls** (§12.3, *not* chips) · body copy.
 
 **Purpose.** File a `Report` — a claim about one **Connector's** availability.
@@ -2131,7 +2138,7 @@ Proximity-gated on the captured location, account-required, offline-queueing.
 
 ```
  ╭─────────────────────────────────────────────────────╮  r 19.5 all [t33]
- │                   ▭▭▭▭▭▭▭▭▭                         │  handle 180×13 #262626
+ │                   ▭▭▭▭▭▭▭▭▭                         │  handle 180×12.75 #262626
  │  GB/T DC · 60 kW                                    │  cap 36 Bold
  │  What's happening at this plug?                     │  cap 28 ExtraLight
  │                                                      │
@@ -2410,7 +2417,7 @@ adds a second mechanism.
 
 ### 12.2 Bay watch — arm and disarm
 
-**Component: primary CTA geometry** (§12.3), 138 px tall (`size.ctaHeight` =
+**Component: primary CTA geometry** (§12.3), 137.25 px tall (`size.ctaHeight` =
 138 = 46.0 pt), radius **16.5 px** [ticket 33], `#393939`
 fill, cap 32 Medium `#FFFFFF` label, **the full 1078 px = 359.3 pt content
 width**, placed directly under D-03's availability block at the content margin.
@@ -2450,7 +2457,7 @@ exactly that, with reasons this file accepts in full rather than re-arguing:
 
 **[RE-DERIVED, ticket 32]** — the quotation is left as file 12 wrote it, but one
 figure in it is wrong and the correction runs the safe way. The category chip is
-**76 px = 25.3 pt**, not 25.7 (10-v2 §7.5 / §7.4: `254 × 76 px = 84.7 × 25.3 pt`;
+**76 px = 25.3 pt**, not 25.7 (10-v2 §7.5 / §7.4: `254.75 × 76.75 px = 84.92 × 25.58 pt`;
 `76 / 3 = 25.33`). The feature chip's **35.0 pt** is exact (105 px). Both are
 *further* under any tap-target floor than the quotation claims, so the ruling
 this file adopts is unaffected and slightly better supported. The 25.7 is file
@@ -2461,7 +2468,7 @@ this file adopts is unaffected and slightly better supported. The 25.7 is file
 | Rule | Consequence in this file |
 | --- | --- |
 | **Chips are labels.** Both variants, both apps. | The route-preview chip (§7.2), the connector feature chips (D-03), and the offline chip (§9.1) are all non-interactive, and every behaviour table above says so. |
-| **Interactive controls take primary-CTA geometry**: 138 px tall (46 pt), radius **16.5 px** [ticket 33], `#393939` + `#FFFFFF` label unselected, `#C7FC2F` + `#121212` Medium label selected. **Label cap: 36 in S-01 (the primary CTA's own measured label size, 10-v2 §4.1 row 5), 32 in S-02 and §12.2** — a per-surface difference this file already carried and which the cap-37 → cap-36 correction does not create. | S-02's three report controls (§8, S-02) and D-03's bay-watch control (§12.2). |
+| **Interactive controls take primary-CTA geometry**: 137.25 px tall (46 pt), radius **16.5 px** [ticket 33], `#393939` + `#FFFFFF` label unselected, `#C7FC2F` + `#121212` Medium label selected. **Label cap: 36 in S-01 (the primary CTA's own measured label size, 10-v2 §4.1 row 5), 32 in S-02 and §12.2** — a per-surface difference this file already carried and which the cap-37 → cap-36 correction does not create. | S-02's three report controls (§8, S-02) and D-03's bay-watch control (§12.2). |
 | **Accent means *selected*.** | S-02 has no selected state (one tap commits), so nothing there is lime — which is also why the accent budget survives. |
 | Layout may differ where the **container width** differs, with the arithmetic shown. | S-02 stacks where file 12 goes three-up (§8, S-02). |
 
@@ -2723,8 +2730,8 @@ changed. **Rebutted** = the document did not change, with the reason.
 
 | # | Finding | Answer |
 | --- | --- | --- |
-| **M1** | Drag handle is 180 × 13 px | **Fixed.** Re-measured (§0.3 row 1) and corrected in D-02, S-01 and S-02. Owed back to part 1. |
-| **M2** | The `03` sheet is a floating card with rounded bottom corners | **Fixed.** Re-measured (§0.3 row 2): all four corners at **19.5 px** [ticket 33], bottom edge y 2317, **64 px** of map below it. Corrected in D-02 (including the list detent), S-01 and S-02, with [RAISE-D34] for the bottom offset when no CTA sits below. **[RE-DERIVED, ticket 32]** — the *identity* correction was right and part 1 adopted it (10-v2 §0.2 M2, `StationCard` not `BottomSheet`, no `radius.sheet` token); the *frame* was not. The card is **x 65 → 1140, y 1797 → 2317 = 1076 × 521 px**, the map below it is **64 px** (this cell said 65), and the radius is **frozen under [RAISE-13]/ticket 33** rather than settled at either file's number. |
+| **M1** | Drag handle is 180.00 × 12.75 px | **Fixed.** Re-measured (§0.3 row 1) and corrected in D-02, S-01 and S-02. Owed back to part 1. |
+| **M2** | The `03` sheet is a floating card with rounded bottom corners | **Fixed.** Re-measured (§0.3 row 2): all four corners at **19.5 px** [ticket 33], bottom edge y 2317, **64 px** of map below it. Corrected in D-02 (including the list detent), S-01 and S-02, with [RAISE-D34] for the bottom offset when no CTA sits below. **[RE-DERIVED, ticket 32]** — the *identity* correction was right and part 1 adopted it (10-v2 §0.2 M2, `StationCard` not `BottomSheet`, no `radius.sheet` token); the *frame* was not. The card is **x 65 → 1140, y 1797 → 2317 = 1077.60 × 521.53 px**, the map below it is **64 px** (this cell said 65), and the radius is **frozen under [RAISE-13]/ticket 33** rather than settled at either file's number. |
 | **M3** | The one link in the system is underlined and no file records it | **Acknowledged, routed — and part 1 has landed it.** The link is `Show and edit my profile` (`02`, cap 27 Regular `#C7FC2F`). Underline is a **type property**, not a screen decision, so it belongs in part 1 beside the weight and colour, not here. **[RE-DERIVED, ticket 32]** — 10-v2 §4.4 now measures the whole decoration (rule x 380 → 825 = 446 px, **2.00 px = 0.67 pt** integrated, 3 px below the baseline, **no descender skip**) and §10.2 ships it as **`type.link`** with `skipInk: false` stated explicitly. The routing is discharged; the old pointer to *"§2/§8.2"* is replaced by **§4.4 / §10.2**. |
 | **M4** | The basemap's palette and label hierarchy are unmeasured | **Rebutted as out of scope, and routed.** The basemap is the map *provider's* style (ticket 06, MapLibre + a self-hosted OpenMapTiles-derived style), not a `packages/ui` component; it is the only new work in the verdict and it is a style-JSON deliverable. Routed to ticket 06 with the note that it governs ~85% of the front door's pixels and that two of the reference's own labels (Rebero, Remera) do not exist in OSM (§11). |
 | **M5** | The route string does not fit the chip | **Fixed by re-solving.** §7.2 checks the fit against the **chip** (254 px measured, 86/30 padding measured) rather than the column, with a stated advance constant (§0.4). The placement survives **only** if the chip is content-sized, which the reference cannot prove from one instance — **[RAISE-D27]**, recommending content-sizing on the strength of the feature chip's measured **four**-width behaviour, and naming the impossibility that follows if the answer is no. **[RE-DERIVED, ticket 32]** — the padding 86/30 is confirmed and part 1 has been corrected **to** it from 88/29; the feature chip's measured widths are **271 / 316 / 387 / 652** (four instances, not the two this file cited), which strengthens the recommendation. Verdict unchanged. |
@@ -2734,7 +2741,7 @@ changed. **Rebutted** = the document did not change, with the reason.
 | **M10** | Bare `GB/T` is not in the closed projection | **Fixed and routed, not closed.** Every string in this file uses the qualified forms. **[RAISE-D32]** (§13.4) states the three open questions — legality, membership, multi-member lenses — and routes them to ticket 18 and to `02-androidauto-design-v3.md` §3.5, which shipped the bare form in Grammar R. |
 | **M11** | D-02 has no behaviour table; screens have no entry points | **Fixed twice.** §8.0 is an exhaustive entry-point table for all fifteen surfaces. D-02 now has a behaviour table whose first row is *the station card pushes D-03*, and every other screen and sheet gained one. |
 | **M12** | `#FFFFFF` on `#C7FC2F` is 1.21:1 | **Raised.** [RAISE-D28], with the contrast recomputed here (1.21:1 against 15.52:1 for `color.onAccent`) and a redundancy invariant that makes R2's peak-power badge safe: nothing may appear in the badge that is not also in `#FFFFFF` text on the same screen. The 1:1 reproduction is recommended; the one-token alternative is named, not chosen. |
-| **M13** | The free-bay dot straddles the lime outline; its ring lands on white | **Fixed by re-derivation.** §2.4 measures the pin (bbox **122 × 147**, head circle fitted to **r = 61.25 ± 0.15** at 0.12 px rms, inner disc **⌀ ≈97** so the white body runs to r ≈60) and shows the collision in numbers: at v1's (+46, −46) the dot's lime spans r **55.1–75.1**, crossing the rim, and its ring lands on the white body. The avatar escapes only because it has no rim. New offset **(+54, −54) px**, tangent to the rim — **[RAISE-D26]**, with the argument that 1:1 on a *mark* means preserving legibility, not the arithmetic that produced it on a rimless host. **[RE-DERIVED TWICE, ticket 32] — the answer moved by one pixel.** The pin's 122 × 147 was this file's number and part 1 has been corrected to it, from 120 × 147 — do not reverse that. But the tangent constraint is `d ≥ 61.25 + 14.5 = 75.75`, so the offset is **54**, not 53: v1's own `d ≥ 75.5` never admitted 53 (`53√2 = 74.95`), and ticket 32's first pass rescued 53 only by setting the head radius to 60 on the false premise that a circle is narrower along its diagonal. At 53 the ring's inner edge sits at 60.45 against a rim at 61.25 and **overlaps by 0.80 px**. `SPEC.md` §6's locked `(+53, −53)` is **corrected to (+54, −54)**. |
+| **M13** | The free-bay dot straddles the lime outline; its ring lands on white | **Fixed by re-derivation.** §2.4 measures the pin (bbox **122.30 × 147.25**, head circle fitted to **r = 61.25 ± 0.15** at 0.12 px rms, inner disc **⌀ ≈97** so the white body runs to r ≈60) and shows the collision in numbers: at v1's (+46, −46) the dot's lime spans r **55.1–75.1**, crossing the rim, and its ring lands on the white body. The avatar escapes only because it has no rim. New offset **(+54, −54) px**, tangent to the rim — **[RAISE-D26]**, with the argument that 1:1 on a *mark* means preserving legibility, not the arithmetic that produced it on a rimless host. **[RE-DERIVED TWICE, ticket 32] — the answer moved by one pixel.** The pin's 122.30 × 147.25 was this file's number and part 1 has been corrected to it, from 120 × 147 — do not reverse that. But the tangent constraint is `d ≥ 61.25 + 14.5 = 75.75`, so the offset is **54**, not 53: v1's own `d ≥ 75.5` never admitted 53 (`53√2 = 74.95`), and ticket 32's first pass rescued 53 only by setting the head radius to 60 on the false premise that a circle is narrower along its diagonal. At 53 the ring's inner edge sits at 60.45 against a rim at 61.25 and **overlaps by 0.80 px**. `SPEC.md` §6's locked `(+53, −53)` is **corrected to (+54, −54)**. |
 | **M14** | "Full width, no inset" across three margin families | **Fixed.** §5.1 defines it once as a relationship to the row's container, tabulates all three containers, and raises the generalisation from a single measured instance — **[RAISE-D29]**. **[RE-DERIVED, ticket 32]** — two of the three container rows were wrong (the measured divider's core is **x 39 → 1166**, not its AA extent x 38 → 1167; the card inner box is **x 129 → 1076 = 948 px**, not x 128 → 1077 = 950), and the file then **broke its own ruling two sections later**: D-03's connector rows moved their divider to the 64 px page column and left the label at **x 196**, which is the label's position in the *38 px* container. Corrected to **x 222** (`64 + 158`, 10-v2 §5.2). That is the one place the M14 defect had actually survived into a drawn screen. |
 
 ### The minors named in the brief
@@ -2811,7 +2818,7 @@ and are not this file's to settle:**
 | # | What | Effect here |
 | --- | --- | --- |
 | **[RAISE-13]** → **ticket 33, CLOSED 2026-08-16** | Part 1 §6's radius method stated a false geometric identity, so **every published radius was under-read** by about `√r` | **Released.** All six outstanding rows re-fitted; every frozen marker in this file replaced by its corrected value. Two findings changed what gets typed: the **category chip, hero badge and drag handle are pills**, and both CTAs share **one** 16.5 token. See the authority note. |
-| **[RAISE-14]** → **ticket 34** | The extent convention (core / integrated / AA-inclusive) is undeclared, and part 1 uses two of them — the primary CTA published AA-inclusive, the floating card at core | This file re-derives against **what part 1 publishes** (CTA 899 × 138, card 1076 × 521, sticky CTA 513 × 131, pin 122 × 147). If ticket 34 declares core or integrated, those four and everything derived from them move. |
+| **[RAISE-14]** → **ticket 34, CLOSED 2026-08-16** | The extent convention was undeclared and part 1 used two of them — the primary CTA published AA-inclusive, the floating card at core | **Ruled `integrated`, with tokens carrying the fraction.** Converted under ticket 36 throughout this file: CTA **898.00 × 137.25**, card **1077.60 × 521.53**, sticky CTA **513.00 × 131.25**, pin **122.30 × 147.25**. Ticket 36 also **reversed two of ticket 32's own circular-button corrections**, which had moved toward core in the absence of a rule. |
 | **[RAISE-15]** → **ticket 35, CLOSED 2026-08-16** | The price string `135 000 RWF/day` is **two weights**, and part 1 §4.1 row 15, §7.8 and §11.3 all called it one | **Ship both, as measured.** §13.2 now carries the composition rule: amount and currency **Bold in every slot**, the tail's weight a property of the **slot** — Regular on `04`'s sticky bar, ExtraLight on the `03` card. Part 1 §4.1 gains rows 7b and 15b and §7.8 states both. The Bold advance constant k = 0.80 (§0.3 row 6) remains flagged as measured on a **mixed-weight** run. |
 
 ---
@@ -2820,9 +2827,9 @@ and are not this file's to settle:**
 
 | Screen | Ref or ext | Components used | States | What fixes its content |
 | --- | --- | --- | --- | --- |
-| **D-01 Map home** | **[ref-01]** | map canvas · crosshair rule §7.11 · map avatar §7.9 (no dot) · charger pin §7.3 (**122 × 147**) + status dot §7.9 at (+54,−54) · primary CTA §7.1 (**899 × 138**) · locate button §7.2 (**⌀139**, 40 px gap) · feature chip §7.5 (offline) · attribution mark | default · offline · no-permission · signed-out · (no loading, no empty, no error) | ADR-0002 · ADR-0007 · ticket 06 · ticket 19 |
-| **D-02 Map + station card** | **[ref-03]** | **floating card** §7.4 (**1076 × 521**, x 65 → 1140, y 1797 → 2317; r **19.5** all corners [ticket 33]) · drag handle **180 × 13**, 25 px down · thumbnail · category chip §7.5 (route, content-sized) · `rateShort` price composition (**[weight settled: ticket 35]**) · heart `#717171` · route line (new width, D8) · divider §5.1 at the **948 px** inner box (list detent) | Regime 1 / 2 / 3 / lensed / no-compatible-plug · route-in-flight · route-failed · offline · signed-out · saved · uncached-photo | availability-display §2 · ADR-0004 · ADR-0007 · ticket 10 · ticket 19 |
-| **D-03 Station detail** | **[ref-04]** | circular buttons §7.2 (**⌀80, ⌀98**) · hero carousel **1078 × 612** + indicator (**95 × 16**, 26 px above the hero bottom) + badge **248 × 70** with a **stroked** bolt §7.7 (peak power, D28) · title/subtitle · owner row · settings rows §7.6 (connectors, divider x 64→1141, **label x 222**) · feature chips §7.5 · **CTA-geometry bay-alert control** §12.2 · sticky bar §7.8 (**513 × 131**) with `rateShort` | all availability regimes · Grammar R's five rate cases + session fee · offline · signed-out · not-at-station · uncached-hero | ADR-0002 · ADR-0008 · ADR-0004 · ticket 10 · ticket 30 · **D12 (schema)** |
+| **D-01 Map home** | **[ref-01]** | map canvas · crosshair rule §7.11 · map avatar §7.9 (no dot) · charger pin §7.3 (**122.30 × 147.25**) + status dot §7.9 at (+54,−54) · primary CTA §7.1 (**898.00 × 137.25**) · locate button §7.2 (**⌀139**, 40 px gap) · feature chip §7.5 (offline) · attribution mark | default · offline · no-permission · signed-out · (no loading, no empty, no error) | ADR-0002 · ADR-0007 · ticket 06 · ticket 19 |
+| **D-02 Map + station card** | **[ref-03]** | **floating card** §7.4 (**1077.60 × 521.53**, x 65 → 1140, y 1797 → 2317; r **19.5** all corners [ticket 33]) · drag handle **180.00 × 12.75**, 25 px down · thumbnail · category chip §7.5 (route, content-sized) · `rateShort` price composition (**[weight settled: ticket 35]**) · heart `#717171` · route line (new width, D8) · divider §5.1 at the **948 px** inner box (list detent) | Regime 1 / 2 / 3 / lensed / no-compatible-plug · route-in-flight · route-failed · offline · signed-out · saved · uncached-photo | availability-display §2 · ADR-0004 · ADR-0007 · ticket 10 · ticket 19 |
+| **D-03 Station detail** | **[ref-04]** | circular buttons §7.2 (**⌀80, ⌀98**) · hero carousel **1078 × 612** + indicator (**95 × 16**, 26 px above the hero bottom) + badge **249.27 × 70.75** with a **stroked** bolt §7.7 (peak power, D28) · title/subtitle · owner row · settings rows §7.6 (connectors, divider x 64→1141, **label x 222**) · feature chips §7.5 · **CTA-geometry bay-alert control** §12.2 · sticky bar §7.8 (**513.00 × 131.25**) with `rateShort` | all availability regimes · Grammar R's five rate cases + session fee · offline · signed-out · not-at-station · uncached-hero | ADR-0002 · ADR-0008 · ADR-0004 · ticket 10 · ticket 30 · **D12 (schema)** |
 | **D-04 Profile** | **[ref-02]** | back button §7.2 (**⌀90**) · profile avatar §7.9 · quick actions §7.2 (`size.quickAction` ⌀150) · hosting card §7.10 (**1128 × 334**, tile **256 × 257**) · settings rows §7.6 (4 [ref] + 2 [ext], divider core **x 39 → 1166**) | signed-in · signed-out · membership / no-membership · app-installed / not / undeterminable · offline | ADR-0003 · ADR-0006 · ticket 11 · ticket 15 |
 | **D-05 Personal Information** | [ext] | back (**⌀90**) · heading (**cap 36 Bold**) · settings rows + value slot (D14) · text input (D21) | signed-in only · offline · error-in-place | ADR-0003 |
 | **D-06 Login & Security** | [ext] | back · heading · settings rows + value slot | providers connected / not · sign-out · delete-account confirm · offline | ADR-0003 · Guideline 5.1.1(v) |
@@ -2832,7 +2839,7 @@ and are not this file's to settle:**
 | **D-10 About EV Guide** | [ext] | back · heading · settings rows + value slot · body copy | static | **§11 attribution** · ticket 06 |
 | **D-11 Saved** | [ext] | back · heading (**cap 36 Bold**) · station cards (D-02 composition, `rateShort`) · dividers §5.1 | populated · empty · offline | ADR-0003 · ticket 19 |
 | **D-12 Alerts** | [ext] | back · heading · settings rows + value slot | armed · empty · at-ceiling · offline | **ticket 30** · ticket 23 |
-| **S-01 Auth sheet** | [ext] | floating card (**1076 px** wide, handle 180 × 13 at 25 px, r **19.5** all corners [ticket 33]) · CTA geometry at **948 px** (D31) · hosting-card fill §7.10 · Apple's native button (**D20**) · text input (**D21**) | idle · in-flight · success (auto-resume) · cancelled · failed · offline · email path | **ADR-0003 as amended** · ADR-0004 · ticket 23 |
+| **S-01 Auth sheet** | [ext] | floating card (**1077.60 px** wide, handle 180.00 × 12.75 at 25 px, r **19.5** all corners [ticket 33]) · CTA geometry at **948 px** (D31) · hosting-card fill §7.10 · Apple's native button (**D20**) · text input (**D21**) | idle · in-flight · success (auto-resume) · cancelled · failed · offline · email path | **ADR-0003 as amended** · ADR-0004 · ticket 23 |
 | **S-02 Report sheet** | [ext] | floating card · **three CTA-geometry controls, stacked** (§12.3) | signed-out · not-at-station · offline (queues) · expired | ADR-0002 · ADR-0007 · ticket 09 · ticket 11 |
 | **S-03 Overflow menu** | [ext] | platform action sheet | — | **D13** |
 
@@ -2851,10 +2858,10 @@ raising them.
 **Three of part 1's questions now govern numbers printed in this file, and none
 of them is this file's to answer** (§16): **[RAISE-13]** every radius, routed to
 **ticket 33** — closed 2026-08-16; every radius here is released and corrected;
-**[RAISE-14]** the extent convention, routed to **ticket 34** — the four
-published sizes this file re-derives against will move if core or integrated is
-declared; **[RAISE-15]** the price string's two weights — §13.2's four consuming
-slots carry both measurements and no assignment.
+**[RAISE-14]** the extent convention, routed to **ticket 34** — closed
+2026-08-16 as **integrated**, and every size in this file converted under
+ticket 36; **[RAISE-15]** the price string's two weights — closed 2026-08-16 as
+*ship both*, and §13.2 now carries the composition rule.
 
 **The dependency this section used to name is discharged.**
 **[RE-DERIVED, ticket 32]** — it read *"`10-design-system-v2.md` does not exist
@@ -2863,7 +2870,7 @@ part 1's originals are void."* File 10-v2 has landed, all six corrections are
 adjudicated in §0.3 (five accepted, one — the CTA width — rejected in this
 file's disfavour), `color.iconMuted` `#717171` is in part 1 §10.1, and **part 1
 is the citation of record again**. Two corrections went the other way and are
-recorded as such rather than reversed: the **map pin at 122 × 147** (§2.4) and
+recorded as such rather than reversed: the **map pin at 122.30 × 147.25** (§2.4) and
 the **category chip's 86 / 30 padding** (§7.2) are this file's measurements, and
 part 1 has been brought into line with both. A later pass must not "restore"
 120 × 147 or 88 / 29.

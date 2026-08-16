@@ -39,16 +39,18 @@
 > the least-rounded thing (the feature chip is), and the floating card is not in
 > the buttons' bracket.
 >
-> **3. Two sizes used below are extent-convention-dependent — file 10
-> [RAISE-14], ticket 34.** File 10 §0.1 records that a component's size reads
-> three ways (core / integrated / AA-inclusive) and that file 10 itself publishes
-> the primary CTA **AA-inclusive** (899 × 138 px = 299.7 × 46.0 pt; core
-> 897 × 136, integrated 898.00 × 137.25) and the floating card at its **core**
-> extent (1076 × 521 px = 358.7 × 173.7 pt). This file re-derives against **what
-> file 10 publishes**, which is ticket 32's instruction. Two things move if
-> ticket 34 declares core or integrated: the `size.ctaHeight` **46.0 pt** the
-> control row and O1 build on (§4.3, §3/O1), and the **594 px** floating-card
-> content column the O2 value-slot fit is computed in (§3/O2).
+> **3. The extent convention is settled — file 10 [RAISE-14], ticket 34,
+> CLOSED 2026-08-16.** A component's size reads three ways (core / integrated /
+> AA-inclusive), and file 10 was publishing the primary CTA **AA-inclusive** and
+> the floating card **core**, with nothing declaring either. **The convention is
+> now `integrated`** — the element's true extent — and **tokens carry the
+> fraction rather than round**. The two sizes this file builds on have moved
+> accordingly: the primary CTA is **898.00 × 137.25 px = 299.33 × 45.75 pt**
+> (`size.ctaHeight` **45.75 pt**, used by the control row and O1 at §4.3 and
+> §3/O1) and the floating card **1077.60 × 521.53 px = 359.20 × 173.84 pt**
+> (whose **594 px** content column the O2 value-slot fit is computed in, §3/O2).
+> Every size in this file was re-derived under ticket 36 and now reads
+> integrated throughout.
 >
 > **4. The price string is two weights, not one — file 10 [RAISE-15].** The
 > amount is Bold and the unit tail is lighter, differently in each slot. Both of
@@ -279,9 +281,13 @@ file as if they were `§7.2`'s own — **eleven times**, at §1 (×2), §3.0 (×
 
 | Button | file 10 `§7.2` / `§10.5` [m] | quoted here as | now reads |
 | --- | --- | --- | --- |
-| close `×` `size.circleButton.sm` | ⌀80 px (x65–144, y230–309) | 27 pt | **26.7 pt** |
-| back `←` `size.circleButton.md` | ⌀90 px (x39–128, y225–314) | 30.3 pt | **30.0 pt** |
-| overflow `⋯` `size.circleButton.lg` | ⌀98 px (x1043–1140, y221–318) | 33.3 pt | **32.7 pt** |
+| close `×` `size.circleButton.sm` | **⌀81.4 px** (x65–144, y230–309) | 27 pt | **27.13 pt** |
+| back `←` `size.circleButton.md` | **⌀90.8 px** (x39–128, y225–314) | 30.3 pt | **30.27 pt** |
+| overflow `⋯` `size.circleButton.lg` | **⌀99.5 px** (x1043–1140, y221–318) | 33.3 pt | **33.17 pt** |
+
+*[ticket 36] Integrated diameters, by integrated area. The pt column this table
+originally called wrong — 27 / 30.3 / 33.3 — was in fact **nearer** the truth
+than the core values that replaced it.*
 
 `27 pt` was the worst of the three: 80 ÷ 3 = 26.67, and file 10 §0.1 forbids
 exactly that rounding — *"the pt value is shown to one decimal and **is not
@@ -401,7 +407,7 @@ supplied it.
 `type.display` 26 pt Bold, accent link at `type.link` — `type.body` Regular
 `#C7FC2F` **underlined**, 0.67 pt thick, 1 pt below the baseline,
 `skipInk: false`; file 10 §4.4's M3 correction, which this file had not carried)
-+ `§7.1` primary CTA (`size.ctaHeight` 46.0 pt, `radius.button` **5.5 pt** [ticket 33]) × 3.
++ `§7.1` primary CTA (`size.ctaHeight` 45.75 pt, `radius.button` **5.5 pt** [ticket 33]) × 3.
 
 Same providers as the driver app, unchanged by ADR-0003's amendment: Google,
 Sign in with Apple, email magic link. **No SMS.** Sign in with Apple is
@@ -414,7 +420,7 @@ needs one) both apply to this screen unchanged; they are not re-raised here.
 against a reference that spends the accent on **one** CTA per screen (~3.9% of
 map-screen pixels, `refs/design-observations.md`). One provider takes the
 accent CTA (platform-primary: Apple on iOS, Google on Android); the other two
-take the same 46.0 pt / **5.5 pt** [ticket 33] geometry
+take the same 45.75 pt / **5.5 pt** [ticket 33] geometry
 with `color.surface` `#393939` fill and
 `color.text` label — a fill the reference uses for every other tappable thing
 (`§7.2`). No new value is introduced.
@@ -829,8 +835,8 @@ Bay B
 
 ### 4.3 The control row
 
-**Assembled from:** `§7.1` primary CTA **geometry** (`size.ctaHeight` **46.0 pt**
-— 138 px, the AA-inclusive reading file 10 publishes; see the revision note's
+**Assembled from:** `§7.1` primary CTA **geometry** (`size.ctaHeight` **45.75 pt**
+— 137.25 px, the **integrated** reading ticket 34 declared; see the revision note's
 [RAISE-14], and `radius.button` **5.5 pt** [ticket 33])
 carrying the **`§7.8` sticky CTA's label size** (cap 32
 Medium), with the two fills the reference already distinguishes —
@@ -922,11 +928,11 @@ advance whose ink extent was 1 px short — see §0.2's cap-32 row.)*
 
 Why not the `§7.5` chips, which look like the obvious answer: the feature chip
 is **35.0 pt** tall and the category chip **25.3 pt** (file 10 `§7.5`:
-`254 × 76 px = 84.7 × 25.3 pt`; **25.7 pt was the v1 height of 77 px** —
+`254.75 × 76.75 px = 84.92 × 25.58 pt`; **25.7 pt was the v1 height of 77 px** —
 **[RE-DERIVED, ticket 32]**, and the 0.4 pt does not touch the argument).
 **Both chips are under any tap-target floor** — 35.0 and 25.3 pt against 44 pt
 on iOS and 48 dp on Android — and neither is interactive in the reference; they
-are labels. Using CTA geometry keeps the target at 46.0 pt. **[d]**, and the accent-as-selection
+are labels. Using CTA geometry keeps the target at 45.75 pt. **[d]**, and the accent-as-selection
 reading is the reference's own: the 03 category chip marks an active attribute
 in accent, the 04 feature chips do not.
 
