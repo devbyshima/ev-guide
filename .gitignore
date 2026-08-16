@@ -6,3 +6,6 @@ dist/
 
 # Unsent outbound correspondence — kept local, never committed (see ticket 26)
 .scratch/ev-guide-spec/correspondence/
+
+# Operator research withheld from the public repo (ticket 26) — kept local only
+.scratch/ev-guide-spec/research/03-operator-landscape-and-data-access.md

@@ -26,11 +26,16 @@ being *reported*. Answer accordingly — it unblocks 07, 08 and 10.
 
 ## Context pointer
 
-Findings in progress at `.scratch/ev-guide-spec/research/03-operator-landscape-and-data-access.md`.
+Findings recorded in the studio's local research notes (**withheld from this
+repository** — see the note below).
 
 ## Answer
 
-Full findings, 32 sources: [`research/03-operator-landscape-and-data-access.md`](../research/03-operator-landscape-and-data-access.md).
+Full findings, 32 sources: **held locally, not published.** The operator research
+characterises a third party's API surface in detail. It is withheld from this
+repository until that operator has been notified of what it describes; the
+security note itself is drafted and unsent (ticket 26). Every conclusion the map
+relies on is stated in this ticket and in ticket 26 without it.
 
 **Verdict: READ — narrowly, and from an operator nobody expected.**
 
