@@ -53,7 +53,7 @@
 > **4. The price string is two weights, not one — file 10 [RAISE-15].** The
 > amount is Bold and the unit tail is lighter, differently in each slot. Both of
 > §0.2's Bold advance constants are means over such a run, so every slot below
-> that states the price weight is marked **`[weight unsettled: RAISE-15]`** and
+> that states the price weight is marked **`[weight settled: ticket 35]`** and
 > carries both measurements.
 >
 > **5. The forbidden-string list is NOT held here.** Its one and only home is
@@ -169,9 +169,9 @@ now cited as well as measured:
 
 | Run | Source string | Ink | Chars | Advance |
 | --- | --- | --- | --- | --- |
-| cap 36, amount Bold **[weight unsettled: RAISE-15]** | `135 000 RWF/day`, `04` sticky bar, x 93 → 524 | 432 px | 15 | **28.8 px/char** [m] |
+| cap 36, amount Bold **[weight settled: ticket 35]** | `135 000 RWF/day`, `04` sticky bar, x 93 → 524 | 432 px | 15 | **28.8 px/char** [m] |
 | cap 32 Medium | `Check Availability`, `04` sticky CTA, x 673 → **1046** | **374 px** | 18 | **20.78 px/char** [m, ticket 32 — re-measured; the old 373 / x1045 rested on an algebraic identity, see below] |
-| cap 27, amount Bold **[weight unsettled: RAISE-15]** | `135 000 RWF/day`, `03` floating-card price, x 755 → 1075 | 321 px | 15 | **21.4 px/char** [m, extents confirmed by file 10 `§7.4`] |
+| cap 27, amount Bold **[weight settled: ticket 35]** | `135 000 RWF/day`, `03` floating-card price, x 755 → 1075 | 321 px | 15 | **21.4 px/char** [m, extents confirmed by file 10 `§7.4`] |
 | cap 27 Regular | `Hybride - Black - 2024`, `03` subtitle (file 11) | 397 px | 22 | **18.0 px/char** [m] |
 
 **Two of these rows were checked against file 10's own extents, and one of them
@@ -454,7 +454,7 @@ reference shows (04). Profile reached by the `§7.9` 43 pt map avatar at
 **Why the two content slots swapped, and the arithmetic that forced it (m9).**
 v1 put the availability clause in the *value* slot. That slot is the `03`
 floating card's price slot: measured ink 321 px, right-aligned to x 1075, cap
-27 with a Bold amount **[m, file 10 `§7.4`; weight unsettled: RAISE-15]**. A
+27 with a Bold amount **[m, file 10 `§7.4`; weight settled: ticket 35 — amount Bold, the tail's weight the slot's]**. A
 Regime-3 clause runs **59** characters — **1263 px at the measured
 21.4 px/char** — which is not merely long for the slot but **more than twice**
 the card's entire 594 px content column, and it would run back through the
@@ -571,7 +571,7 @@ connector types; `§7.8` sticky bar.
   icons in the **Light** band at **1.4 pt**. Using the chrome nominal here would
   draw a glyph 50 % oversized in a 35 pt-tall chip.
 - **Sticky bar left slot → R4's short rate projection**, cap 36 with a Bold
-  amount **[weight unsettled: RAISE-15]**. The measured **ink** budget is
+  amount **[weight settled: ticket 35]**. The measured **ink** budget is
   **510 px** — the reference's own price ink starts at x 93 and the lime CTA
   starts at x 603 (file 10 `§7.8`) — and `No confirmed rate` is
   17 chars × 28.8 = **490 px**, clearing by 20 px [d].

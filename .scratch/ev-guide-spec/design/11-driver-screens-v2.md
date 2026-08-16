@@ -162,7 +162,7 @@ file's own corner evidence for the card frame). That was a regression and is und
 | 3 | Category chip **256 × 77 px** (v1 of this file said 253 × 75) | **254 × 76 px**, x 480→733, y 2030→2105 | lime-ink bbox | **Accepted.** 10-v2 §7.4 / §7.5 carry 254 × 76 px = 84.7 × 25.3 pt at x480–733, y2030–2105. |
 | 4 | Icon colour is `#FFFFFF` except the pin glyph and the hosting tile | **False.** The `03` card heart is **`#717171`** — 517 px of solid core, no white pixel anywhere in its ink box (x 1025→1074, y 1881→1926, 50 × 46 px). The `04` heart and share (**67 × 67 px**, 10-v2 §8.1 row 22) glyphs *are* `#FFFFFF` | colour histogram over the ink box; sub-pixel stroke integration across three perpendicular cuts | **Accepted, with the stroke claim withdrawn.** 10-v2 §1.1 and §10.1 add `color.iconMuted` = `#717171`. But the stroke is **not** "6.0 px, i.e. the 2 pt stroke unchanged": §8.1 row 17 integrates the card heart at **4.8–6.0 px** and §8.2 files it in the **Light** band at **4.8 px = 1.6 pt**, against a nominal 6 px = 2 pt. The `04` heart is **66 × 62 px** (§8.1 row 21), not 68 × 62. Both corrected here and at §15/F4. |
 | 5 | Primary CTA **899 × 138 px** | **897 px** of lime core, x 65→961; the locate button occupies x 1003→1139 | run-length scan at y 2450 | **Rejected — part 1 was right and this row was wrong.** 10-v2 §7.1 [m]: frame **x64 → 962**, size **899 × 138 px = 299.7 × 46.0 pt**; §7.2 / `size.circleButton.xl`: locate **139 px = 46.3 pt**; §7.1: **40 px = 13.3 pt** gap. This file's 897 was a mixture — the *core* width against the *AA-inclusive* height (10-v2 §0.1: core 897 × 136, integrated 898.00 × 137.25, AA-inclusive 899 × 138) — and is wrong under every one of the three conventions. **The residual identity is the proof:** `897 + 41 + 137 = 1075`, three short of the 1078 px content column, so this file asserted an *exact* identity from three numbers that do not add up. At 10-v2's figures **`899 + 40 + 139 = 1078` closes exactly.** See the re-derivation below. |
-| 6 | — (no advance model) | **Mean ink advance is string-dependent**, so every fit check below states its constant. Measured: cap 27 Regular k = 0.667 (`Hybride - Black - 2024`, 22 ch, 397 px) … 0.730 (`Hybride`, 7 ch, 138 px). cap 32 Medium k = 0.650 (`Check Availability`, 18 ch, 374 px). **cap 36 Medium k = 0.590** (`Let's find a car`, 16 ch, 340 px). **Bold k = 0.80** — two runs agreeing to 0.01 (`135 000 RWF/day` at cap 36, 433 px; at cap 27, 321 px) | ink bbox ÷ (chars × cap px) | **Accepted, with two arithmetic corrections.** (a) The CTA label's cap is **36, not 37** — 10-v2 §4.1 row 5 measures `Let's find a car` at cap 36 Medium, and §4.1's own note says rows measured from a **flat** cap (`L`) *"are exact"*. §4.2 collapses 36/37 into one **step**, which is a statement about the type scale, not a licence to divide by 37. Re-derived: `340 ÷ (16 × 36)` = **0.590**, where this row read 0.574. (b) The **Bold k = 0.80** constant is measured on `135 000 RWF/day`, which 10-v2 §11.3 has since shown is **not one weight** — **[weight unsettled: RAISE-15]**, see the note below. |
+| 6 | — (no advance model) | **Mean ink advance is string-dependent**, so every fit check below states its constant. Measured: cap 27 Regular k = 0.667 (`Hybride - Black - 2024`, 22 ch, 397 px) … 0.730 (`Hybride`, 7 ch, 138 px). cap 32 Medium k = 0.650 (`Check Availability`, 18 ch, 374 px). **cap 36 Medium k = 0.590** (`Let's find a car`, 16 ch, 340 px). **Bold k = 0.80** — two runs agreeing to 0.01 (`135 000 RWF/day` at cap 36, 433 px; at cap 27, 321 px) | ink bbox ÷ (chars × cap px) | **Accepted, with two arithmetic corrections.** (a) The CTA label's cap is **36, not 37** — 10-v2 §4.1 row 5 measures `Let's find a car` at cap 36 Medium, and §4.1's own note says rows measured from a **flat** cap (`L`) *"are exact"*. §4.2 collapses 36/37 into one **step**, which is a statement about the type scale, not a licence to divide by 37. Re-derived: `340 ÷ (16 × 36)` = **0.590**, where this row read 0.574. (b) The **Bold k = 0.80** constant is measured on `135 000 RWF/day`, which 10-v2 §11.3 has since shown is **not one weight** — **[weight settled: ticket 35]**, see the note below. |
 
 **[RE-DERIVED, ticket 32] The residual-width identity, recomputed.** The claim
 *"the CTA's width is a residual, not a component property"* is the sole evidence
@@ -179,7 +179,7 @@ Three numbers that add up exactly to an independently measured column is a
 strong check that 10-v2's CTA frame is the right one. Every consumer of the
 residual claim below is re-derived on the bottom row.
 
-**[weight unsettled: RAISE-15] The price string is two weights, not one.** Both
+**[weight settled: ticket 35] The price string is two weights, not one.** Both
 runs used above for the Bold constant — `135 000 RWF/day` at cap 36 on `04`'s
 sticky bar and at cap 27 on the `03` card — are **mixed-weight runs**. Measured
 [m, 10-v2 §11.3, integrated stem coverage]: the **amount is Bold in both**
@@ -273,7 +273,7 @@ changes only its content.
 | --- | --- | --- | --- |
 | 1 | car pin (`01`, `03`) | **charger pin** | Yes — 10-v2 §7.3 geometry, colours and stroke identical; only the glyph drawing changes (line-art vehicle → line-art charge point), same `#393939`, same 5–6 px stroke, same ink width inside the inner disc |
 | 2 | rental card (the `03` card composition) | **station card** | Yes — 10-v2 §7.4 slots reassigned in §8/D-02; no geometry moves |
-| 3 | `135 000 RWF` Bold + `/day` **lighter tail** | **the R4 short rate projection** (§13.2) | Yes — the reference's composition is *amount-and-currency Bold + a lighter slash-unit tail*, and `rateShort` takes it verbatim. cap 27 on the card, cap 36 on the sticky bar. **[weight unsettled: RAISE-15]** — the amount is Bold in both slots (stem/cap 0.192), but the tail measures **Regular** on `04`'s sticky bar (4.36 px stem, 0.121) and **ExtraLight** on the `03` card (1.65 px, 0.061). This row previously said *"Regular"* for both. **Never a per-Connector rate rendered as the station's** — see §13.2 |
+| 3 | `135 000 RWF` Bold + `/day` **lighter tail** | **the R4 short rate projection** (§13.2) | Yes — the reference's composition is *amount-and-currency Bold + a lighter slash-unit tail*, and `rateShort` takes it verbatim. cap 27 on the card, cap 36 on the sticky bar. **[weight settled: ticket 35]** — the amount is Bold in both slots (stem/cap 0.192), but the tail measures **Regular** on `04`'s sticky bar (4.36 px stem, 0.121) and **ExtraLight** on the `03` card (1.65 px, 0.061). This row previously said *"Regular"* for both. **Never a per-Connector rate rendered as the station's** — see §13.2 |
 | 4 | `Check Availability` (sticky CTA, `04`) | **`Directions`** | Yes — 10-v2 §7.8, **513 × 131 px = 171.0 × 43.7 pt** [m, §7.8; core, and §0.1 records this one reads the same under all three extent conventions], radius **16.5 px** [ticket 33], `#C7FC2F`, label cap 32 **Medium** `#121212`. 10 chars at k = 0.65 → 208 px in a 513 px button ✓ |
 | 5 | `Let's find a car` (primary CTA, `01`/`03`) | **`Let's find a charger`** | Yes — 10-v2 §7.1, **899 × 138 px = 299.7 × 46.0 pt** (frame x64 → 962; published AA-inclusive, [RAISE-14]), radius **16.5 px** [ticket 33], label **cap 36** Medium `#121212`. **[RE-DERIVED, ticket 32]** — 20 chars at k = 0.65 → `20 × 0.65 × 36` = **468 px** inside 899 px ✓ (this row read *481 px inside 897 px*, computing the ink at the stale cap 37 against the stale core width; the verdict is unchanged and the margin is wider, not tighter). The reference's own 16-char label measures 340 px [m·11] |
 
@@ -1096,7 +1096,7 @@ the inner box is **x 129 → 1076 = 948 px = 316.0 pt** [d]):
 | Title | cap 36 Bold, x 483, baseline 1921 | **`nameShort`** — `SP Remera` |
 | Subtitle | cap 27 Regular, x 483, 19 px below title | **the availability clause** |
 | Category chip | 254 × 76 px = 84.7 × 25.3 pt [m·11, and 10-v2 §7.5], x 480, y 2030, **a pill** — ½ integrated height 38.4 [ticket 33], lime 2.5 px border, **content-sized** [RAISE-D27] | **the route preview** (§7.2) |
-| Price | cap 27, right-aligned, ink right edge **x 1075** (65 px inside the card's right edge) | **`rateShort`** (§13.2) — **[weight unsettled: RAISE-15]**: amount Bold (stem/cap 0.192), unit tail **ExtraLight** in this slot (1.65 px stem, 0.061), Regular in `04`'s sticky slot |
+| Price | cap 27, right-aligned, ink right edge **x 1075** (65 px inside the card's right edge) | **`rateShort`** (§13.2) — **[weight settled: ticket 35]**: amount Bold (stem/cap 0.192), unit tail **ExtraLight** in this slot (1.65 px stem, 0.061), Regular in `04`'s sticky slot |
 | Heart | ink 50 × 46 px = 16.7 × 15.3 pt, x 1025–1074, y 1881–1926, **`#717171`**, stroke **4.8–6.0 px** (10-v2 §8.2 files it in the **Light** band at 4.8 px = 1.6 pt) [m·11 + 10-v2 §7.4 / §8.1 row 17] | `SavedStation` toggle |
 
 **Behaviour** — verdict **M11**: v1 had no behaviour table on this screen at
@@ -1229,7 +1229,7 @@ surviving alone is merely less informative. Regime 1 emits **no freshness head**
 
 **The rate slot takes `rateShort`, never a Connector's rate** (§13.2, **R4**).
 S1 has one confirmed rate, so it renders `600 RWF` **Bold** + `/kWh` in the
-lighter tail weight — **[weight unsettled: RAISE-15]**, and in *this* slot the
+lighter tail weight — **[weight settled: ticket 35]**, and in *this* slot the
 tail measures **ExtraLight** (1.65 px stem, stem/cap 0.061), not the Regular
 this file previously assigned to all four consuming slots; `04`'s sticky slot
 measures **Regular** (4.36 px, 0.121). Had its GB/T guns been priced 600 and its
@@ -1514,7 +1514,7 @@ adopting it.
 
 **Sticky bar.** Left slot at cap 36, amount **Bold**: **`rateShort`** (§13.2),
 *not* Grammar R — the long ladder stays in the block above (**R4**).
-**[weight unsettled: RAISE-15]** — the reference's run in this slot is Bold in
+**[weight settled: ticket 35]** — the reference's run in this slot is Bold in
 the amount (stem/cap 0.192) and **Regular** in the unit tail (4.36 px stem,
 0.121), against **ExtraLight** in the `03` card's slot; 10-v2 §4.1 row 15 and
 §7.8 still call the whole run Bold and are not corrected. `Directions` CTA
@@ -1920,7 +1920,7 @@ list's own container width (§5.1).
 **Layout.** Back button · `Saved` heading · one card per saved station, each
 carrying thumbnail 100 pt / `nameShort` cap 36 Bold / availability clause cap 27
 Regular / `rateShort` right-aligned at cap 27, amount Bold and the unit tail
-lighter (**[weight unsettled: RAISE-15]** — the `03` card slot this composition
+lighter (**[weight settled: ticket 35]** — the `03` card slot this composition
 copies measures the tail **ExtraLight**, 1.65 px stem) / heart `#717171`. **No route
 chip** — the list is not tied to a position and computing a route per row would
 be a burst of Valhalla calls for a screen the driver is browsing, not acting on.
@@ -2532,14 +2532,14 @@ rateShort(station) →
   { kind: 'none'   }                   -- no confirmed, in-window rate on any plug
 ```
 
-| kind | Rendered | Composition — **[weight unsettled: RAISE-15]** |
+| kind | Rendered | Composition — **[weight settled: ticket 35]** |
 | --- | --- | --- |
 | `single` | `600 RWF/kWh` | `600 RWF` **Bold** + `/kWh` **in the slot's lighter tail weight** |
 | `from` | `From 400 RWF/kWh` | `From 400 RWF` **Bold** + `/kWh` **in the slot's lighter tail weight** |
 | `none` | `No confirmed rate` | **[RAISE-D33]** |
 
-**[weight unsettled: RAISE-15] — this table said `Regular` for every slot, and
-the two slots do not agree.** This file was **right that the run is two
+**[weight settled: ticket 35, 2026-08-16] — this table said `Regular` for every
+slot, and the two slots do not agree.** This file was **right that the run is two
 weights** — 10-v2 §11.3 has been brought into line and now carries the
 structural signature this section defines, and §12 raises the weight question
 as **[RAISE-15]** — but it was wrong to assign one lighter weight to all four
@@ -2549,6 +2549,19 @@ consuming slots. Measured [m, 10-v2 §11.3, integrated stem coverage]:
 | --- | --- | --- | --- |
 | `04` sticky bar (D-03) | 36 | **Bold** — `F` of `RWF` 6.92 px, stem/cap **0.192** | **Regular** — `d`/`a`/`y` 4.36 / 4.21 / 4.37 px, **0.121** |
 | `03` card price (D-02) | 27 | **Bold** — `1` 5.19 px, `F` 5.22 px, **0.192** | **ExtraLight** — `d`/`a` 1.65 px, **0.061** |
+
+**The rule, ruled by the founder under [ticket 35](../issues/35-price-string-two-weights.md) — ship both, as measured:**
+
+> A price slot renders three runs: the **amount** (this projection's number,
+> grouped), the **currency**, and the **unit tail**. **Amount and currency are
+> Bold in every slot.** The tail's weight is a property of the **slot**, not of
+> the value: **Regular** on `04`'s sticky bar, **ExtraLight** on the `03` card.
+
+**No change to the projection is owed**, and ticket 35's own framing of this was
+wrong in our favour: it assumed `rateShort` would have to carry the amount/tail
+split as structure, but amendment 8 already has it returning **numbers**, so the
+slot composes the string itself and the boundary was never recoverable-only-from-
+a-string in the first place. `packages/domain` stays free of type decisions.
 
 Two slots, two different tail weights, both measured. **Neither is adopted here
 and no assignment is invented**: 10-v2 §4.1 row 15 and §7.8 still describe the
@@ -2799,7 +2812,7 @@ and are not this file's to settle:**
 | --- | --- | --- |
 | **[RAISE-13]** → **ticket 33, CLOSED 2026-08-16** | Part 1 §6's radius method stated a false geometric identity, so **every published radius was under-read** by about `√r` | **Released.** All six outstanding rows re-fitted; every frozen marker in this file replaced by its corrected value. Two findings changed what gets typed: the **category chip, hero badge and drag handle are pills**, and both CTAs share **one** 16.5 token. See the authority note. |
 | **[RAISE-14]** → **ticket 34** | The extent convention (core / integrated / AA-inclusive) is undeclared, and part 1 uses two of them — the primary CTA published AA-inclusive, the floating card at core | This file re-derives against **what part 1 publishes** (CTA 899 × 138, card 1076 × 521, sticky CTA 513 × 131, pin 122 × 147). If ticket 34 declares core or integrated, those four and everything derived from them move. |
-| **[RAISE-15]** | The price string `135 000 RWF/day` is **two weights**, and part 1 §4.1 row 15, §7.8 and §11.3 all call it one | §13.2's four consuming slots are marked **[weight unsettled]** with both measurements stated; no per-slot assignment is invented here, and the Bold advance constant k = 0.80 (§0.3 row 6) is flagged as measured on a mixed-weight run. |
+| **[RAISE-15]** → **ticket 35, CLOSED 2026-08-16** | The price string `135 000 RWF/day` is **two weights**, and part 1 §4.1 row 15, §7.8 and §11.3 all called it one | **Ship both, as measured.** §13.2 now carries the composition rule: amount and currency **Bold in every slot**, the tail's weight a property of the **slot** — Regular on `04`'s sticky bar, ExtraLight on the `03` card. Part 1 §4.1 gains rows 7b and 15b and §7.8 states both. The Bold advance constant k = 0.80 (§0.3 row 6) remains flagged as measured on a **mixed-weight** run. |
 
 ---
 
@@ -2808,7 +2821,7 @@ and are not this file's to settle:**
 | Screen | Ref or ext | Components used | States | What fixes its content |
 | --- | --- | --- | --- | --- |
 | **D-01 Map home** | **[ref-01]** | map canvas · crosshair rule §7.11 · map avatar §7.9 (no dot) · charger pin §7.3 (**122 × 147**) + status dot §7.9 at (+54,−54) · primary CTA §7.1 (**899 × 138**) · locate button §7.2 (**⌀139**, 40 px gap) · feature chip §7.5 (offline) · attribution mark | default · offline · no-permission · signed-out · (no loading, no empty, no error) | ADR-0002 · ADR-0007 · ticket 06 · ticket 19 |
-| **D-02 Map + station card** | **[ref-03]** | **floating card** §7.4 (**1076 × 521**, x 65 → 1140, y 1797 → 2317; r **19.5** all corners [ticket 33]) · drag handle **180 × 13**, 25 px down · thumbnail · category chip §7.5 (route, content-sized) · `rateShort` price composition (**[weight unsettled: RAISE-15]**) · heart `#717171` · route line (new width, D8) · divider §5.1 at the **948 px** inner box (list detent) | Regime 1 / 2 / 3 / lensed / no-compatible-plug · route-in-flight · route-failed · offline · signed-out · saved · uncached-photo | availability-display §2 · ADR-0004 · ADR-0007 · ticket 10 · ticket 19 |
+| **D-02 Map + station card** | **[ref-03]** | **floating card** §7.4 (**1076 × 521**, x 65 → 1140, y 1797 → 2317; r **19.5** all corners [ticket 33]) · drag handle **180 × 13**, 25 px down · thumbnail · category chip §7.5 (route, content-sized) · `rateShort` price composition (**[weight settled: ticket 35]**) · heart `#717171` · route line (new width, D8) · divider §5.1 at the **948 px** inner box (list detent) | Regime 1 / 2 / 3 / lensed / no-compatible-plug · route-in-flight · route-failed · offline · signed-out · saved · uncached-photo | availability-display §2 · ADR-0004 · ADR-0007 · ticket 10 · ticket 19 |
 | **D-03 Station detail** | **[ref-04]** | circular buttons §7.2 (**⌀80, ⌀98**) · hero carousel **1078 × 612** + indicator (**95 × 16**, 26 px above the hero bottom) + badge **248 × 70** with a **stroked** bolt §7.7 (peak power, D28) · title/subtitle · owner row · settings rows §7.6 (connectors, divider x 64→1141, **label x 222**) · feature chips §7.5 · **CTA-geometry bay-alert control** §12.2 · sticky bar §7.8 (**513 × 131**) with `rateShort` | all availability regimes · Grammar R's five rate cases + session fee · offline · signed-out · not-at-station · uncached-hero | ADR-0002 · ADR-0008 · ADR-0004 · ticket 10 · ticket 30 · **D12 (schema)** |
 | **D-04 Profile** | **[ref-02]** | back button §7.2 (**⌀90**) · profile avatar §7.9 · quick actions §7.2 (`size.quickAction` ⌀150) · hosting card §7.10 (**1128 × 334**, tile **256 × 257**) · settings rows §7.6 (4 [ref] + 2 [ext], divider core **x 39 → 1166**) | signed-in · signed-out · membership / no-membership · app-installed / not / undeterminable · offline | ADR-0003 · ADR-0006 · ticket 11 · ticket 15 |
 | **D-05 Personal Information** | [ext] | back (**⌀90**) · heading (**cap 36 Bold**) · settings rows + value slot (D14) · text input (D21) | signed-in only · offline · error-in-place | ADR-0003 |
