@@ -229,7 +229,7 @@ titleToSubtitle 20 · blockGap 39 · sectionGap 62 · sectionGapLarge 87 ·
 settingsRow 176 · iconGrid 72 · iconGridChip 48 · iconStroke 6 · hairline 2.
 Named after where they were measured: **there is no grid.**
 
-**Radii** (px) — chip 13.4 · card 15.6 · tile 15.2 · **button 16.5** (both CTAs,
+**Radii** (px) — featureChip 13.4 · card 15.6 · tile 15.2 · **button 16.5** (both CTAs,
 one token) · floatingCard 19.5 (all four corners) · image 31.8 · **pill 9999** ·
 circle 9999. **There is no `radius.sheet` token and no `radius.buttonSticky`
 token, deliberately** — a single radius fits all eight corners of both CTAs with
