@@ -148,12 +148,39 @@ indicator. Added as **`size.puckCone` 16 × 19** with the gap recorded, and
 [RAISE-10] is amended: the ADR-0009 redraw off Google's blue has **four** parts
 to redraw, not three.
 
-### 5. What this leaves
+### 5. Propagated into files 11 and 12 — and it reversed two of ticket 32's own corrections
+
+67 sites converted. Three results were not conversions:
+
+- **Ticket 32's circular-button corrections went the wrong way.** It moved close
+  `×` ⌀81 → 80, overflow `⋯` ⌀100 → 98 and back `←` ⌀91 → 90, calling the
+  originals *"the AA-inclusive read, the same defect as the `04` close and
+  overflow buttons"*. It was the same defect — but the defect was the
+  **correction**. Integrated, they measure **81.4 / 99.5 / 90.8**, so the
+  original annotations were the *closer* of the two readings. This is commit
+  `6a5a922` again, in a different file: with no convention declared, correcting
+  toward core is a guess dressed as a fix, and it went against the reference
+  three times.
+- **The residual-width identity is withdrawn.** Ticket 32 offered
+  `899 + 40 + 139 = 1078` as the proof that part 1 was right about the CTA.
+  It closes **only** because all three terms are AA-inclusive over-reads that
+  happen to sum to the AA-inclusive card width. Measured integrated on `01` at
+  y2450: CTA left **64.25**, right **962.25**; gap **40.16**; locate left
+  **1002.41**, right **1140.01** — span **1075.76** against a **1077.60**
+  content column, **1.83 px short**. The CTA row is **left-aligned** with the
+  floating card (64.25 against 64.20) and **not right-aligned** (1140.01 against
+  1141.80). The row's verdict is unaffected; the arithmetic offered as its proof
+  is not available.
+- **A blanket value sweep damages prose that *describes* a convention.** Three
+  notes in files 11 and 12 explain the core/integrated/AA-inclusive split by
+  quoting example numbers; replacing values by string match turned them into
+  sentences that label integrated numbers "AA-inclusive". Found and rewritten.
+  **Convert the values, then re-read every paragraph that names a convention** —
+  they are the ones a value sweep is guaranteed to corrupt.
+
+### 6. What this leaves
 
 Nothing on `SPEC.md`'s component-size line is pre-convention any more; the
-marker is removed. The thumbnail carries a band and the reason for it. **Files 11
-and 12 still carry the pre-convention sizes in prose, tables and diagram
-annotations** — that propagation is the remaining work and is tracked in §5 of
-this ticket's brief above; it is mechanical, and it is deliberately not bundled
-into this commit for the same reason ticket 33's radius release was not bundled
-with it.
+marker is removed. The thumbnail carries a band and the reason for it. Files 11 and 12 are propagated (§5).
+**Nothing in the design record is now pre-convention**, and no ticket in this map
+is open except the car cluster, which needs the founder's device test.
