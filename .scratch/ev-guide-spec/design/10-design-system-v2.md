@@ -315,10 +315,10 @@ Google's own control, and under MapLibre EV Guide must draw it.
 
 | Part | Value |
 | --- | --- |
-| Disc | **`#4285F4`**, ⌀ **40 px = 13.3 pt** |
-| Ring | `#FFFFFF`, **4 px = 1.3 pt** |
-| Accuracy halo | **`#4285F4` at ≈19 % over `#212121`** (measured `#27344B`; solves to α = 0.18–0.20 on all three channels), ⌀ **82 px = 27.3 pt** |
-| Heading cone | `#4285F4`, projecting from the disc in the heading direction, ⌀ ≈ 82 px envelope |
+| Disc | **`#4285F4`**, ⌀ **39.6 px = 13.20 pt** [m, ticket 36 — integrated area] |
+| Ring | `#FFFFFF`, **4.0 px = 1.33 pt** [m, ticket 36 — unchanged; a hard edge] |
+| Accuracy halo | **`#4285F4` at ≈19 % over `#212121`** (measured `#27344B`; solves to α = 0.18–0.20 on all three channels), ⌀ **82.0 px = 27.33 pt** [m, ticket 36 — unchanged] |
+| **Heading cone** | `#4285F4`, **16 × 19 px = 5.33 × 6.33 pt**, area ≈130 px. **DETACHED from the disc, not projecting from it [corrected, ticket 36]** — the gap measures **6–7 px at every row on both map screens** (`01` x626–641 y1306–1324; `03` x200–215 y1473–1490), i.e. the 4 px white ring plus its anti-aliasing. It sits *outside* the ring and *inside* the halo. The previous entry's *"⌀ ≈ 82 px envelope"* was the **halo's** diameter, not a measurement of the cone |
 | Centre on `01` | x603.5, y1311 |
 
 `#4285F4` is **Google's brand blue and the only foreign brand colour in the four
@@ -855,16 +855,32 @@ The sticky-bar variant on `04` is **not** the same component — 131–133 px ta
 
 ### 7.2 Circular icon buttons [held]
 
-Five different diameters. Listed as measured; §12 raises the inconsistency
-rather than harmonising it.
+Five different diameters — **seven buttons**, and the three quick actions are
+not one size. Listed as measured; §12 raises the inconsistency rather than
+harmonising it. **`SPEC.md` collapsed the quick actions into a single
+`quickAction 150` token and ticket 36 reversed that**: harmonising here is
+exactly what this section refuses to do.
 
 | Button | Screen | Diameter px | pt | Fill | Glyph |
 | --- | --- | --- | --- | --- | --- |
-| Close `×` | 04 | **80** | 26.7 | `#393939` (x65–144, y230–309) | `#FFFFFF`, ~3.8 px perpendicular |
-| Back `←` | 02 | **90** | 30.0 | `#393939` (x39–128, y225–314) | `#FFFFFF`, 5.0 px |
-| Overflow `⋯` | 04 | **98** | 32.7 | `#393939` (x1043–1140, y221–318) | 3 × `#FFFFFF` dots, ⌀ **7.6 px** |
-| Locate `➤` | 01, 03 | **137–139** outer | 46.3 | `#FFFFFF` + **4 px lime ring** | **filled `#000000`** arrow |
-| Quick action | 02 | **154 / 149 / 149** | 51.3 / 49.7 | `#393939` | `#FFFFFF`, 6.0–8.0 px |
+| Close `×` | 04 | **81.4** | 27.13 | `#393939` (x65–144, y230–309) | `#FFFFFF`, ~3.8 px perpendicular |
+| Back `←` | 02 | **90.8** | 30.27 | `#393939` (x39–128, y225–314) | `#FFFFFF`, 5.0 px |
+| Overflow `⋯` | 04 | **99.5** | 33.17 | `#393939` (x1043–1140, y221–318) | 3 × `#FFFFFF` dots, ⌀ **7.6 px** |
+| Locate `➤` | 01, 03 | **137.7** outer | 45.90 | `#FFFFFF` + **4 px lime ring** | **filled `#000000`** arrow |
+| Quick action ① | 02 | **154.8** | 51.60 | `#393939` | `#FFFFFF`, 6.0–8.0 px |
+| Quick action ② | 02 | **150.3** | 50.10 | `#393939` | `#FFFFFF`, 6.0–8.0 px |
+| Quick action ③ | 02 | **149.9** | 49.97 | `#393939` | `#FFFFFF`, 6.0–8.0 px |
+
+**[ticket 36]** All re-measured at their **integrated** extent (§0.1), circles by
+integrated area — `D = 2√(A/π)` — which needs no edge location and is therefore
+immune to sub-pixel phase. Every one reads **0.4–1.5 px larger** than the
+pixel-counted value it replaces, in the same direction, as expected.
+
+**The locate button needs the edge-to-edge reading, not the area one.** Its arrow
+is **filled `#000000`** — the only filled icon in the system (§8.3) — so a
+coverage-from-background measure scores the glyph as *outside* the button and
+under-reads the diameter by ~20 px. Recorded because the same trap waits on any
+element whose glyph is darker than its ground.
 
 The close and overflow buttons sit on the **same centre line** (y ≈ 269.5) at
 different sizes — both were flood-filled, so this is not a chord artefact.
@@ -1417,13 +1433,14 @@ dashboard must not "fix".
 | `size.avatarProfile` | 316 | 105.3 |
 | `size.avatarOwner` | 76 | 25.3 |
 | `size.thumbnail` | 300 | 100.0 |
-| `size.chipHeight` | 105 | 35.0 |
+| `size.chipHeight` | **105.49** | 35.16 |
 | **`size.floatingCard`** | **1076 × 521** | **358.7 × 173.7** |
 | **`size.handle`** | **180 × 13** | **60.0 × 4.3** |
 | `size.pin` | **122 × 147** | **40.7 × 49.0** |
-| `size.statusDot` | 20 | 7.0 |
-| `size.accentRing` | 3 | 1.0 |
-| `size.puck` | 40 disc / 82 halo | 13.3 / 27.3 |
+| `size.statusDot` | **20.4** | 6.80 |
+| `size.accentRing` | **3.0** | 1.00 |
+| `size.puck` | **39.6 disc / 4.0 ring / 82.0 halo** | 13.20 / 1.33 / 27.33 |
+| **`size.puckCone`** | **16 × 19**, **6–7 px clear of the disc** | 5.33 × 6.33 |
 
 Native only — the admin dashboard inherits none of §10.5.
 
@@ -1576,6 +1593,13 @@ puck, so 1:1 means deliberately shipping Google's blue in a map that is not
 Google's. The alternatives — the lime accent, or a neutral white — are both
 deviations, and the lime one collides with the pin outline, which is the same
 colour. Needs a ruling before the map screen can be specified.
+
+**Amended by ticket 36: the redraw has FOUR parts, not three.** §2.5's token set
+covers disc, ring and halo; the **heading cone** is a fourth `#4285F4` surface —
+16 × 19 px, detached from the disc by 6–7 px — that `size.puck` never carried.
+Whatever ADR-0009's redraw settles on for the blue applies to it too, and a
+build that sizes the puck from the tokens alone draws a plain dot and **silently
+loses the heading indicator**.
 
 **[RAISE-11 — NEW] The same heart icon is two colours and two sizes.** `02`
 Wishlist and `04` detail: 66–67 × 62 px, `#FFFFFF`. `03` card: 50 × 46 px,

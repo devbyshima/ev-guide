@@ -238,14 +238,25 @@ zero penalty. The **category chip, the hero badge and the drag handle are pills*
 The images-rounder-than-containers inversion is real — images 10.6 pt against
 containers 4.5–6.5 pt — and must not be "fixed".
 
-**Component sizes** (px) — **published at their integrated extent** (ticket 34;
-see the note below). CTA **898.00 × 137.25 h** (sticky **513.00 × 131.25**) ·
-floating card **1077.60 × 521.53** · **pin 122.30 × 147.25** · handle
-**180.00 × 12.75** · feature chip **105.49 h** · category chip
-**254.75 × 76.75**.
-*Pre-convention, pending [ticket 36](.scratch/ev-guide-spec/issues/36-size-line-convention-sweep.md):*
-circular buttons 80/90/98/139 · quickAction 150 · avatars 129 map / 316 profile /
-76 owner · thumbnail 300 · statusDot 20 · accentRing 3 · puck 40 disc / 82 halo.
+**Component sizes** (px) — **all published at their integrated extent**
+(tickets 34 and 36; see the note below). CTA **898.00 × 137.25 h** (sticky
+**513.00 × 131.25**) · floating card **1077.60 × 521.53** · **pin
+122.30 × 147.25** · handle **180.00 × 12.75** · feature chip **105.49 h** ·
+category chip **254.75 × 76.75** · circular buttons **81.4 / 90.8 / 99.5 /
+137.7** · **quickAction 154.8 / 150.3 / 149.9 — three sizes, not one** · avatars
+**128.6** map / **315.9** profile / **76.7** owner · thumbnail **≈297.5 ±1.5** ·
+statusDot **20.4** · accentRing **3.0** · puck **39.6** disc / **4.0** ring /
+**82.0** halo / **puckCone 16 × 19**, 6–7 px clear of the disc.
+
+Three of those need a sentence. **`quickAction` was a single 150 token for three
+buttons that measure 154.8 / 150.3 / 149.9** — the design record had them right
+as "154 / 149 / 149" and the collapse happened on the way into this document;
+`packages/ui` may implement them however it likes but may not lose the
+distinction. **The thumbnail carries a band because it cannot be pinned** — it is
+photo-filled, three estimators spread 4 px, and all three land under the
+published 300, which was a pixels-touched bbox. **The puck's heading cone is a
+fourth `#4285F4` surface**, detached from the disc, that the token set never
+carried; it is inside ADR-0009's redraw scope along with the other three.
 
 > **On the two conventions, now one.** A component's size reads three ways —
 > core, integrated, AA-inclusive — and until 2026-08-16 the design record used
@@ -261,9 +272,13 @@ circular buttons 80/90/98/139 · quickAction 150 · avatars 129 map / 316 profil
 > system**, by about `√r`
 > ([ticket 33](.scratch/ev-guide-spec/issues/33-radius-system-under-read.md), all
 > twelve rows re-fitted, harness re-validated against four independent knowns).
-> The sizes still marked *pre-convention* were measured before the rule existed
-> and are swept under
-> [ticket 36](.scratch/ev-guide-spec/issues/36-size-line-convention-sweep.md).
+> The remaining sizes were swept under
+> [ticket 36](.scratch/ev-guide-spec/issues/36-size-line-convention-sweep.md),
+> which confirmed the rule's own prediction in both directions: every hard-edged
+> element read **identically** under all three conventions and did not move
+> (`accentRing` 3.0, the puck ring 4.0 and halo 82.0, the profile avatar 315.9),
+> and every element that moved moved **up**, by 0.4–1.5 px — which is what a
+> pixels-touched count does against an integrated one.
 
 **Five findings that would each have shipped visibly wrong:**
 

@@ -1,7 +1,7 @@
 # 36 — Sweep the remaining component sizes to the declared convention
 
 Type: task
-Status: open — raised 2026-08-16 by ticket 34
+Status: **resolved 2026-08-16** — every size converted; files 11/12 propagation still owed
 Blocked by: — (the convention exists; this is measurement)
 
 ## Question
@@ -57,4 +57,103 @@ assuming a uniform dark ground returns a confident, wrong answer.
 
 ## Answer
 
-*(pending)*
+**Swept 2026-08-16.** Every remaining size is measured at its integrated extent.
+Three results are corrections rather than conversions, and one is a defect in
+`SPEC.md` rather than in the measurement.
+
+### 1. The sweep
+
+| Element | published | **integrated** | pt | verdict |
+| --- | --- | --- | --- | --- |
+| Close `×` (`04`) | 80 | **81.4** | 27.13 | moves |
+| Back `←` (`02`) | 90 | **90.8** | 30.27 | moves |
+| Overflow `⋯` (`04`) | 98 | **99.5** | 33.17 | moves |
+| Locate `➤` (`01`, `03`) | "137–139" | **137.7** | 45.90 | a range resolves to a number |
+| Quick action ① (`02`) | — | **154.8** | 51.60 | see §2 |
+| Quick action ② (`02`) | — | **150.3** | 50.10 | see §2 |
+| Quick action ③ (`02`) | — | **149.9** | 49.97 | see §2 |
+| Profile avatar (`02`) | 316 | **315.9** | 105.30 | **holds** |
+| Map avatar (`01`) | 129 | **128.6** | 42.87 | moves |
+| Owner avatar (`04`) | 76 | **76.7** | 25.57 | moves |
+| Thumbnail (`03`) | 300 | **≈297.5 ±1.5** | 99.17 | **cannot be pinned** — see §3 |
+| Status dot | "20–21" | **20.4** | 6.80 | a range resolves to a number |
+| Accent ring | 3 | **3.0** | 1.00 | **holds exactly** |
+| Puck disc | 40 | **39.6** | 13.20 | holds |
+| Puck ring | 4 | **4.0** | 1.33 | **holds exactly** |
+| Puck halo | 82 | **82.0** | 27.33 | **holds exactly** |
+
+Circles are measured by **integrated area** (`D = 2√(A/π)`), which needs no edge
+location at all and is therefore immune to the sub-pixel phase that ticket 34 is
+about. Where an element carries a glyph darker than its own fill — the locate
+button's arrow is **filled `#000000`**, the only filled icon in the system —
+a coverage-from-background reading counts the glyph as *outside* and under-reads
+the diameter by ~20 px. Those were measured edge-to-edge instead.
+
+**Ticket 34's prediction is confirmed in both directions.** Elements with hard
+edges read the same under every convention and did not move: `accentRing` 3.0,
+the puck ring 4.0, the puck halo 82.0, the profile avatar 315.9. The elements
+that moved all moved **up**, by 0.4–1.5 px, which is what a pixels-touched count
+does against an integrated one.
+
+### 2. `size.quickAction` is one token for three different buttons
+
+`SPEC.md` publishes **`quickAction 150`**. There are three of them and they
+measure **154.8 / 150.3 / 149.9** — the first is **4.9 px (1.6 pt) larger** than
+the other two, which is above any measurement error here.
+
+This is not a sweep finding: **file 10 §7.2 already recorded "154 / 149 / 149"**,
+and §7.2's own preamble says *"Five different diameters. Listed as measured; §12
+raises the inconsistency rather than harmonising it."* The single 150 token was
+introduced when the sizes were carried into `SPEC.md`, and it **harmonised
+exactly what the design record refused to harmonise**. The 1:1 rule makes this a
+defect, not a simplification.
+
+`SPEC.md` now carries all three. Whether `packages/ui` ships three tokens or one
+plus two overrides is a build decision; what it may not do is pick 150 and lose
+the distinction.
+
+### 3. The thumbnail cannot be pinned, and every method reads below 300
+
+Three estimators disagree by 4 px and **all three land under the published 300**:
+a single clean cut gives 299.0, a 35-cut median gives 297.5, and the three
+highest-contrast rows give 294.9. The disagreement is systematic — the brighter
+the reference sample, the smaller the width — which is the signature of a photo
+that darkens toward its own edge, biasing any estimate that normalises by an
+interior sample.
+
+**What is solid: 300 was a pixels-touched bbox**, the same over-read §0.1 already
+documented for strokes ("*where v1 reported a white run of exactly 6 px it was
+counting pixels touched, which over-reads by 1–2 px*"). Published as
+**≈297.5 ±1.5**, with the band, not a false precision. This is the second
+photo-filled element the record cannot resolve, after the `04` hero (ticket 33).
+
+### 4. The heading cone is real, mis-described, and unmeasured
+
+Not a size on the list, found while measuring the puck. **`10-v2` §2.5 does
+record a heading cone** — so this is not an undocumented element — but both of
+its statements are wrong:
+
+- *"projecting from the disc"* — it is **detached**. Measured row by row on
+  **both** map screens, the gap between the blue disc and the cone is **6–7 px at
+  every row**, never zero. That is the 4 px white ring plus its anti-aliasing:
+  the cone sits **outside the ring**, clear of the disc.
+- *"⌀ ≈ 82 px envelope"* — 82 px is the **halo's** diameter, which the cone sits
+  inside. The cone itself measures **16 × 19 px** (`01`: x626–641, y1306–1324;
+  `03`: x200–215, y1473–1490), area ≈130 px, in the same `#4285F4`, at the same
+  bearing on both screens.
+
+`size.puck` publishes "40 disc / 82 halo" and has **no cone term**, so a build
+sizing the puck from the tokens draws a plain dot and silently drops the heading
+indicator. Added as **`size.puckCone` 16 × 19** with the gap recorded, and
+[RAISE-10] is amended: the ADR-0009 redraw off Google's blue has **four** parts
+to redraw, not three.
+
+### 5. What this leaves
+
+Nothing on `SPEC.md`'s component-size line is pre-convention any more; the
+marker is removed. The thumbnail carries a band and the reason for it. **Files 11
+and 12 still carry the pre-convention sizes in prose, tables and diagram
+annotations** — that propagation is the remaining work and is tracked in §5 of
+this ticket's brief above; it is mechanical, and it is deliberately not bundled
+into this commit for the same reason ticket 33's radius release was not bundled
+with it.
