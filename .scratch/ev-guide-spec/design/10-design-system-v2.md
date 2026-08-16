@@ -721,12 +721,13 @@ values verbatim; **[RAISE-3]** puts normalise-or-reproduce to the founder.
 
 ## 6. Radii
 
-> **⚠ EVERY VALUE IN THIS TABLE IS UNDER REVIEW — [RAISE-13], ticket 33.**
-> The method sentence below is **geometrically false**, and it under-reads every
-> radius here. The values are left in place, unchanged, until ticket 33 rules,
-> because correcting them moves `radius.*` in `packages/ui` **and** the locked
-> radius table in `SPEC.md` §5. **Do not copy a radius out of this table into
-> files 11 or 12 in the meantime** (ticket 32 holds them for this reason).
+> **⚠ CORRECTED 2026-08-16 by ticket 33 — [RAISE-13] closed.** The method
+> sentence below was **geometrically false** and under-read every radius here.
+> All twelve rows are now fitted by supersampled analytic coverage, validated
+> against ticket 32's four re-measurements. **The freeze is lifted**: files 11
+> and 12 may release their `[radius frozen: RAISE-13/ticket 33]` marks against
+> the corrected table. `SPEC.md` §5 still carries the old values and is amended
+> together with ticket 34's extent convention.
 
 ~~All measured by corner-arc profiling: for a rounded rect the topmost scanline's
 fill begins `r` px in from the left edge, and the leftmost column's fill begins
@@ -769,20 +770,28 @@ One consequence is already visible and matters for `radius.button`: at 16.4
 fits all eight corners with zero penalty, so radius is *not* a fourth [RAISE-4]
 difference, and no `radius.buttonSticky` token should be created.
 
-| Element | radius px | radius pt | Arc measured |
+| Element | radius px | radius pt | Basis |
 | --- | --- | --- | --- |
-| **Category chip** (`03` `Hybride`) | **31.5** | **10.5** | x478.5→510, y2029.5→2062 |
-| **Hero badge** (`04`) | **~32** | **~10.7** | x849→881, y865→896 |
-| **Hero image** (`04`) | **30** | **10.0** | x75→105, y354→406 |
-| **Card thumbnail** (`03`) | **30** | **10.0** | x128→158, y1873→1904 |
-| **Hosting-card icon tile** (`02`) | ~15 | ~5.0 | ±2 px |
-| **Floating card, ALL FOUR corners** (`03`) | **14** | **4.7** | top: row 1797 starts x79 (14.5 from edge x64.5); col x65 starts y1810 (13.5 from edge y1796.5). **bottom: col x65 ends y2303 (14.5 from edge y2317.5); row 2316 spans 77→1128** |
-| **Sticky CTA** (`04`) | **~14** | **~4.7** | x603→616, y2362→2374 |
-| **Primary CTA** (`01`, `03`) | **13** ±2 | **4.3** | arc reads 11–15 px depending on the AA threshold |
-| **Hosting card** (`02`) | **13** | **4.3** | x38→49, y1448→1461 |
-| **Feature chip** (`04`) | **10** | **3.3** | x64→74, y2055→2065 |
-| **Drag handle** (`03`) | **6.5** | **2.2** | ½ height — fully rounded |
+| **Category chip** (`03` `Hybride`) | **pill** — ½ h = **38.4** | **12.8** | integrated box 254.75 × 76.75; fit 37.1–38.05 against a 38.4 cap, inside error |
+| **Hero badge** (`04`) | **pill** — ½ h = **35.4** | **11.8** | integrated box 249.27 × 70.75; free fit **35.60, above the cap** |
+| **Card thumbnail** (`03`) | **31.8** | **10.6** | four-corner joint fit, 4 089 well-conditioned px; band 30–33 |
+| **Hero image** (`04`) | **31.8** [d] | **10.6** | **[?]** in its own right — inherits the thumbnail token, see below |
+| **Floating card, ALL FOUR corners** (`03`) | **19.5** | **6.5** | ticket 32; re-validated at 19.50, SSE 0.55 |
+| **Primary CTA** (`01`, `03`) | **16.5** | **5.5** | re-validated at 16.50, SSE 0.27 |
+| **Sticky CTA** (`04`) | **16.5** | **5.5** | 16.60 measured — one token with the primary, see below |
+| **Hosting card** (`02`) | **15.6** | **5.2** | ticket 32; re-validated at 15.60, SSE 0.36 |
+| **Hosting-card icon tile** (`02`) | **15.2** | **5.1** | ±1 — only 5 levels of contrast (`#3E3E3E` on `#393939`) |
+| **Feature chip** (`04`) | **13.4** | **4.5** | quadrant fit, SSE 0.26 |
+| **Drag handle** (`03`) | **pill** — ½ h = **6.4** | **2.1** | 180.00 × 12.75; **never biased** — derived from the constraint, not the arc |
 | Circles (avatars, icon buttons, pin head, indicator dots) | ½ diameter | | |
+
+**On the hero image [?].** §7.7 blamed the photo, which is true — its corners
+sample 19–21 against a background of 18. But **the backdrop is not `#121212`
+either**: it is a gradient running 20 → 32 across the corner regions, reading
+**32 directly below the hero's bottom edge — brighter than the photo above it**.
+A fit assuming a uniform dark backdrop returns r ≈ 45–48 with deceptively good
+SSE; that number is an artifact and is recorded only so it is not re-derived and
+believed. The hero keeps the thumbnail's token, which is now **31.8, not 30**.
 
 **Three corrections to the record, all material:**
 
@@ -795,16 +804,31 @@ difference, and no `radius.buttonSticky` token should be created.
 2. **The `03` container's radius is 14 px on all four corners, not "16 top,
    square bottom".** v1 measured the top corner against a mis-placed edge and
    assumed the bottom because it assumed a bottom sheet. See §7.4.
-3. **The category chip and hero badge *approach* a pill but measurably fall
-   short** — both land at r ≈ 0.85 × half-height (31.5 vs 38.5; 32 vs 36). Build
-   them with an explicit radius, not `borderRadius: 9999`.
+3. **The category chip and hero badge ARE pills. [corrected, ticket 33]** v2
+   said they "approach a pill but measurably fall short" at r ≈ 0.85 × half-height
+   and told `packages/ui` to use an explicit radius. Both readings were products
+   of the false method. The badge's free fit returns **35.60 against a geometric
+   cap of 35.375** — above the cap — with SSE 15.1 at the cap against 85.4 at the
+   published 32. The chip lands 0.3–1.3 px short of its own cap, inside the
+   method's ±0.5 px error. **Both build as `borderRadius: 9999`.** This is the
+   reverse of the instruction v2 gave, and the only §6 correction that changes
+   what is typed rather than which number is typed.
 
 The system's distinctive move is that **images are rounder than containers**:
-images and thumbnails 10 pt, near-pills 10.5 pt, containers 3.3–4.7 pt. Buttons
-are the *least* rounded things on the screen, and after M2 the floating card is
-in the same 4.7 pt bracket as the buttons rather than a softer one. That
-inversion must survive into `packages/ui` — every instinct will be to do the
-opposite. **[held]**
+images and thumbnails **10.6 pt**, pills 11.8–12.8 pt, containers **4.5–6.5 pt**.
+That inversion **survives the re-fit [held]** — it narrows from 2.1× to **1.6×**
+against the softest container and is 2.4× against the buttons, nowhere near
+inverting. It must survive into `packages/ui`; every instinct will be to do the
+opposite.
+
+**Two riders on that sentence were wrong and are struck [ticket 33].**
+~~Buttons are the least rounded things on the screen~~ — the feature chip is
+**4.5 pt** against the button's 5.5, and it was 3.3 against 4.3 in the published
+values too; the claim never survived its own table. ~~After M2 the floating card
+is in the same 4.7 pt bracket as the buttons~~ — the card is **6.5 pt** against
+the button's 5.5, a full point apart, and is now the *softest* container in the
+system. M2 itself (all four corners equal, not "16 top, square bottom") is a
+corner-count finding and is unaffected.
 
 ---
 
@@ -1581,12 +1605,19 @@ independent estimators (including a threshold-free area check) come back
 evidence (row 1797 first carries card colour at x79, 14.5 px in) is incompatible
 with the 14 px it was used to justify, which predicts 8.8 px. **Six rows have not
 been re-fitted**, so the system's signature finding — *images are rounder than
-containers* — can be neither confirmed nor overturned yet: at the re-measured
-values the floating card (19.5) overtakes the buttons (16.4) and approaches the
-images (30), and if the image rows are equally under-read the inversion may
-narrow, hold, or invert. Correcting the values moves `radius.*` in `packages/ui`
-and the **locked** radius table in `SPEC.md` §5, so it is a founder call and not
-a sweep correction. The values stand unchanged until it is made.
+containers* — could be neither confirmed nor overturned at the time.
+
+**CLOSED 2026-08-16 by ticket 33.** All six were re-fitted and §6 is corrected.
+The signature finding **holds** (images 10.6 pt against containers 4.5–6.5 pt,
+narrowed from 2.1× to 1.6× but nowhere near inverting), but **two riders on it
+were false and are struck** — buttons are *not* the least-rounded thing (the
+feature chip is), and the floating card is *not* in the buttons' bracket (6.5 pt
+against 5.5). The material change for `packages/ui` is that **the category chip
+and the hero badge are pills**, not near-pills: `borderRadius: 9999`, the reverse
+of what v2 instructed. The hero image is confirmed **[?]** — its backdrop is a
+20 → 32 gradient, not `#121212`, so a fit that assumes a dark ground returns a
+plausible-looking 45–48 that is pure artifact. **`SPEC.md` §5's radius table is
+wrong in all seven rows and is still to be amended**, bundled with ticket 34.
 
 **[RAISE-14 — NEW, ticket 32 → ticket 34] The extent convention is undeclared,
 and this file uses two.** See §0.1. The primary CTA is published AA-inclusive,
