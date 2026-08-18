@@ -195,6 +195,16 @@ One corpus, executed by the TypeScript, Swift and Kotlin suites — this is what
 keeps three transcriptions of the same function honest. Every fixture below
 exists because a review round found a defect that the *other* fixtures hid.
 
+**Amendment (ADR-0012).** The corpus now lives as data:
+`packages/corpus/corpus.json`, and the executors are server (TypeScript),
+phone (Dart), CarPlay (Swift) and Android Auto (Kotlin). Each language-native
+suite executes the JSON rather than re-transcribing the fixtures, and
+`packages/domain/test/corpus-json.test.ts` holds the TypeScript reference
+implementation to the same file, so the corpus and the implementation cannot
+drift apart silently. Fixture 4 stays language-native on every side: it
+asserts the absence of a bay-level rate field, which no serialisation can
+carry.
+
 1. Dual-gun bay, **`Occupied` + `OutOfService`**, asserted under both lenses.
 2. Dual-gun bay, **`Occupied` + never-reported**, both lenses.
 3. Dual-gun bay, one gun `OutOfService`, one `Free`, both lenses and unlensed.

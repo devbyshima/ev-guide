@@ -1,0 +1,404 @@
+{
+  "$comment": "The shared fixture corpus of docs/availability-display.md section 3, serialised as language-neutral data per ADR-0012. That document is the source of truth; every entry in cases transcribes one of its ten numbered fixtures (via the TypeScript suite, packages/domain/test/corpus.test.ts), and grammarCases carries the section 2.2 law assertions of packages/domain/test/grammar.test.ts as raw counts. Executors: server (TypeScript), phone (Dart), CarPlay (Swift), Android Auto (Kotlin); each language-native suite executes this file rather than re-transcribing the fixtures. Fixture 4 (rates are per plug, not per bay) is structural: it asserts the absence of a bay-level rate field, which no serialisation can carry, so it stays a language-native test on every side. A report's capturedAt is defined as now - ageMs; the latest report per connector wins, by capturedAt.",
+  "now": 1760000000000,
+  "cases": [
+    {
+      "id": "1-dual-gun-occupied-plus-out-of-service",
+      "title": "dual-gun bay, Occupied + OutOfService, under both lenses",
+      "bays": [
+        {
+          "id": "b1",
+          "connectors": [
+            { "id": "c1", "type": "IEC_62196_T2" },
+            { "id": "c2", "type": "GBT_DC" }
+          ]
+        }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Occupied", "source": "operator", "ageMs": 300000, "sourceOnline": true },
+        { "connectorId": "c2", "state": "OutOfService", "source": "operator", "ageMs": 300000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "bayState", "bayId": "b1", "lens": ["IEC_62196_T2"], "nowOffsetMs": 0, "expect": "Occupied" },
+        { "kind": "bayState", "bayId": "b1", "lens": ["GBT_DC"], "nowOffsetMs": 0, "expect": "OutOfService" },
+        { "kind": "bayState", "bayId": "b1", "lens": null, "nowOffsetMs": 0, "expect": "Occupied" }
+      ]
+    },
+    {
+      "id": "2-dual-gun-occupied-plus-never-reported",
+      "title": "dual-gun bay, Occupied + never-reported",
+      "bays": [
+        {
+          "id": "b1",
+          "connectors": [
+            { "id": "c1", "type": "IEC_62196_T2" },
+            { "id": "c2", "type": "GBT_DC" }
+          ]
+        }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Occupied", "source": "driver", "ageMs": 300000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "bayState", "bayId": "b1", "lens": ["IEC_62196_T2"], "nowOffsetMs": 0, "expect": "Occupied" },
+        { "kind": "bayState", "bayId": "b1", "lens": ["GBT_DC"], "nowOffsetMs": 0, "expect": "Occupied" }
+      ]
+    },
+    {
+      "id": "3-dual-gun-one-out-of-service-one-free",
+      "title": "dual-gun bay, one OutOfService and one Free",
+      "bays": [
+        {
+          "id": "b1",
+          "connectors": [
+            { "id": "c1", "type": "IEC_62196_T2" },
+            { "id": "c2", "type": "GBT_DC" }
+          ]
+        }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 300000, "sourceOnline": true },
+        { "connectorId": "c2", "state": "OutOfService", "source": "operator", "ageMs": 300000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "bayState", "bayId": "b1", "lens": ["IEC_62196_T2"], "nowOffsetMs": 0, "expect": "Free" },
+        { "kind": "bayState", "bayId": "b1", "lens": ["GBT_DC"], "nowOffsetMs": 0, "expect": "OutOfService" },
+        { "kind": "bayState", "bayId": "b1", "lens": null, "nowOffsetMs": 0, "expect": "Free" }
+      ]
+    },
+    {
+      "id": "5-single-bay-station",
+      "title": "single-bay and one-plug-per-type stations: never 1 of 1, never All 1 (law 6)",
+      "bays": [
+        {
+          "id": "b1",
+          "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }]
+        }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 300000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "grammar", "lens": null, "otherBays": 0, "verbosity": "full", "expectRegime": 2, "expectText": "1 bay free", "notContains": ["1 of 1", "All 1"] }
+      ]
+    },
+    {
+      "id": "6-empty-contributor-all-out-of-service",
+      "title": "f = o = 0 with x > 0: the empty-contributor case",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] },
+        { "id": "b2", "connectors": [{ "id": "c2", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "OutOfService", "source": "operator", "ageMs": 300000, "sourceOnline": true },
+        { "connectorId": "c2", "state": "OutOfService", "source": "operator", "ageMs": 300000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "counts", "lens": null, "expect": { "n": 2, "free": 0, "occupied": 0, "outOfService": 2, "unknown": 0 } },
+        { "kind": "grammar", "lens": null, "otherBays": 0, "verbosity": "full", "expectRegime": 2, "expectText": "2 out of service", "notContains": ["0 of"] }
+      ]
+    },
+    {
+      "id": "7-multi-type-lens",
+      "title": "a lens of two or more types: counts only bays offering a lensed type, names the rest once",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] },
+        { "id": "b2", "connectors": [{ "id": "c2", "type": "IEC_62196_T2_COMBO" }] },
+        { "id": "b3", "connectors": [{ "id": "c3", "type": "GBT_DC" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 300000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "counts", "lens": ["IEC_62196_T2", "IEC_62196_T2_COMBO"], "expect": { "n": 2, "free": 1, "occupied": 0, "outOfService": 0, "unknown": 1 } },
+        { "kind": "grammar", "lens": ["IEC_62196_T2", "IEC_62196_T2_COMBO"], "otherBays": 1, "verbosity": "full", "expectRegime": 3, "expectText": "1 free · 1 unknown · 1 other bay", "notContains": ["1 other bay unknown"] }
+      ]
+    },
+    {
+      "id": "8-offline-override",
+      "title": "offline override with a 30-second-old report",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 30000, "sourceOnline": false }
+      ],
+      "checks": [
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 0, "expect": "Unknown" },
+        { "kind": "grammar", "lens": null, "otherBays": 0, "verbosity": "full", "expectRegime": 1, "expectText": "1 bay · no confirmed status", "notContains": ["no recent report", "unreported", "last reported"] }
+      ]
+    },
+    {
+      "id": "9-driver-free-decay-boundary",
+      "title": "driver Free holds at window - 1min and is Unknown at window + 1min (2h window)",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 7140000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 0, "expect": "Free" },
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 120000, "expect": "Unknown" }
+      ]
+    },
+    {
+      "id": "9-operator-free-decay-boundary",
+      "title": "operator Free holds at window - 1min and is Unknown at window + 1min (6h window)",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "operator", "ageMs": 21540000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 0, "expect": "Free" },
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 120000, "expect": "Unknown" }
+      ]
+    },
+    {
+      "id": "9-operator-out-of-service-decay-boundary",
+      "title": "operator OutOfService holds at window - 1min and is Unknown at window + 1min (30d window)",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "OutOfService", "source": "operator", "ageMs": 2591940000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 0, "expect": "OutOfService" },
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 120000, "expect": "Unknown" }
+      ]
+    },
+    {
+      "id": "9-render-across-boundary",
+      "title": "a render across a boundary changes the answer with no cache change",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 7140000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 0, "expect": "Free" },
+        { "kind": "effective", "connectorId": "c1", "nowOffsetMs": 120000, "expect": "Unknown" }
+      ]
+    },
+    {
+      "id": "9-next-decay-deadline",
+      "title": "nextDecayDeadline lands exactly on the boundary",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 1800000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "deadline", "expect": 1760005400000 }
+      ]
+    },
+    {
+      "id": "10-device-derived-wins",
+      "title": "materialised aggregate vs device-derived: the device wins (a stale green is impossible)",
+      "bays": [
+        { "id": "b1", "connectors": [{ "id": "c1", "type": "IEC_62196_T2" }] }
+      ],
+      "reports": [
+        { "connectorId": "c1", "state": "Free", "source": "driver", "ageMs": 10800000, "sourceOnline": true }
+      ],
+      "checks": [
+        { "kind": "counts", "lens": null, "expect": { "n": 1, "free": 0, "occupied": 0, "outOfService": 0, "unknown": 1 } },
+        { "kind": "grammar", "lens": null, "otherBays": 0, "verbosity": "full", "expectRegime": 1, "expectText": "1 bay · no confirmed status", "notContains": [] }
+      ]
+    }
+  ],
+  "grammarCases": [
+    {
+      "id": "law1-all-unknown-never-zero-of",
+      "title": "law 1: all-Unknown emits the capacity clause only, never 0 of N and never a state word",
+      "counts": { "n": 4, "free": 0, "occupied": 0, "outOfService": 0, "unknown": 4 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 1,
+      "expectText": "4 bays · no confirmed status",
+      "notContains": ["0 of", "free", "busy", "out of service", "unknown"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law1-zero-free-mixed",
+      "title": "law 1: a zero free count emits no free clause, not 0 of N",
+      "counts": { "n": 2, "free": 0, "occupied": 1, "outOfService": 0, "unknown": 1 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 3,
+      "expectText": "1 busy · 1 unknown",
+      "notContains": ["0 of"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law2-no-total-while-unknown",
+      "title": "law 2: no total while anything is unknown",
+      "counts": { "n": 3, "free": 1, "occupied": 0, "outOfService": 0, "unknown": 2 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 3,
+      "expectText": "1 free · 2 unknown",
+      "notContains": ["of 3", "All"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law2-no-total-with-oos-and-unknown",
+      "title": "law 2: out of service's inner of is not a denominator, and no total appears",
+      "counts": { "n": 4, "free": 2, "occupied": 0, "outOfService": 1, "unknown": 1 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 3,
+      "expectText": "2 free · 1 out of service · 1 unknown",
+      "notContains": ["of 4", "All"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law3-busy-absent-when-nothing-occupied",
+      "title": "law 3: when nothing is occupied the word busy cannot appear at all",
+      "counts": { "n": 3, "free": 0, "occupied": 0, "outOfService": 1, "unknown": 2 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 3,
+      "expectText": "1 out of service · 2 unknown",
+      "notContains": ["busy"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law3-law4-busy-never-folds",
+      "title": "laws 3 and 4: busy quantifies exactly o, never o plus x",
+      "counts": { "n": 3, "free": 0, "occupied": 2, "outOfService": 1, "unknown": 0 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 2,
+      "expectText": "2 busy · 1 out of service",
+      "notContains": ["3 busy", "of 3", "All"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law4-oos-counted-separately",
+      "title": "law 4: OutOfService carries its own clause with its own count",
+      "counts": { "n": 5, "free": 1, "occupied": 2, "outOfService": 2, "unknown": 0 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 2,
+      "expectText": "1 of 5 bays free · 2 busy · 2 out of service",
+      "notContains": ["4 busy", "All"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law4-survives-minimal",
+      "title": "law 4: OutOfService survives to minimal verbosity whenever x > 0",
+      "counts": { "n": 4, "free": 1, "occupied": 1, "outOfService": 1, "unknown": 1 },
+      "otherBays": 0,
+      "verbosity": "minimal",
+      "expectRegime": 3,
+      "expectText": "1 out of service",
+      "notContains": ["free", "busy", "unknown"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law4-survives-short",
+      "title": "law 4: OutOfService survives the short variant ahead of busy",
+      "counts": { "n": 3, "free": 1, "occupied": 1, "outOfService": 1, "unknown": 0 },
+      "otherBays": 0,
+      "verbosity": "short",
+      "expectRegime": 2,
+      "expectText": "1 of 3 bays free · 1 out of service",
+      "notContains": ["busy"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law5-never-all-when-broken",
+      "title": "law 5: never All while x > 0",
+      "counts": { "n": 3, "free": 2, "occupied": 0, "outOfService": 1, "unknown": 0 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 2,
+      "expectText": "2 of 3 bays free · 1 out of service",
+      "notContains": ["All"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law6-singular-free",
+      "title": "law 6: n = 1 free says 1 bay free, never 1 of 1 or All 1",
+      "counts": { "n": 1, "free": 1, "occupied": 0, "outOfService": 0, "unknown": 0 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 2,
+      "expectText": "1 bay free",
+      "notContains": ["1 of 1", "All 1"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law6-singular-unknown",
+      "title": "law 6: uses bay not bays at n = 1",
+      "counts": { "n": 1, "free": 0, "occupied": 0, "outOfService": 0, "unknown": 1 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 1,
+      "expectText": "1 bay · no confirmed status",
+      "notContains": ["1 of 1", "All 1", "bays"],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "law8-sweep-regime1",
+      "title": "law 8: the all-Unknown string asserts no report history",
+      "counts": { "n": 3, "free": 0, "occupied": 0, "outOfService": 0, "unknown": 3 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 1,
+      "expectText": "3 bays · no confirmed status",
+      "notContains": [],
+      "forbiddenSweep": true
+    },
+    {
+      "id": "law8-sweep-with-remainder",
+      "title": "law 8: the remainder clause asserts no report history either",
+      "counts": { "n": 2, "free": 1, "occupied": 0, "outOfService": 0, "unknown": 1 },
+      "otherBays": 2,
+      "verbosity": "full",
+      "expectRegime": 3,
+      "expectText": "1 free · 1 unknown · 2 other bays",
+      "notContains": [],
+      "forbiddenSweep": true
+    },
+    {
+      "id": "law8-sweep-short",
+      "title": "law 8: shortened variants stay clean too",
+      "counts": { "n": 5, "free": 1, "occupied": 1, "outOfService": 1, "unknown": 2 },
+      "otherBays": 0,
+      "verbosity": "short",
+      "expectRegime": 3,
+      "expectText": "1 free · 1 out of service",
+      "notContains": [],
+      "forbiddenSweep": true
+    },
+    {
+      "id": "regime2-permits-total",
+      "title": "regime 2 permits a total",
+      "counts": { "n": 4, "free": 2, "occupied": 2, "outOfService": 0, "unknown": 0 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 2,
+      "expectText": "2 of 4 bays free · 2 busy",
+      "notContains": [],
+      "forbiddenSweep": false
+    },
+    {
+      "id": "regime3-counts-without-total",
+      "title": "regime 3 emits counts without a total",
+      "counts": { "n": 4, "free": 1, "occupied": 1, "outOfService": 1, "unknown": 1 },
+      "otherBays": 0,
+      "verbosity": "full",
+      "expectRegime": 3,
+      "expectText": "1 free · 1 busy · 1 out of service · 1 unknown",
+      "notContains": ["of 4"],
+      "forbiddenSweep": false
+    }
+  ]
+}
