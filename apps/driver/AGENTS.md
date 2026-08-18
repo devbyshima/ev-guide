@@ -69,12 +69,12 @@ xcrun devicectl device process launch --device E41E8007-FB0A-516E-8A80-DA36110DF
 
    The crash behind this entry: **iOS 27.0 (device build 24A5390f) fatally
    traps apps built against the iOS 27.0 SDK that do not adopt the UIScene
-   lifecycle** — "UIScene life cycle is required for apps built with this
-   SDK", TN3187. Expo SDK 57 / RN 0.86 ship no scene support, and a bare
+   lifecycle** ("UIScene life cycle is required for apps built with this
+   SDK", TN3187). Expo SDK 57 / RN 0.86 ship no scene support, and a bare
    `UIApplicationSupportsMultipleScenes` flag is not adoption (tested: still
    traps); a full `UISceneConfigurations` manifest survives. The simulator
-   does not reproduce it — its 27.0 runtime (24A5355p) predates the
-   enforcement — so "works in the simulator" proves nothing here.
+   does not reproduce it, because its 27.0 runtime (24A5355p) predates the
+   enforcement, so "works in the simulator" proves nothing here.
 
 ### Debug vs Release
 
