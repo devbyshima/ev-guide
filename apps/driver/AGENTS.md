@@ -53,8 +53,28 @@ xcrun devicectl device process launch --device E41E8007-FB0A-516E-8A80-DA36110DF
 4. **Free-team profiles live 7 days.** Anything installed stops launching about
    a week later with "Unable to Verify App" and no build error. Rebuild rather
    than debug. A paid membership removes both this and the 3-app cap.
-5. **`exit code 0` immediately after launch is not a crash.** iOS terminates a
-   launched app when the device is **locked**. Unlock Serein and relaunch.
+5. **`devicectl process launch --console` reporting `exit code 0` can be a
+   crash.** The line is a devicectl artifact: this app died in ~74 ms with
+   `EXC_BREAKPOINT` / `Trace/BPT trap: 5` and devicectl still printed exit
+   code 0. Never trust that line on this toolchain; pull the real crash log:
+
+   ```bash
+   xcrun devicectl device info files --device <id> --domain-type systemCrashLogs
+   xcrun devicectl device copy from --device <id> --domain-type systemCrashLogs \
+     --source <name>.ips --destination <path>
+   ```
+
+   (`~/Library/Logs/CrashReporter/MobileDevice/` stays empty unless Xcode's
+   Devices window syncs it; the domain above works without Xcode.)
+
+   The crash behind this entry: **iOS 27.0 (device build 24A5390f) fatally
+   traps apps built against the iOS 27.0 SDK that do not adopt the UIScene
+   lifecycle** — "UIScene life cycle is required for apps built with this
+   SDK", TN3187. Expo SDK 57 / RN 0.86 ship no scene support, and a bare
+   `UIApplicationSupportsMultipleScenes` flag is not adoption (tested: still
+   traps); a full `UISceneConfigurations` manifest survives. The simulator
+   does not reproduce it — its 27.0 runtime (24A5355p) predates the
+   enforcement — so "works in the simulator" proves nothing here.
 
 ### Debug vs Release
 
