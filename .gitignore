@@ -23,3 +23,10 @@ dist/
 apps/*/ios/
 apps/*/android/
 apps/*/.expo/
+
+# Flutter (ADR-0012): the native runners are REAL, authored projects — the
+# opposite of the Expo CNG rule above, which dies with apps/driver.
+!apps/driver_flutter/ios/
+!apps/driver_flutter/android/
+.dart_tool/
+packages/dart/*/pubspec.lock

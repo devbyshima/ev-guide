@@ -1,0 +1,16 @@
+name: ev_guide_data
+description: >-
+  Repository protocols plus the mock implementation and seed. Dart
+  transcription of packages/data behind the same ADR-0005 seam.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  ev_guide_domain:
+    path: ../domain
+
+dev_dependencies:
+  test: ^1.25.0

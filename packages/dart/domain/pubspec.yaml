@@ -1,0 +1,13 @@
+name: ev_guide_domain
+description: >-
+  Pure types plus the availability derivation and display grammar.
+  Dart transcription of packages/domain; docs/availability-display.md is the
+  spec and packages/corpus/corpus.json is the proof of equivalence (ADR-0012).
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  test: ^1.25.0

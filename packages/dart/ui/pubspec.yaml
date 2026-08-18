@@ -1,0 +1,17 @@
+name: ev_guide_ui
+description: >-
+  Design tokens, styles and shared widgets, 1:1 from the reference with the
+  ticket 33/34/36 corrections. Dart transcription of packages/ui.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
