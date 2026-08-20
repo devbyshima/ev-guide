@@ -1,6 +1,9 @@
 /**
  * The style layer: **pure objects derived from tokens, no React Native
- * import**. Components consume these; tests assert them.
+ * import**. Tests assert them; the admin SPA consumes them. Nothing in this
+ * repo renders them any more, because the components that did were deleted
+ * with the Expo app (ADR-0012). The purity is why the deletion cost nothing:
+ * not one measured value lived in the component file.
  *
  * Splitting it this way is deliberate. The 1:1 reference rule lives in
  * numbers, and numbers are what drift. A style object can be asserted against
@@ -143,8 +146,13 @@ export function dragHandleStyle() {
  * corners and is never anchored to the screen edge, with 64 px of live map
  * between its bottom edge and the CTA.
  *
- * `packages/ui` names it `StationCard` and must not build it on a sheet
- * primitive, whose whole contract is bottom anchoring.
+ * SPEC.md section 5 finding 3 requires it to be named `StationCard` and built
+ * on something other than a sheet primitive, whose whole contract is the
+ * bottom anchoring this card does not do. That obligation now sits on
+ * `packages/dart/ui`, which is where the component lives; this package keeps
+ * the geometry the requirement is about. The spec still addresses the
+ * requirement to `packages/ui` by name, which was accurate when both mobile
+ * apps consumed it.
  */
 export function stationCardStyle() {
   return {

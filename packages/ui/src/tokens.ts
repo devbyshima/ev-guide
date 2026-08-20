@@ -8,8 +8,12 @@
  * rounding rule is exactly the ambiguity that produced a wrong "correction"
  * to a locked value).
  *
- * The admin dashboard takes **tokens only**, no React Native components, and
- * the 1:1 reference rule does not govern it.
+ * The admin dashboard takes **tokens only**, and the 1:1 reference rule does
+ * not govern it. That used to be a restriction marking this package off from
+ * its own components; the components are gone (ADR-0012 moved the phone to
+ * Flutter), so it now simply describes the package. The phone's tokens are the
+ * Dart transcription in `packages/dart/ui`, which SPEC.md section 13's
+ * guarantees are tested against.
  */
 
 /** px -> pt at @3x. Exported so nothing re-derives the ratio by hand. */
