@@ -446,6 +446,41 @@ reasoning in v3.
   and no components. The obligation belongs to **`packages/dart/ui`**, where
   `station_card.dart` actually lives. This is a stale reference ADR-0012 should
   have swept and did not, not a change this redesign makes.
+
+  **Six further SPEC lines are ADR-0012 residue**, swept here so the sweep is
+  done once rather than found six more times. Three name `packages/ui`. §5's
+  opening (*"Lands as `packages/ui`, shared by both mobile apps"*) and §7's
+  operator line (*"Separate Expo app, same `packages/ui`"*) both address the
+  mobile surface, which is `packages/dart/ui`; §7's *"Expo"* is ADR-0012's
+  residue in the same sentence. §10's repo-shape block calls `packages/ui` *"the
+  React Native design system"*, and that block is stale end to end rather than
+  in one row: it still lists `apps/driver Expo` and `apps/operator Expo`, and
+  carries none of `packages/dart/`, `packages/corpus` or `apps/driver_flutter`.
+  Correcting its `packages/ui` row alone would leave a table wrong in four
+  others, so the block is replaced rather than edited.
+
+  **The other three name Expo and were found by sweeping for it**, which is how
+  a sweep for one symptom should end. §1 still described both mobile apps as
+  Expo, in the product's own opening paragraph. Decision 14 still read "two
+  **Expo** apps" and named the old package trio. And §10's platform floor still
+  resolved to "the latest stable **Expo** SDK", when ADR-0012 killed ADR-0011
+  and re-resolved the same rule to Flutter 3.47.0 stable / Dart 3.13.0. The rule
+  itself is untouched: pin at build start, upgrade as ordinary maintenance,
+  SDK-default minimums, no hand-raised floors.
+
+  **One Expo reference is deliberately left alone**: §13 guarantee 11, which
+  names React Native's `activeOpacity` and `android_ripple` as the mechanism
+  behind the no-disabled-token rule. Its mechanism is stale and its rule is not,
+  and it is being worked in a separate effort alongside `EVGuideButton`, which
+  ships the very `disabled` state that guarantee forbids. Sweeping it here would
+  collide with that.
+
+  **One clause is this effort's own** rather than ADR-0012's. §5's *"no React
+  Native components"* drew a line between the admin and the mobile components;
+  with those deleted, nothing in the repo remains on the other side of it, so
+  the sentence now describes `packages/ui` instead of restricting it. The
+  package is not thereby left ungoverned: §5's ban on naming a typeface and its
+  `quickAction` rule still bind it, and both still hold in `tokens.ts`.
 - **`refs/README.md`** asserts the 1:1 rule in its own text and must be amended
   to the styling scope.
 - **"Only one button may be lime" is amended, not deleted**, in

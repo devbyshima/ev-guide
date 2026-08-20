@@ -24,8 +24,9 @@ not in a commit message and not in a screen.
 EV Guide is a **directory of EV charging stations in Rwanda**. A driver opens
 it to find a station, see its rate, connector types and bay count, learn
 whether a bay is free, and get directions. Three surfaces: a **driver app**
-(Expo, iOS + Android), an **operator app** (Expo), and a **web admin dashboard**
-(Vite SPA) the studio runs.
+(Flutter, iOS + Android), an **operator app** (Flutter), and a **web admin
+dashboard** (Vite SPA) the studio runs. *(Both mobile apps were Expo until
+[ADR-0012](docs/adr/0012-flutter-migration.md) on 2026-08-18.)*
 
 It is **free, with no monetisation anywhere** — no driver payments, no operator
 subscription, no paid listings, no billing infrastructure and no plan tiers at
@@ -78,7 +79,7 @@ absence, not a gap in the research.
 | 11 | Role is a **membership edge**, never a user attribute. Owners create their own Operators. Conflicts resolve **most-recent-`capturedAt`-wins regardless of source**, source always shown. No reputation system. | ticket 11 |
 | 12 | Operator stats are **four metrics** — views, direction taps, reports received, own uptime. No kWh, revenue or session count exists, because EV Guide never observes a charging session. | ticket 11 |
 | 13 | **Backend is BWEZE**, built **frontend-first** behind repository protocols. One auth realm, one user table, all three surfaces. Store reports, derive at read time, poll — no cron, no websockets. | [ADR-0005](docs/adr/0005-backend-bweze-frontend-first.md) |
-| 14 | **Two Expo apps + one Vite admin in one pnpm monorepo**; `packages/domain · data · ui`; the mock data implementation is a first-class citizen. | [ADR-0006](docs/adr/0006-codebase-shape.md) |
+| 14 | **Two Flutter apps + one Vite admin in one pnpm monorepo**; `packages/dart/domain · data · ui` for the phone, `packages/domain · data` as the server reference, `packages/ui` for the admin's tokens, `packages/corpus` as shared fixtures; the mock data implementation is a first-class citizen. *(ADR-0006 said two **Expo** apps and one package trio; [ADR-0012](docs/adr/0012-flutter-migration.md) split the implementations by runtime. Everything else in ADR-0006 stands.)* | [ADR-0006](docs/adr/0006-codebase-shape.md), [ADR-0012](docs/adr/0012-flutter-migration.md) |
 | 15 | Connector types are an **open enum in OCPI 2.3.0 spellings** (tier 1: `IEC_62196_T2`, `IEC_62196_T2_COMBO`, `GBT_AC`, `GBT_DC`; `OTHER`/`UNKNOWN` always expressible). **Never persist a platform integer** — map at the edge. CHAdeMO is not a Rwandan standard. | ticket 02 |
 | 16 | **The reference designs govern styling, not information architecture.** Palette, type, radii, spacing, component geometry and the state grammar are implemented 1:1, with no deliberate deviations, and impossibilities are raised rather than improved around. **Layout and IA are decided on their merits for a Rwandan driver.** *(Amended 2026-08-20 by ADR-0013; until then the reference governed layout too. Four knowing styling deviations are recorded in decision 22.)* | founder rule; ticket 17; [ADR-0013](docs/adr/0013-charger-finder-redesign.md) |
 | 17 | **v1 ships the availability layer and claims the directory.** Availability is "live status when reported" — a bonus, never a promise. **`real-time` and `live` are banned** from the UI, the store listing and onboarding alike. | ticket 28 |
@@ -197,8 +198,18 @@ Measured from `refs/01.png`…`04.png` (iPhone 16 Pro @3x), two adversarial
 rounds. The pixel-level record is
 [`10-design-system-v2.md`](.scratch/ev-guide-spec/design/10-design-system-v2.md);
 it is the citation of record for anything not restated here. Lands as
-`packages/ui`, shared by both mobile apps. **The admin dashboard takes tokens
+**`packages/dart/ui`**, shared by both mobile apps, with `packages/ui` carrying
+the same token values for the admin. **The admin dashboard takes tokens
 only — no React Native components**, and the 1:1 rule does not govern it.
+
+*Swept 2026-08-20 alongside [ADR-0013](docs/adr/0013-charger-finder-redesign.md).*
+This line named `packages/ui` as the mobile design system, which ADR-0012 made
+stale when it moved the phone to Dart. The `no React Native components` clause
+is now **descriptive rather than restrictive**: those components were deleted
+with the Expo app, so nothing in the repo sits on the other side of the line it
+drew. `packages/ui` is not thereby left ungoverned. This section's ban on naming
+a typeface and its `quickAction` rule still bind it, and both still hold in
+`tokens.ts`.
 
 **Colour** — `#121212` page · `#212121` map canvas · `#393939` surface ·
 `#3E3E3E` raised/divider · `#C7FC2F` accent (**exactly one value, no tints, no
@@ -484,8 +495,8 @@ empty vocabulary. Cold online start is under 1 MB excluding tiles.
 ## 7. Operator app
 
 Full record: [`12-operator-admin-screens-v2.md`](.scratch/ev-guide-spec/design/12-operator-admin-screens-v2.md).
-Separate Expo app, same `packages/ui`, same auth realm. **No tab bar** — push
-and present only.
+Separate **Flutter** app (ADR-0012), same **`packages/dart/ui`**, same auth
+realm. **No tab bar** — push and present only.
 
 | Screen | Notes |
 | --- | --- |
@@ -606,23 +617,45 @@ websockets in v1. Clients refetch on screen focus and map movement.
 workspace:
 
 ```
-apps/driver     Expo, managed CNG + dev-client
-apps/operator   Expo
-apps/admin      Vite + React SPA, BWEZE-hosted static
-packages/domain pure types + the derivation + the closed vocabulary; no platform imports
-packages/data   repository protocols; the mock implementation is first-class and carries the seed dataset
-packages/ui     the React Native design system, built 1:1 from the reference
+apps/driver_flutter  Flutter (ADR-0012); the phone app
+apps/operator        Flutter (ADR-0012); unscaffolded until asked
+apps/admin           Vite + React SPA, BWEZE-hosted static; unscaffolded until asked
+packages/dart/domain the phone's derivation, decay, freshness, grammar, vocabulary, projections
+packages/dart/data   the phone's repository protocols, mock and seed
+packages/dart/ui     the design system, built 1:1 from the reference
+packages/domain      the same derivation in TypeScript; the SERVER-side reference implementation
+packages/data        the same protocols in TypeScript, for the server
+packages/ui          token values for the admin; takes tokens only, no components
+packages/corpus      corpus.json, the ten fixtures as data; executed by every runtime that transcribes the derivation
 ```
+
+*Block replaced 2026-08-20 alongside
+[ADR-0013](docs/adr/0013-charger-finder-redesign.md).* It was stale end to end
+rather than in one row. Of its six rows **three were wrong**: it listed both
+apps as Expo, and called `packages/ui` the React Native design system. **Four
+entries were missing** entirely, which is why the block grows from six rows to
+ten: `packages/dart/domain`, `packages/dart/data`, `packages/dart/ui` and
+`packages/corpus`. `apps/driver` is **renamed** to `apps/driver_flutter` rather
+than added, which is why six rows plus four entries is ten and not eleven.
+Correcting the `packages/ui` row alone would have left **two rows wrong and
+four entries missing**, so the whole block is rewritten.
+**ADR-0006's shape is unchanged in substance**: one workspace, the same seams,
+the mock first-class. ADR-0012 split the implementations by runtime and this
+block had not caught up.
 
 **Frontend first.** Both apps are built against the mock data layer behind the
 repository protocols; the BWEZE implementation lands after, behind the same
 seam. Mock and BWEZE implementations must both satisfy the protocols and both
 feed the derivation unchanged.
 
-**Platform floor is a rule, not a number:** the latest stable Expo SDK pinned
-when the build starts, New Architecture on, SDK-default minimum OS versions
-with no hand-raised floors (Rwanda's fleet skews older Android; every raised
-floor sheds users for nothing).
+**Platform floor is a rule, not a number:** the latest stable SDK pinned when
+the build starts, then upgraded as ordinary maintenance, with SDK-default
+minimum OS versions and no hand-raised floors (Rwanda's fleet skews older
+Android; every raised floor sheds users for nothing). The rule resolved to
+Expo SDK 57 under ADR-0011, and resolves to **Flutter 3.47.0 stable / Dart
+3.13.0** under [ADR-0012](docs/adr/0012-flutter-migration.md), which killed
+ADR-0011 and carried its one lasting correction forward: take the version from
+the scaffold, never from the dependency's own `latest`.
 
 **Launch bar, in the spec and not negotiable:** the BWEZE data plane must run
 on always-on server infrastructure **before EV Guide serves drivers**. As of
