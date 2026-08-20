@@ -322,13 +322,14 @@ const SizeTokens size = SizeTokens._();
 class ContrastTokens {
   const ContrastTokens._();
 
-  /// The hero badge label. Fidelity was chosen over readability.
-  final double heroBadgeLabel = 1.21;
-
   /// The drag handle. Invisible-grade, and correct.
   final double handle = 1.24;
 }
 
 /// Contrast facts that are deliberately shipped as-is, so nobody "fixes"
 /// them without reading ADR-0009 first.
+///
+/// `heroBadgeLabel` lived here at 1.21 until ADR-0013. The badge label is now
+/// [ColorTokens.onAccent] on the accent fill, which computes to 15.52:1, so
+/// there is no deliberate-illegibility fact left to guard.
 const ContrastTokens knownContrast = ContrastTokens._();

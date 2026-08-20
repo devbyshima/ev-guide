@@ -80,14 +80,14 @@ absence, not a gap in the research.
 | 13 | **Backend is BWEZE**, built **frontend-first** behind repository protocols. One auth realm, one user table, all three surfaces. Store reports, derive at read time, poll — no cron, no websockets. | [ADR-0005](docs/adr/0005-backend-bweze-frontend-first.md) |
 | 14 | **Two Expo apps + one Vite admin in one pnpm monorepo**; `packages/domain · data · ui`; the mock data implementation is a first-class citizen. | [ADR-0006](docs/adr/0006-codebase-shape.md) |
 | 15 | Connector types are an **open enum in OCPI 2.3.0 spellings** (tier 1: `IEC_62196_T2`, `IEC_62196_T2_COMBO`, `GBT_AC`, `GBT_DC`; `OTHER`/`UNKNOWN` always expressible). **Never persist a platform integer** — map at the edge. CHAdeMO is not a Rwandan standard. | ticket 02 |
-| 16 | **The reference designs are implemented 1:1.** No deliberate deviations; impossibilities are raised, not improved around. Two knowing deviations are recorded in §12. | founder rule; ticket 17 |
+| 16 | **The reference designs govern styling, not information architecture.** Palette, type, radii, spacing, component geometry and the state grammar are implemented 1:1, with no deliberate deviations, and impossibilities are raised rather than improved around. **Layout and IA are decided on their merits for a Rwandan driver.** *(Amended 2026-08-20 by ADR-0013; until then the reference governed layout too. Four knowing styling deviations are recorded in decision 22.)* | founder rule; ticket 17; [ADR-0013](docs/adr/0013-charger-finder-redesign.md) |
 | 17 | **v1 ships the availability layer and claims the directory.** Availability is "live status when reported" — a bonus, never a promise. **`real-time` and `live` are banned** from the UI, the store listing and onboarding alike. | ticket 28 |
 | 18 | Seeding is a **launch-week studio survey pass** plus pre-launch recruitment of the 2–3 largest operators. Admin-marked "known-busy patterns" are **permanently rejected** as synthetic data. | ticket 28 |
 | 19 | **Bay-watch** is one-shot: only a **report-driven** transition into `Free` fires it, decay never does; 2 h expiry, max 3 armed. The design is the spam control — no rate limiter, no digest. Transport is raw APNs + FCM from BWEZE. | ticket 30 |
 | 20 | **Journey planning with charging stops is out of scope** — including the corridor filter and the remaining-charge isochrone. A future effort, not this map widened. | ticket 29 |
 | 21 | **Outbound acquisition of every kind happens only after the product is built.** The MININFRA annex request and the Kabisa disclosure are drafted and held. Manual entry stands. | founder rule 2026-08-13; tickets 25, 26 |
-| 22 | **Exactly two knowing 1:1 deviations exist**: the `Google` wordmark slot carries `© OpenStreetMap contributors`, and the location puck is redrawn off Google's `#4285F4` into `#FFFFFF` + `#C7FC2F`. Everywhere else the reference wins. | [ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md) |
-| 23 | **Two fidelity costs are carried rather than deviated around**: the hero badge is reproduced at 1.21:1 under a redundancy invariant, and the operator app ships **dark-only**, revisited only on launch-week evidence. | [ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md) |
+| 22 | **Exactly four knowing styling deviations exist**: the `Google` wordmark slot carries `© OpenStreetMap contributors`; the location puck is redrawn off Google's `#4285F4` into `#FFFFFF` + `#C7FC2F`; the hero badge label is drawn in `color.onAccent` at 15.52:1 rather than the reference's 1.21:1; and the **accent budget is knowingly exceeded** so selected connector chips can be lime. Everywhere else the reference wins. The fourth is the only **systemic** one, and cannot be checked against a single component. | [ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md), [ADR-0013](docs/adr/0013-charger-finder-redesign.md) |
+| 23 | **One fidelity cost is carried rather than deviated around**: the operator app ships **dark-only**, revisited only on launch-week evidence. *(The hero badge's 1.21:1 contrast was the second such cost until 2026-08-20, when it moved to decision 22 as a deviation.)* | [ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md), [ADR-0013](docs/adr/0013-charger-finder-redesign.md) |
 | 24 | **The typeface ships as an acceptance band, not a name**, and is chosen **free-first** — a retail licence only if no free face meets the band. Old-style figures are non-negotiable. | [ADR-0010](docs/adr/0010-typeface-acceptance-band.md) |
 
 ---
@@ -294,6 +294,21 @@ carried; it is inside ADR-0009's redraw scope along with the other three.
    It is never anchored to the screen edge: `packages/ui` names it `StationCard`
    and must not build it on a sheet primitive, whose whole contract is bottom
    anchoring.
+
+   *Re-read, not amended, by [ADR-0013](docs/adr/0013-charger-finder-redesign.md)
+   decision 5.* The card gains **detents**, and the substance above survives: it
+   grows upward, its bottom edge never moves, and the 64 px gap and the CTA row
+   below it are intact at every detent. The consequence the ADR carries is that
+   Flutter's `DraggableScrollableSheet` and `showModalBottomSheet` remain
+   unusable here, so the detent physics are custom code. A build that reaches for
+   a sheet primitive to get detents has broken this finding, not satisfied it.
+
+   *One word of it is corrected, and the correction predates ADR-0013.* The
+   obligation above is addressed to `packages/ui`, but ADR-0012 handed the phone
+   to `packages/dart` and left `packages/ui` as the admin's token source, which
+   takes **tokens only and no components**. **The obligation belongs to
+   `packages/dart/ui`**, where `station_card.dart` lives. This is a stale
+   reference ADR-0012 should have swept, not a change this redesign makes.
 4. **The handle is 180 px**, and `#262626`. It is a pill: ½ of its integrated
    height (12.75) is r **6.4**.
 5. **The basemap palette across ~85% of the front door was never in the
@@ -314,6 +329,18 @@ box** — `color.surface` at `size.ctaHeight` **137.25 px**, `radius.button`
 absence of a tab bar is a positive finding** and fixes navigation everywhere:
 full-screen surfaces reached by a push (back `←`) or a presentation (close `×`),
 plus one floating avatar.
+
+*Re-justified, not amended, by [ADR-0013](docs/adr/0013-charger-finder-redesign.md)
+decision 6.* Under the amended decision 16 this finding no longer inherits its
+authority from the reference, so it was re-argued on its merits and survives.
+A tab bar needs three to five sibling destinations of comparable weight and EV
+Guide has one: `Trips` needs a `Session` entity that does not exist, `Recents`
+needs a view-history entity nothing carries, and `Saved` is account-gated, so
+for the anonymous majority one of three tabs would be a permanent sign-in
+prompt. It would also occupy the bottom of every screen, which is exactly where
+the measured CTA row and D-03's sticky bar live, and a selected tab has no
+channel but the single accent. §7 gives the operator app the same ruling, so
+both apps stay on one navigation grammar.
 
 **The states are designed** (ticket 31, two adversarial rounds:
 [states](.scratch/ev-guide-spec/design/18-interaction-states-v2.md) ·
@@ -336,13 +363,19 @@ govern everything built on this system:
 ## 6. Driver app
 
 Full screen-by-screen record, with states and domain mapping:
-[`11-driver-screens-v2.md`](.scratch/ev-guide-spec/design/11-driver-screens-v2.md).
+[`11-driver-screens-v3.md`](.scratch/ev-guide-spec/design/11-driver-screens-v3.md),
+which supersedes v2 for this app under
+[ADR-0013](docs/adr/0013-charger-finder-redesign.md).
+[`11-driver-screens-v2.md`](.scratch/ev-guide-spec/design/11-driver-screens-v2.md)
+**remains the citation of record for every measured value**: the redesign moved
+no pixel, and v3 composes only from geometry v2 established.
 
 | Screen | Source | What fixes its content |
 | --- | --- | --- |
-| **D-01 Map home** | ref `01` | ADR-0002 · ADR-0007 · ticket 06 |
-| **D-02 Map + station card** | ref `03` | availability-display §2 · ADR-0004 · ADR-0007 · ticket 10 |
-| **D-03 Station detail** | ref `04` | ADR-0002 · ADR-0008 · ADR-0004 · tickets 10, 30 |
+| **D-01 Map home** | ref `01` | ADR-0002 · ADR-0007 · ticket 06 · **ADR-0013** (gains a search field, and only that) |
+| **D-02 Map + station sheet** | ref `03` | availability-display §2 · ADR-0004 · ADR-0007 · ticket 10 · **ADR-0013** (detented; gains a connector line and `Directions`) |
+| **D-13 Nearby chargers** | ext | **ADR-0013** · domain-model `stationsNear` · v2's second detent, promoted to the sheet's default, and the only home of the connector chip row |
+| **D-03 Station detail** | ref `04` | ADR-0002 · ADR-0008 · ADR-0004 · tickets 10, 30 · **ADR-0013** (`Update status` becomes first-class) |
 | **D-04 Profile** | ref `02` | ADR-0003 · ADR-0006 · tickets 11, 15 |
 | **D-05 Personal Information** | ext | ADR-0003 |
 | **D-06 Login & Security** | ext | ADR-0003 · Guideline 5.1.1(v) |
@@ -355,6 +388,30 @@ Full screen-by-screen record, with states and domain mapping:
 | **S-01 Auth sheet** | ext | ADR-0003 as amended |
 | **S-02 Report sheet** | ext | ADR-0002 · ADR-0007 · tickets 09, 11 |
 | **S-03 Overflow menu** | ext | platform action sheet |
+
+**What the redesign adds, and what it does not** (ADR-0013). Four additions,
+each composed from existing geometry: a **search field** on D-01 (the
+secondary-control box, a leading magnifier glyph, **no placeholder**, an
+on-device substring match, **no geocoding**); a **connector chip row** at the top
+of D-13; **D-13** itself, promoted from v2's second detent to the sheet's
+default content; and **`Update status`** as a first-class control on D-03.
+
+**No screen is dropped and no filter screen is added.** A two-tier filter model
+with an `S-04 Filters` sheet was drafted and **withdrawn before it was built**
+(ADR-0013 decision 8), because every dimension in it hid stations.
+
+**Nothing hides.** No control in the driver app removes a station from the map
+or the list. The chip row **reorders and marks** instead, and the mark is the
+lens grammar that already exists (`No GB/T DC bay here · 4 bays · Type 2,
+CCS2`). This keeps the plug lens's original ruling intact and extends it to
+every control the redesign adds. Two consequences travel with it: the phone's
+`stationsNear` is **unbounded** (a bound under a reordering model is hiding by
+the back door; the car surfaces keep theirs, where the reorder is what makes the
+bound land well), and the chip row **holds no persisted state**, being rebuilt
+from the D-09 lens each time D-13 is built.
+
+**`My plug` does not gain a filter half.** It stays a lens, always on when a
+selection exists, and it now also seeds the chip row.
 
 **The five substitutions the reference forces**, all settled: `Payment &
 payouts` → **`Offline & map data`** (there is no payment concept to host);
@@ -369,13 +426,35 @@ At 53 the dot's ring overlaps the rim by 0.80 px — the exact fusion the
 placement exists to prevent. The original derivation stated `d ≥ 75.5` and then
 divided 74.5 by √2, so it never admitted its own answer.)*
 
+*One of the five is reversed by [ADR-0013](docs/adr/0013-charger-finder-redesign.md).*
+The **search/discovery substitution** stood because the reference had no search
+component, which was a styling-derived reason for an IA decision. A search field
+now ships on D-01, and `stationsNear` remains the ranking query behind it rather
+than a replacement for it. The other four substitutions stand unchanged, and the
+pin's `(+54, −54)` tangency solution is untouched: it is also **why a second
+additive pin mark is unavailable**, since a power-tier glyph would collide with
+the free-bay dot at `d ≥ 75.75`.
+
 **Attribution and the badge.** D-01's bottom-left mark slot carries
 `© OpenStreetMap contributors` in the reference's own type treatment, tapping
-through to D-10 — the first of the product's two knowing deviations
-([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md)). D-03's
-hero badge is reproduced at its measured 1.21:1 contrast under the **redundancy
-invariant**: any value on the badge is restated in readable form below it, and
-it carries peak power or nothing.
+through to D-10 — the first of the product's four knowing styling deviations
+([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md),
+[ADR-0013](docs/adr/0013-charger-finder-redesign.md); the count was two until
+2026-08-20). D-03's
+hero badge label is drawn in `color.onAccent` `#121212`, computed at
+**15.52:1**, and still carries **peak power or nothing**, never an availability
+word.
+
+*Amended 2026-08-20 by [ADR-0013](docs/adr/0013-charger-finder-redesign.md)
+decision 2, which supersedes ADR-0009 item 3.* The badge was previously
+reproduced at the reference's measured **1.21:1**, on the reasoning that
+recolouring the label would be a visible break of a rule that governed layout as
+well as styling. Decision 16's amendment dissolved that reasoning, so the
+contrast was re-ratified rather than inherited. **The `redundancy invariant`
+survives on a new justification**: any value on the badge is still restated in
+readable form below it, not because the badge is illegible (it is not) but
+because the badge is **optional**, so a value whose only home is the badge
+disappears when the badge does.
 
 **What the pin deliberately does not say.** One additive channel, spent on the
 only actionable fact: a free-bay dot or nothing. It does not distinguish
@@ -582,8 +661,9 @@ record's raise lists. **None of these is settled by this document.**
 
 **Founder calls — all five ratified 2026-08-14, and now decisions 4, 22, 23
 and 24.** The typeface acceptance band and its free-first selection
-([ADR-0010](docs/adr/0010-typeface-acceptance-band.md)); the two knowing
-deviations and the two fidelity costs
+([ADR-0010](docs/adr/0010-typeface-acceptance-band.md)); the knowing deviations
+and the fidelity costs, **now four and one** after
+[ADR-0013](docs/adr/0013-charger-finder-redesign.md)
 ([ADR-0009](docs/adr/0009-reference-fidelity-deviations-and-costs.md)); and
 `My plug` staying ungated ([ADR-0003](docs/adr/0003-driver-identity-and-gating.md)
 amendment). They are listed here only so a reader who remembers them as open
@@ -679,7 +759,12 @@ Each is a test, not a review item.
 9. **The chosen typeface passes the nine-metric acceptance band**, re-run
    whenever the face changes (ADR-0010).
 10. **The redundancy invariant holds**: no value appears on the hero badge
-    without being restated in readable form below it (ADR-0009).
+    without being restated in readable form below it (ADR-0009, as amended by
+    [ADR-0013](docs/adr/0013-charger-finder-redesign.md) decision 2). *The test
+    is unchanged; its reason is not.* It was written to make the badge's 1.21:1
+    illegibility harmless. The badge is now legible at 15.52:1, and the
+    invariant is kept because the badge **carries peak power or is absent**, so
+    a value whose only home is the badge disappears when the badge does.
 11. **No disabled token exists**, and no bare touchable ships. React Native's
     `activeOpacity` and `android_ripple` deliver the forbidden opacity ramp and
     motion **by default**, so every call site goes through `PressableSurface`

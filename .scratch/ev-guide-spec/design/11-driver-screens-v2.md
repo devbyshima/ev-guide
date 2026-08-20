@@ -2082,6 +2082,27 @@ buttons would be the largest accent deviation in the design. So: the platform's
 native provider takes the accent slot; the other two use the hosting card's
 `#393939` fill at the CTA's measured height and radius.
 
+> **Amended, not deleted, 2026-08-20**
+> ([ADR-0013](../../../docs/adr/0013-charger-finder-redesign.md) decision 7).
+> **This rule still governs S-01 and every surface whose controls compete for
+> primacy**, which is the case it was written for: three provider buttons where
+> exactly one should win. The paragraph above stands unchanged for that.
+>
+> It **no longer governs a surface whose controls carry selection state.**
+> D-13's connector chip row is multi-select, so several members can be lime at
+> once, and the founder accepted that as a knowing styling deviation rather than
+> make the selected state invisible. The reason the rule does not reach it: lime
+> on a chip marks **state**, not primacy, and the alternatives all failed. A
+> single-select row could not express a Type 2 and CCS2 car, which is ordinary
+> in Rwanda; a collapsed `Filters` control could not carry a count, because
+> `Badge` is a prohibited component; and a non-accent selected treatment needs a
+> token that does not exist, since surface to raised is 1.08:1.
+>
+> The `~3.9%` figure is a **measurement** and stays true. What changed is what
+> follows from it. Note the exposure is smaller than it first looks: the chip
+> row sits on `color.page` inside the sheet, not over the map, so it competes
+> with no pin rim.
+
 **[RAISE-D20] Sign in with Apple cannot be reproduced 1:1.** Apple's guidelines
 fix that button's appearance — black / white / white-outline, its own logo
 lockup and type — and it cannot be restyled to `#C7FC2F` with a `#121212` label.
@@ -2229,11 +2250,11 @@ type, then **S-02**. See [RAISE-D13] for what is deliberately absent from it.
 | Not built | Why |
 | --- | --- |
 | **Route / navigation screen** | ADR-0004 forbids inventing one; the preview lives in D-02 (§7). |
-| **Search screen** | The reference has no search component; a directory of tens of stations sorted by distance needs none. Recorded as an accepted reduction, not an oversight. |
+| **Search screen** | The reference has no search component; a directory of tens of stations sorted by distance needs none. Recorded as an accepted reduction, not an oversight. **[Overturned 2026-08-20, ADR-0013.](../../../docs/adr/0013-charger-finder-redesign.md)** The stated ground was the reference, which now governs styling only, so the reduction reopened and a **search field** ships on D-01. Still no search *screen*: it is a field, and results replace D-13's rows in place. |
 | **Full-screen photo viewer** | The hero carousel is the whole photo surface. No ticket asks for more, and a viewer would be the only full-bleed modal in the app. |
 | **Owner screen** | The owner row is identity, not navigation. Nothing in the model has an Owner-scoped read for drivers. |
 | **Onboarding** | No reference, no ticket. Ticket 28 fixes what the *listing and onboarding claim* (`real-time` never appears anywhere) but does not commission screens. **[RAISE-D24]** — if onboarding ships, it is a new design pass, and its copy is already constrained. |
-| **Filters** | Nothing in the model is a filter dimension on the phone; the plug lens (D-09) is a reading aid, not a filter, and it never hides a station. |
+| **Filters** | Nothing in the model is a filter dimension on the phone; the plug lens (D-09) is a reading aid, not a filter, and it never hides a station. **[Largely upheld 2026-08-20, ADR-0013 decision 8.](../../../docs/adr/0013-charger-finder-redesign.md)** An `S-04 Filters` sheet was drafted and **withdrawn before it was built**, so this row stands: there is still no filter screen. The second clause is kept verbatim and extended to *every* control the redesign adds, since **nothing hides**. Only the first clause softens: the lens is now also a reordering key, expressed by a connector chip row at the top of D-13, which reorders and marks but never removes. |
 | **Operator anything** | Different app (ADR-0006). |
 
 ---

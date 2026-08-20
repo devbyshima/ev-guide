@@ -147,7 +147,7 @@ and the copies are now pointers. Adding a string here is a change to
 | `real-time`, `live` (as a promise) | Ticket 28: availability is claimed as a bonus, never a promise. Banned in the UI, the store listing and onboarding alike. | say nothing; show freshness |
 | `0 of N free` | Grammar law 1 — a denominator may only appear when `u = 0`. | Regime 3 counts, no total |
 | `busy` applied to any bay that is `Unknown` or `OutOfService` | Law 3. | the state's own word |
-| any availability word on the accent/hero badge | An accent chip reading "no confirmed status" on ~87% of stations paints the product as an apology, which ADR-0002 forbids. The badge also measures 1.21:1 contrast and may carry no value a driver must read. | badge carries peak power, or is absent |
+| any availability word on the accent/hero badge | An accent chip reading "no confirmed status" on ~87% of stations paints the product as an apology, which ADR-0002 forbids. *(This row carried a second reason until 2026-08-20: that the badge measured 1.21:1 and could carry no value a driver must read. [ADR-0013](adr/0013-charger-finder-redesign.md) decision 2 made the badge legible at 15.52:1, so that reason is gone and the row now stands on the apology ground alone, which was always the stronger of the two. The ban itself is unchanged.)* | badge carries peak power, or is absent |
 | `in use` | A second word for `Occupied`. One word, one state. | `busy` |
 
 ### 2.3 Freshness returns structure, not a word

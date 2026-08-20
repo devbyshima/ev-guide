@@ -48,6 +48,22 @@ badge must be restated in readable form below it. The badge carries peak power
 (`60 kW`) or is absent, and **no availability word may ever appear there**
 (availability-display.md §2.2b).
 
+> **SUPERSEDED 2026-08-20 by [ADR-0013](0013-charger-finder-redesign.md)
+> decision 2. This item only; items 1, 2 and 4 of this ADR stand.**
+> **Do not build a 1.21:1 badge.** The label is now `color.onAccent` `#121212`,
+> computed at **15.52:1**. The reasoning above depended on recolouring being a
+> visible break of a 1:1 rule that governed layout as well as styling; ADR-0013
+> scoped that rule to styling alone, so the contrast was re-ratified by the
+> founder rather than inherited. The badge moved from this ADR's cost column to
+> its deviation column, so the counts in the title and in SPEC decisions 22 and
+> 23 changed: **four deviations, one cost.**
+>
+> **The redundancy invariant and the availability-word ban both survive**, each
+> on a narrower ground. The invariant is kept because the badge is *optional*,
+> not because it is illegible. The ban is kept because an accent chip reading
+> `no confirmed status` on ~87% of stations is an apology ADR-0002 forbids; its
+> second reason, the 1.21:1 contrast, is gone.
+
 ### 4. The operator app ships dark-only — a cost, not a deviation
 
 The whole system is `#121212`/`#212121`/`#393939` with no elevation and no

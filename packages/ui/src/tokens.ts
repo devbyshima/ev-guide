@@ -168,10 +168,12 @@ export const size = {
 /**
  * Contrast facts that are deliberately shipped as-is, so nobody "fixes" them
  * without reading ADR-0009 first.
+ *
+ * `heroBadgeLabel` lived here at 1.21 until ADR-0013. The badge label is now
+ * `color.onAccent` on the accent fill, which computes to 15.52:1, so there is
+ * no deliberate-illegibility fact left to guard.
  */
 export const knownContrast = {
-  /** The hero badge label. Fidelity was chosen over readability. */
-  heroBadgeLabel: 1.21,
   /** The drag handle. Invisible-grade, and correct. */
   handle: 1.24,
 } as const;
