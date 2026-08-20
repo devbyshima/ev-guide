@@ -11,4 +11,5 @@ export 'src/widgets/drag_handle.dart';
 export 'src/widgets/ev_guide_button.dart';
 export 'src/widgets/ev_guide_text.dart';
 export 'src/widgets/feature_chip.dart';
+export 'src/widgets/pressable_surface.dart';
 export 'src/widgets/station_card.dart';

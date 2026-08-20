@@ -10,6 +10,33 @@ import 'package:flutter_test/flutter_test.dart';
 Widget host(Widget child) =>
     Directionality(textDirection: TextDirection.ltr, child: child);
 
+/// A live handler, as a constant, so a button under test can be `const`.
+void noop() {}
+
+/// Everything the press and inert rules govern: the paint and the geometry.
+///
+/// Deliberately excludes the semantics node. `inert` does change `enabled`
+/// there, and that is a statement to assistive technology rather than a style
+/// - section 12.1's "changes nothing visually" governs paint, which is what
+/// this reads.
+({Decoration? decoration, Size size, TextStyle? label, int depth}) paintOf(
+  WidgetTester tester,
+) {
+  Finder inButton(Finder matching) =>
+      find.descendant(of: find.byType(EVGuideButton), matching: matching);
+  return (
+    decoration: tester
+        .widget<Container>(inButton(find.byType(Container)))
+        .decoration,
+    size: tester.getSize(find.byType(EVGuideButton)),
+    label: tester.widget<Text>(inButton(find.byType(Text))).style,
+    // Named channels catch a fill, geometry or label swap. The count catches
+    // the shape the drift actually took: a wrapper slipped over the child,
+    // which changes no property this record reads by name.
+    depth: tester.widgetList(inButton(find.byWidgetPredicate((_) => true))).length,
+  );
+}
+
 void main() {
   testWidgets('EVGuideText renders at the step size with no family named', (
     tester,
@@ -47,8 +74,9 @@ void main() {
     );
   });
 
-  testWidgets('EVGuideButton keeps the measured height, fires, and dims when '
-      'disabled', (tester) async {
+  testWidgets('EVGuideButton keeps the measured height and fires', (
+    tester,
+  ) async {
     var taps = 0;
     await tester.pumpWidget(
       host(
@@ -67,21 +95,101 @@ void main() {
       tester.getSize(find.byType(EVGuideButton)).height,
       closeTo(size.ctaSticky.h / 3, 5e-5),
     );
+  });
 
+  // Ticket 31 section 12.1's own tests for `PressableSurface`, applied to the
+  // one control that exists today. (b) the pressed tree is identical to the
+  // resting tree; (c) `inert` changes no style and blocks every tap.
+  //
+  // This replaces an assertion that the button "dims when disabled", which
+  // locked in the two things section 4.3 and section 5.2 forbid. It read the
+  // 0.85/0.5 ramp as the design and would have failed a correct widget.
+  testWidgets('the pressed tree is identical to the resting tree', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      host(
+        const Center(
+          child: EVGuideButton(label: 'Find a charger', onPressed: noop),
+        ),
+      ),
+    );
+    final resting = paintOf(tester);
+
+    // Hold the finger down: this is the whole state the rule governs.
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(EVGuideButton)),
+    );
+    addTearDown(() => gesture.up());
+    await tester.pumpAndSettle();
+
+    expect(paintOf(tester), resting);
+    // Named separately from the tree comparison because it is the specific
+    // channel section 4.1 priced and rejected, and the one this widget shipped.
+    expect(find.byType(Opacity), findsNothing);
+  });
+
+  testWidgets('inert changes no style and blocks every tap', (tester) async {
+    var taps = 0;
+    Widget button({required bool inert}) => host(
+      Center(
+        child: EVGuideButton(
+          label: 'Save',
+          inert: inert,
+          onPressed: () => taps++,
+        ),
+      ),
+    );
+
+    await tester.pumpWidget(button(inert: false));
+    final live = paintOf(tester);
+
+    await tester.pumpWidget(button(inert: true));
+    expect(paintOf(tester), live);
+    expect(find.byType(Opacity), findsNothing);
+
+    await tester.tap(find.byType(EVGuideButton), warnIfMissed: false);
+    await tester.pump();
+    expect(taps, 0);
+
+    // Case (c) is transient by definition, so the control must come back
+    // without the caller rebuilding it differently.
+    await tester.pumpWidget(button(inert: false));
+    await tester.tap(find.byType(EVGuideButton));
+    expect(taps, 1);
+  });
+
+  testWidgets('an inert control absorbs the tap rather than passing it '
+      'through', (tester) async {
+    var behind = 0;
     await tester.pumpWidget(
       host(
         Center(
-          child: EVGuideButton(
-            label: 'Find a charger',
-            disabled: true,
-            onPressed: () => taps++,
+          child: SizedBox(
+            width: 400,
+            height: 200,
+            child: Stack(
+              children: [
+                // Stands in for the live map under D-01's CTA.
+                Positioned.fill(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => behind++,
+                    child: const SizedBox.expand(),
+                  ),
+                ),
+                const Center(
+                  child: EVGuideButton(label: 'Save', inert: true),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-    await tester.tap(find.text('Find a charger'), warnIfMissed: false);
-    expect(taps, 1);
-    expect(tester.widget<Opacity>(find.byType(Opacity)).opacity, 0.5);
+    await tester.tap(find.byType(EVGuideButton), warnIfMissed: false);
+    await tester.pump();
+    expect(behind, 0);
   });
 
   testWidgets('StationCard renders words without choosing them', (
