@@ -11,9 +11,21 @@ spacing, the component geometry, and the state grammar. They no longer govern
 Supersedes: [ADR-0009](0009-reference-fidelity-deviations-and-costs.md) **item 3
 only** (the hero badge fidelity cost). Items 1, 2 and 4 stand unchanged.
 
-Amends: SPEC.md §5 finding 3 and the tab-bar finding (both re-read below), §6
-in full, §13 item 10's justification, `docs/availability-display.md` §2.2b
-row 6, and `refs/README.md`, which asserts the 1:1 rule in its own text.
+Amends: SPEC.md §2 decisions 22 and 23 (the deviation and fidelity-cost
+counts), §5 finding 3 and the tab-bar finding (both re-read below), §5's
+`no React Native components` clause, §6 in full, §13 item 10's justification,
+`docs/availability-display.md` §2.2b row 6,
+[`11-driver-screens-v2.md`](../../.scratch/ev-guide-spec/design/11-driver-screens-v2.md)
+§S-01's product-wide "Only one button may be lime",
+[`19-form-controls-v2.md`](../../.scratch/ev-guide-spec/design/19-form-controls-v2.md)
+§1.5, and `refs/README.md`, which asserts the 1:1 rule in its own text.
+
+Sweeps, on ADR-0012's authority rather than its own: SPEC.md §1's opening, §2
+decision 14, §5's opening, §5 finding 3's addressee, §7's operator line, §10's
+repo-shape block, and §10's platform floor. Each was falsified when ADR-0012
+moved the phone to Flutter and was then left standing; **none of the seven is a
+change this redesign makes**, and Consequences carries them. **§13 guarantee 11
+is deliberately not swept** despite naming Expo, for the reason given there.
 
 The screen-by-screen record is
 [`11-driver-screens-v3.md`](../../.scratch/ev-guide-spec/design/11-driver-screens-v3.md),
