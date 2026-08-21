@@ -28,16 +28,16 @@ spec is closed apart from the car cluster.
 | | State |
 | --- | --- |
 | Spec + ADRs | **Locked**, except section 9 (car), which waits on the device test |
-| `packages/domain`, `data`, `ui` (TypeScript) | **Server reference + admin tokens.** 125 tests |
+| `packages/domain`, `data`, `ui` (TypeScript) | **Server reference + admin tokens.** 137 tests |
 | `packages/corpus` | The shared fixture corpus as committed JSON |
-| `packages/dart/domain`, `data`, `ui` | **The phone implementation.** 112 tests |
+| `packages/dart/domain`, `data`, `ui` | **The phone implementation.** 124 tests |
 | `apps/driver_flutter` | First vertical slice; **verified on a physical iPhone** |
 | `apps/operator`, `apps/admin` | Not started |
 | CarPlay / Android Auto | In the spec, out of the first build; ticket 05 void under Flutter |
 
 ```bash
-pnpm install && pnpm -r test        # the TypeScript reference: 125 tests
-cd packages/dart/domain && dart test    # 56, of which 43 execute the corpus
+pnpm install && pnpm -r test        # the TypeScript reference: 137 tests
+cd packages/dart/domain && dart test    # 68, of which 43 execute the corpus
 cd packages/dart/data   && dart test    # 18
 cd packages/dart/ui     && flutter test # 38
 cd apps/driver_flutter  && flutter test

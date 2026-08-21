@@ -150,6 +150,42 @@ and the copies are now pointers. Adding a string here is a change to
 | any availability word on the accent/hero badge | An accent chip reading "no confirmed status" on ~87% of stations paints the product as an apology, which ADR-0002 forbids. *(This row carried a second reason until 2026-08-20: that the badge measured 1.21:1 and could carry no value a driver must read. [ADR-0013](adr/0013-charger-finder-redesign.md) decision 2 made the badge legible at 15.52:1, so that reason is gone and the row now stands on the apology ground alone, which was always the stronger of the two. The ban itself is unchanged.)* | badge carries peak power, or is absent |
 | `in use` | A second word for `Occupied`. One word, one state. | `busy` |
 
+**What the tests cover, and what they do not.** Two data lists carry this
+table, and two suites apply them to two different surfaces.
+`FORBIDDEN_SUBSTRINGS` holds the fourteen literals of rows 1, 2 and 7.
+`FORBIDDEN_COPY_PATTERNS` holds row 3 as two word patterns, because `live` as
+bare letters fires on `delivered`, `lives`, `outlive` and thirteen further
+words, 158 times in this repository as of 935a9b5. **Row 3 is the only reason
+the second list exists; nothing else belongs in it.**
+
+The older suites (`grammar.test.ts`, `corpus-json.test.ts` and their Dart
+mirrors) sweep the substrings over the text `grammar()` emits. That text is
+composed from the closed vocabulary, integers and the separator alone, which
+makes those sweeps a guard on the vocabulary rather than a check on copy: the
+words a copy author would actually type cannot occur there at all, so row 3 is
+unfalsifiable on that surface. The newer suites
+(`packages/domain/test/copy-surface.test.ts` and its Dart mirror) apply **both
+lists** to the closed vocabulary and to the strings authored in the surface
+files, which is where copy is written.
+
+Four things remain a review obligation rather than a test: row 1's catch-all
+clause, recorded as `FORBIDDEN_CATCHALL`; row 3 read in this table's qualified
+sense, since no pattern can tell a promise from a description; row 6, which is
+a layout rule about the accent badge and not a string at all; and the store
+listing and onboarding that SPEC.md §13 guarantee 8 also names, neither of
+which lives in this repository. Rows 4 and 5 are grammar laws 1 and 3 and are
+tested as such.
+
+**Open, and owed: `live` is banned twice, at two different widths.** SPEC.md
+decision 17 bans it flat, this table qualifies it "(as a promise)", and
+guarantee 8 names only `real-time`. The check enforces the flat text because
+that is the locked document, so it fails closed: decision 17's own phrase
+`live status when reported` would not pass it. Choosing the width is a spec
+amendment, and until it is made the check is deliberately the stricter of the
+two readings. Also unresolved and deliberately unbanned: the spaced spelling
+`real time`, which neither list carries, because the table names two closed
+spellings and adding a third is a widening no ticket has made.
+
 ### 2.3 Freshness returns structure, not a word
 
 ```
