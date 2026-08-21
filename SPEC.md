@@ -798,10 +798,17 @@ Each is a test, not a review item.
     illegibility harmless. The badge is now legible at 15.52:1, and the
     invariant is kept because the badge **carries peak power or is absent**, so
     a value whose only home is the badge disappears when the badge does.
-11. **No disabled token exists**, and no bare touchable ships. React Native's
-    `activeOpacity` and `android_ripple` deliver the forbidden opacity ramp and
-    motion **by default**, so every call site goes through `PressableSurface`
-    and a bare touchable fails the build (ticket 31 §12.2).
+11. **No disabled token exists**, and no bare touchable ships. The prop is
+    `inert`, never `disabled` (ticket 31 §12.1), and pressed renders nothing
+    (§4.3), so every call site goes through `PressableSurface`. **The platform
+    ships the deviation by default, and only the names change.** React Native
+    delivered the forbidden opacity ramp and motion through `activeOpacity`
+    and `android_ripple`; under Flutter they arrive through `InkWell`,
+    `InkResponse`, `CupertinoButton` and the Material buttons, while a raw
+    `GestureDetector` draws nothing. The test is therefore a sweep over the
+    widgets rather than a ban on one import, and a bare touchable fails it
+    (ticket 31 §12.2). *Re-aimed at Flutter 2026-08-21 (ADR-0012): the
+    guarantee is unchanged, the defaults it defends against are renamed.*
 12. **The forbidden list has exactly one home** — *satisfied 2026-08-14 by
     ticket 32, and the grep is what keeps it satisfied.* The three claimed
     addresses were reduced to citations of availability-display.md §2.2b, but
