@@ -6,7 +6,7 @@
 ///    absence of a bay-level rate field. No serialisation can carry an
 ///    absence, so it stays a language-native test on every side.
 /// 2. The vocabulary as data: sentinel values of the closed vocabulary and
-///    the forbidden-substring list, byte-for-byte against the TypeScript
+///    the two forbidden lists, byte-for-byte against the TypeScript
 ///    reference, because a transcription may not invent (or drift) a word.
 /// 3. The section 2.2 law sweeps of packages/domain/test/grammar.test.ts that
 ///    run exhaustively over every partition of n bays. "For any input" is
@@ -123,6 +123,15 @@ void main() {
         forbiddenCatchall,
         'any phrasing that asserts a report exists, does not exist, or is old',
       );
+    });
+
+    test('the copy-pattern list carries section 2.2b row 3 as words', () {
+      // Row 3's second word is enforced here rather than in the list above,
+      // because as bare letters `live` fires on `delivered` and fifteen other
+      // words in this repository as of 935a9b5. copy_surface_test.dart is
+      // what runs these against copy; this pins them as data, the way the
+      // substring list is pinned.
+      expect(forbiddenCopyPatterns, [r'\blive\b', r'\breal-?time\b']);
     });
 
     test('connector type-words are the section 2.4 projection', () {

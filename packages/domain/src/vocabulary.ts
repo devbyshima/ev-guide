@@ -81,3 +81,43 @@ export const FORBIDDEN_SUBSTRINGS: readonly string[] = [
  */
 export const FORBIDDEN_CATCHALL =
   'any phrasing that asserts a report exists, does not exist, or is old';
+
+/**
+ * Section 2.2b row 3 bans two words, `real-time` and `live`, and the list
+ * above carries only the first. That asymmetry is deliberate, and until now
+ * it was nowhere written down.
+ *
+ * `FORBIDDEN_SUBSTRINGS` is swept over the text `grammar()` emits, and that
+ * text is composed from `WORDS`, integers and the separator alone. Neither
+ * word can occur in it, so row 3 is unfalsifiable on that surface: the two
+ * entries above guard the closed vocabulary, they do not check copy. Adding
+ * `live` beside them would add a third assertion that cannot fail.
+ *
+ * `live` is not a substring ban in any case. As bare letters it fires on
+ * `delivered`, `lives`, `outlive` and thirteen further words, 158 times in
+ * this repository as of 935a9b5, including the paragraph above about dropped
+ * live bans. So it is expressed as a word, and lives in its own list.
+ *
+ * `copy-surface.test.ts` and its Dart mirror are what run this list, over the
+ * closed vocabulary and over the strings authored in the surface files. They
+ * apply `FORBIDDEN_SUBSTRINGS` to those same surfaces at the same time: this
+ * list is row 3, not a second home for the rest of the table. Note what that
+ * makes it: the first mechanical enforcement SPEC.md section 13 guarantee 8
+ * has ever had, because the substring sweep never reached a surface, a
+ * fixture or a component.
+ *
+ * **A ruling is owed on the scope, and this list does not make it.** SPEC.md
+ * decision 17 bans `live` flat; section 2.2b qualifies it "(as a promise)".
+ * No pattern can read intent, so this one enforces the locked flat text and
+ * fails closed. The collision sits inside a single table cell: decision 17
+ * defines availability as "live status when reported" one clause before
+ * banning the word, so that phrase would fail this check if it were ever
+ * shipped as copy. Narrowing to the qualified reading is an edit to this
+ * array; making that call is not this array's job.
+ */
+export const FORBIDDEN_COPY_PATTERNS: readonly string[] = [
+  // Row 3 (ticket 28), the words rather than the letters. `real-?time` is the
+  // two spellings already banned above, under a word boundary.
+  '\\blive\\b',
+  '\\breal-?time\\b',
+];
